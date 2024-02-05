@@ -333,21 +333,24 @@ git merge dev
 # Git-Repository Verzeichnis
 cd /Users/jan/daten/start
 git init --bare c-projekt.git
+git init --bare notizen_latex_html_python_v1
 
 # Remote-Repository verwenden
 # Projekt Verzeichnis
 cd /Users/jan/daten/start/Programmierung/JanSchaffranek/C-Programmierung/c-projekte
 git remote add origin /Users/jan/daten/start/c-projekt.git
+cd /Users/jan/daten/latex/notizen_latex_html_python_v1
 git remote add origin /Users/jan/daten/start/notizen_latex_html_python_v1
 
 # Lokalen Branch umbenennen
 #git branch -m master main
-
 # Neuen Branch 'main' auf Remote-Repository pushen und als Upstream setzen
 git remote -v
 #git remote set-url origin <korrekte-URL>
-git pull origin main
+#git pull origin main
 git push -u origin main
+git pull
+git push
 ```
 
 ### Schritt 7: Branches synchron halten
