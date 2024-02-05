@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "lldb",
+      "request": "launch",
+      "args": [],
+      "cwd": "/Users/jan/daten/start/Programmierung/JanSchaffranek/C-Programmierung/latex_python_2024/python-scripte",
+      "program": "/Users/jan/daten/start/Programmierung/JanSchaffranek/C-Programmierung/latex_python_2024/python-scripte/build/Debug/outDebug"
+    }
+  ]
+}

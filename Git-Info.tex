@@ -1,0 +1,310 @@
+% ju 05-Feb-24 Git-Info.tex
+\documentclass{vorlage-design-main}
+\usepackage[utf8]{inputenc}
+\usepackage{longtable}
+\usepackage{blindtext,alltt}
+%% Ganze Überschrift
+\title{Thema}
+
+%% Kürzerer Titel zur Verwendung im Seitenkopf
+\runningtitle{Kurztitel}
+\author{Jan Unger}
+% \author{2.}
+\date{\today}
+
+%% Die .bib-Datei mit vollständigen Referenzen zur Verwendung mit biblatex. articleclass lädt das Paket biblatex-chicago mit Anpassungen
+\addbibresource{literatur.bib}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+
+\end{abstract}
+
+\hypertarget{git-info}{%
+\section{Git-Info}\label{git-info}}
+
+\hypertarget{konfliktaufluxf6sung-und-das-verstuxe4ndnis-von-merge-konflikten}{%
+\subsection{Konfliktauflösung und das Verständnis von
+Merge-Konflikten}\label{konfliktaufloesung-und-das-verstaendnis-von-merge-konflikten}}
+
+\hypertarget{erkennen-von-merge-konflikten}{%
+\subsubsection{Erkennen von
+Merge-Konflikten}\label{erkennen-von-merge-konflikten}}
+
+Ein Merge-Konflikt tritt auf, wenn Git nicht automatisch Änderungen aus
+verschiedenen Branches in derselben Datei zusammenführen kann. Dies
+geschieht häufig, wenn zwei Entwickler gleichzeitig Änderungen an
+denselben Zeilen einer Datei vornehmen oder wenn ein Entwickler eine
+Datei löscht, während ein anderer sie bearbeitet hat.
+
+\hypertarget{verstehen-von-merge-konflikten}{%
+\subsubsection{Verstehen von
+Merge-Konflikten}\label{verstehen-von-merge-konflikten}}
+
+Wenn ein Konflikt auftritt, kennzeichnet Git die betroffenen Bereiche in
+der Datei und unterbricht den Merge-Prozess. Der Konflikt muss manuell
+gelöst werden, bevor der Merge abgeschlossen werden kann.
+
+In der Datei sehen Konflikte typischerweise so aus:
+
+\begin{lstlisting}
+<<<<<<< HEAD
+[Inhalt im aktuellen Branch]
+=======
+[Inhalt aus dem zu mergenden Branch]
+>>>>>>> [Branch-Name]
+\end{lstlisting}
+
+\begin{itemize}
+
+\item
+  \verb|<<<<<<< HEAD| markiert den Beginn des
+  konfliktbehafteten Bereichs in Ihrem aktuellen Branch.
+\item
+  \verb|=======| trennt die unterschiedlichen
+  Inhalte.
+\item
+  \verb|>>>>>>> [Branch-Name]| markiert das Ende des
+  konfliktbehafteten Bereichs und zeigt den Namen des anderen Branches
+  an.
+\end{itemize}
+
+\hypertarget{aufluxf6sen-von-merge-konflikten}{%
+\subsubsection{Auflösen von
+Merge-Konflikten}\label{aufloesen-von-merge-konflikten}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \textbf{Identifizieren Sie alle Konfliktbereiche} in der Datei. Suchen
+  Sie nach den Markierungen \verb|<<<<<<<|,
+  \verb|=======|, und
+  \verb|>>>>>>>|.
+\item
+  \textbf{Entscheiden Sie für jeden Konfliktbereich}, welchen Inhalt Sie
+  behalten möchten:
+
+  \begin{itemize}
+  
+  \item
+    Wählen Sie den Inhalt von einem der Branches.
+  \item
+    Kombinieren Sie Inhalte aus beiden Branches.
+  \item
+    Schreiben Sie einen neuen Inhalt, der beide Änderungen
+    berücksichtigt.
+  \end{itemize}
+\item
+  \textbf{Bearbeiten Sie die Datei} und entfernen Sie die Markierungen
+  (\verb|<<<<<<<|, \verb|=======|,
+  \verb|>>>>>>>|), sodass nur der gewünschte Inhalt
+  übrig bleibt.
+\item
+  \textbf{Fügen Sie die gelösten Dateien zum Staging-Bereich hinzu}:
+
+\begin{lstlisting}[language=bash]
+git add [Dateiname]
+\end{lstlisting}
+\item
+  \textbf{Schließen Sie den Merge-Vorgang ab}. Wenn alle Konflikte
+  gelöst sind, führen Sie den Merge mit einem Commit ab:
+
+\begin{lstlisting}[language=bash]
+git commit
+\end{lstlisting}
+
+  Git öffnet einen Editor für den Commit-Message. Die vorgefertigte
+  Nachricht enthält Informationen über den Merge und die gelösten
+  Konflikte. Speichern Sie die Nachricht und schließen Sie den Editor.
+\item
+  \textbf{Testen Sie die Änderungen}. Stellen Sie sicher, dass Ihr Code
+  nach der Konfliktlösung wie erwartet funktioniert.
+\end{enumerate}
+
+\hypertarget{unterschied-push-und-fetch}{%
+\subsection{Unterschied push und
+fetch}\label{unterschied-push-und-fetch}}
+
+\hypertarget{git-push}{%
+\subsubsection{Git push}\label{git-push}}
+
+\begin{itemize}
+
+\item
+  \textbf{Zweck}: Der Befehl \verb|git push| wird
+  verwendet, um lokale Änderungen an einem Remote-Repository zu
+  übermitteln. Wenn Sie Commits in Ihrem lokalen Repository gemacht
+  haben, die noch nicht im Remote-Repository vorhanden sind, können Sie
+  \verb|git push| verwenden, um diese Änderungen
+  hochzuladen und das Remote-Repository zu aktualisieren.
+\item
+  \textbf{Richtung}: \verb|push| sendet Daten vom
+  lokalen Repository zum Remote-Repository.
+\item
+  \textbf{Zugriffsrechte}: Um \verb|push| ausführen
+  zu können, benötigen Sie Schreibzugriff auf das Remote-Repository.
+  Ohne die entsprechenden Berechtigungen wird der
+  \verb|push|-Versuch mit einer Fehlermeldung
+  abgelehnt.
+\item
+  \textbf{Anwendung}: \verb|push| wird typischerweise
+  verwendet, nachdem Sie lokale Commits gemacht haben und bereit sind,
+  diese Änderungen mit anderen zu teilen oder ein zentrales Repository
+  auf dem neuesten Stand zu halten.
+\end{itemize}
+
+\hypertarget{git-fetch}{%
+\subsubsection{Git fetch}\label{git-fetch}}
+
+\begin{itemize}
+
+\item
+  \textbf{Zweck}: Der Befehl \verb|git fetch| wird
+  verwendet, um Informationen vom Remote-Repository zu holen, ohne diese
+  automatisch mit Ihrem lokalen Arbeitsverzeichnis oder Ihren lokalen
+  Branches zu mergen. \verb|fetch| holt alle neuen
+  Arbeit von dem angegebenen Remote-Repository, einschließlich neuer
+  Branches und Tags sowie Änderungen in bestehenden Branches.
+\item
+  \textbf{Richtung}: \verb|fetch| holt Daten vom
+  Remote-Repository zum lokalen Repository.
+\item
+  \textbf{Zugriffsrechte}: Für \verb|fetch| benötigen
+  Sie lediglich Lesezugriff auf das Remote-Repository. Da es keine
+  Änderungen am Remote-Repository vornimmt, sind die
+  Zugriffsanforderungen weniger streng.
+\item
+  \textbf{Anwendung}: \verb|fetch| wird verwendet, um
+  auf dem Laufenden zu bleiben mit dem, was im Remote-Repository
+  passiert, ohne die eigenen lokalen Änderungen zu beeinflussen. Nach
+  einem \verb|fetch| können Sie entscheiden, ob und
+  wie Sie die geholten Änderungen in Ihre Arbeit integrieren möchten,
+  z.B. durch einen \verb|merge| oder
+  \verb|rebase|.
+\end{itemize}
+
+\textbf{Zusammenfassung}
+
+\begin{itemize}
+
+\item
+  \verb|push| \textbf{sendet} Änderungen vom lokalen
+  zum Remote-Repository, erfordert Schreibzugriff und wird verwendet, um
+  Ihre Arbeit mit anderen zu teilen.
+\item
+  \verb|fetch| \textbf{holt} Änderungen vom
+  Remote-Repository, erfordert nur Lesezugriff und beeinflusst Ihre
+  lokale Arbeit nicht direkt. Es erlaubt Ihnen, die Änderungen zu sehen
+  und zu entscheiden, wie Sie diese in Ihre Arbeit integrieren möchten.
+\end{itemize}
+
+\hypertarget{unterschied-merge-und-rebase}{%
+\subsection{Unterschied Merge und
+rebase}\label{unterschied-merge-und-rebase}}
+
+\hypertarget{git-merge}{%
+\subsubsection{Git merge}\label{git-merge}}
+
+\begin{itemize}
+
+\item
+  \textbf{Was es tut}: \verb|merge| nimmt die Inhalte
+  von zwei Branches und vereinigt sie in einem neuen >>Merge-Commit<<.
+  Wenn Sie einen \verb|merge| durchführen, bleibt die
+  gesamte Historie der Branches erhalten, und es wird ein neuer Commit
+  erstellt, der zwei Eltern hat: einen für jeden Branch, der
+  zusammengeführt wird.
+\item
+  \textbf{Commit-Historie}: Die resultierende Commit-Historie ist eine
+  nicht-lineare Historie, die die parallele Entwicklung der Branches
+  zeigt. Das macht es leichter, die historischen Kontexte der
+  Entwicklungspfade zu verstehen.
+\item
+  \textbf{Verwendung}: \verb|merge| wird oft in Teams
+  verwendet, um Änderungen aus einem Feature-Branch in den Hauptbranch
+  (z.B. \verb|main| oder
+  \verb|master|) zu integrieren, da es die
+  vollständige Historie und die Entscheidungen hinter den Änderungen
+  bewahrt.
+\end{itemize}
+
+\hypertarget{git-rebase}{%
+\subsubsection{Git rebase}\label{git-rebase}}
+
+\begin{itemize}
+
+\item
+  \textbf{Was es tut}: \verb|rebase| nimmt die
+  Commits von einem Branch und >>reappliziert<< sie auf einen anderen
+  Branch. Dabei wird die Basis des Feature-Branches auf den aktuellen
+  Endpunkt des Zielbranches verschoben. Dies kann dazu führen, dass die
+  Commit-Historie geändert wird, da die Commit-IDs der rebasierten
+  Commits neu erstellt werden.
+\item
+  \textbf{Commit-Historie}: Die resultierende Commit-Historie ist
+  linear, was eine saubere, gerade Entwicklungslinie ohne die
+  Merge-Commits erzeugt, die man bei der Verwendung von
+  \verb|merge| sieht. Dies kann die Historie
+  übersichtlicher und einfacher zu verstehen machen, insbesondere bei
+  der Untersuchung von Projektverläufen.
+\item
+  \textbf{Verwendung}: \verb|rebase| wird häufig
+  verwendet, um einen lokalen Branch auf den neuesten Stand zu bringen,
+  indem man ihn auf die Spitze des Hauptbranches setzt, bevor man
+  Änderungen zu einem Remote-Repository pushen oder einen Pull-Request
+  erstellen will. Es wird auch verwendet, um eine saubere, lineare
+  Historie zu erstellen, die leichter zu navigieren ist.
+\end{itemize}
+
+\textbf{Unterschiede zusammengefasst}
+
+\begin{itemize}
+
+\item
+  \textbf{Historie}: \verb|merge| bewahrt die
+  tatsächliche Entwicklungsgeschichte und die Struktur der Branches,
+  während \verb|rebase| eine lineare Historie
+  erstellt, indem es die Commits neu anordnet, als wären sie auf dem
+  neuesten Stand des Zielbranches gemacht worden.
+\item
+  \textbf{Konflikte}: Sowohl \verb|merge| als auch
+  \verb|rebase| können Konflikte erzeugen, die
+  manuell gelöst werden müssen. Bei einem
+  \verb|rebase| müssen diese Konflikte jedoch für
+  jeden Commit einzeln gelöst werden, durch den der
+  \verb|rebase| durchgeführt wird, was in manchen
+  Situationen mühsamer sein kann.
+\item
+  \textbf{Sicherheit und Transparenz}: \verb|merge|
+  gilt als sicherer für die öffentliche oder geteilte Historie, da es
+  die tatsächliche Entwicklungsgeschichte nicht verändert.
+  \verb|Rebase| ändert die Commit-Historie, was in
+  geteilten Branches zu Problemen führen kann, wenn nicht sorgfältig
+  gehandhabt.
+\end{itemize}
+
+\textbf{Empfehlungen}
+
+\begin{itemize}
+
+\item
+  Verwenden Sie \verb|merge|, wenn Sie die
+  vollständige Historie und die Kontexte der Branch-Entwicklung bewahren
+  möchten, insbesondere in geteilten Repositories.
+\item
+  Verwenden Sie \verb|rebase|, um eine saubere,
+  lineare Historie für lokale Änderungen zu schaffen, bevor Sie diese
+  teilen, oder wenn Sie die Übersichtlichkeit und Einfachheit einer
+  linearen Commit-Historie bevorzugen.
+\end{itemize} % Platzhalter
+
+%% Optional Anhang
+%\clearpage
+%\appendix
+
+\clearpage
+\printbibliography
+\end{document}

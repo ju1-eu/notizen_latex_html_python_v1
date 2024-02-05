@@ -1,0 +1,721 @@
+% ju 05-Feb-24 Workflow.tex
+\documentclass{vorlage-design-main}
+\usepackage[utf8]{inputenc}
+\usepackage{longtable}
+\usepackage{blindtext,alltt}
+%% Ganze Überschrift
+\title{Thema}
+
+%% Kürzerer Titel zur Verwendung im Seitenkopf
+\runningtitle{Kurztitel}
+\author{Jan Unger}
+% \author{2.}
+\date{\today}
+
+%% Die .bib-Datei mit vollständigen Referenzen zur Verwendung mit biblatex. articleclass lädt das Paket biblatex-chicago mit Anpassungen
+\addbibresource{literatur.bib}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+
+\end{abstract}
+
+\hypertarget{workflow---5x-schritte}{%
+\section{Workflow - 5x Schritte}\label{workflow---5x-schritte}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+
+\item
+  \textbf{Entwicklung} Makefile für C
+\item
+  \textbf{Debugging} gdb oder lldb
+\item
+  \textbf{Optimierung} ChatGPT
+\item
+  \textbf{Dokumentation} Pythonscripte =\textgreater{} Latex \& HTML,
+  Makefile für Latex
+\item
+  \textbf{Versionierung} Git \& GitHub
+\end{enumerate}
+
+\hypertarget{entwicklung}{%
+\subsection{Entwicklung}\label{entwicklung}}
+
+ChatGPT \url{https://chat.openai.com/?model=gpt-4}
+
+\begin{itemize}
+
+\item
+  \textbf{Prompt:} Erstelle mir den Code in C
+\end{itemize}
+
+\begin{lstlisting}[language=bash]
+make
+make DEBUG=1 # Debug-Modus = make
+make DEBUG=0 # Release-Modus
+make clean
+\end{lstlisting}
+
+\hypertarget{makefile}{%
+\subsubsection{Makefile}\label{makefile}}
+
+\begin{lstlisting}[language=bash]
+# Verwendung:
+# make
+# make DEBUG=1 // für den Debug-Modus
+# make DEBUG=0 // Release-Modus
+# make clean
+
+# Einstellung für Debug-Modus, standardmäßig auf 1 gesetzt
+DEBUG ?= 1
+
+# Compiler-Definition
+CC = gcc
+# Grundlegende Compiler Flags
+CFLAGS = -Wall -Wextra -std=c11
+# Linker Flags
+LDFLAGS = -lm
+
+# Findet alle .c-Dateien im Verzeichnis
+SOURCES = $(wildcard *.c)
+# Erstellt eine Liste der ausführbaren Dateien, eine für jede .c-Datei
+EXECUTABLES = $(SOURCES:.c=)
+
+# Bedingte Einstellungen basierend auf dem DEBUG-Flag
+ifeq ($(DEBUG), 1)
+    CFLAGS += -g3
+    EXECUTABLES := $(addsuffix Debug, $(EXECUTABLES))
+else
+    CFLAGS += -O2
+    EXECUTABLES := $(addsuffix Release, $(EXECUTABLES))
+endif
+
+# Hauptziel
+all: $(EXECUTABLES)
+
+# Regeln zum Erstellen der ausführbaren Programme
+%Debug: %.c
+    $(CC) $(CFLAGS) $< -o $@ $(LDFLAGS)
+
+%Release: %.c
+    $(CC) $(CFLAGS) $< -o $@ $(LDFLAGS)
+
+# Clean up
+clean:
+    rm -f $(EXECUTABLES)
+    rm -f *Debug *Release
+    rm -rf *.dSYM
+
+
+# Spezielle Ziele, die keine Dateien sind
+.PHONY: all clean
+\end{lstlisting}
+
+\hypertarget{testen-und-debugging}{%
+\subsection{Testen und Debugging}\label{testen-und-debugging}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \textbf{LLDB starten mit dem Programm}:
+
+\begin{lstlisting}[language=bash]
+lldb ./dateiDebug
+\end{lstlisting}
+\item
+  \textbf{Breakpoint setzen}:
+
+\begin{lstlisting}
+list
+b <Zeilennummer>
+\end{lstlisting}
+
+  Zum Beispiel, um einen Breakpoint in Zeile 32 zu setzen:
+
+\begin{lstlisting}
+b 32
+\end{lstlisting}
+\item
+  \textbf{Programm ausführen}:
+
+\begin{lstlisting}
+run
+\end{lstlisting}
+
+  Startet das Programm innerhalb des Debuggers.
+\item
+  \textbf{Überprüfen von Variablenwerten}: Nachdem das Programm am
+  Breakpoint angehalten hat:
+
+\begin{lstlisting}
+frame variable <Variablenname>
+\end{lstlisting}
+
+  Beispiel:
+
+\begin{lstlisting}
+frame variable floatResult
+frame variable doubleResult
+frame variable longDoubleResult
+\end{lstlisting}
+\item
+  \textbf{Nächste Zeile ausführen}:
+
+\begin{lstlisting}
+next
+\end{lstlisting}
+
+  Führt die nächste Zeile des Codes aus und bleibt im gleichen
+  Funktionskontext.
+\item
+  \textbf{Fortsetzen der Ausführung bis zum nächsten Breakpoint}:
+
+\begin{lstlisting}
+continue
+\end{lstlisting}
+
+  Setzt die Ausführung des Programms fort.
+\item
+  \textbf{LLDB beenden}:
+
+\begin{lstlisting}
+quit
+\end{lstlisting}
+\end{enumerate}
+
+\hypertarget{zusuxe4tzliche-hilfreiche-befehle}{%
+\subsubsection{Zusätzliche hilfreiche
+Befehle}\label{zusaetzliche-hilfreiche-befehle}}
+
+\begin{itemize}
+\item
+  \textbf{Liste der Breakpoints anzeigen}:
+
+\begin{lstlisting}
+breakpoint list
+\end{lstlisting}
+
+  Zeigt alle gesetzten Breakpoints an.
+\item
+  \textbf{Informationen über den aktuellen Thread}:
+
+\begin{lstlisting}
+thread list
+\end{lstlisting}
+
+  Listet alle Threads auf und zeigt den aktuellen Thread an.
+\item
+  \textbf{Code um den aktuellen Punkt anzeigen}:
+
+\begin{lstlisting}
+list
+\end{lstlisting}
+
+  Zeigt den Quellcode um die aktuelle Zeile herum an.
+\item
+  \textbf{Zurückverfolgung des Aufrufstacks}:
+
+\begin{lstlisting}
+bt
+\end{lstlisting}
+
+  Zeigt den Stack-Trace des aktuellen Threads an.
+\end{itemize}
+
+\hypertarget{optimierung}{%
+\subsection{Optimierung}\label{optimierung}}
+
+ChatGPT \url{https://chat.openai.com/?model=gpt-4}
+
+\begin{itemize}
+
+\item
+  Prüfe und optimiere
+\end{itemize}
+
+\hypertarget{dokumentation}{%
+\subsection{Dokumentation}\label{dokumentation}}
+
+\textbf{ChatGPT} \url{https://chat.openai.com/?model=gpt-4}
+
+\begin{itemize}
+\item
+  Verwende den \textbf{Schreibstil}: Expositorisch ohne Form du/sie.
+  \textbf{Datum} im internationalen Format: >>Jahr-Monat-Tag<<
+\item
+  Erstelle eine \textbf{Beschreibung zum Quellcode}
+\item
+  Erstelle eine \textbf{README.md}
+\item
+  Erstelle eine \textbf{Entwickler-Info im Code}, um wichtige
+  Informationen und Anweisungen für die Nutzung des Scripts
+  bereitzustellen.
+\item
+  Erstelle eine \textbf{strukturierte Dokumentation} für das Projekt.
+\item
+  \textbf{Zusammenfassung}
+
+\begin{lstlisting}
+Thema: C - Programmierung
+Verwende GitHub-Flavored Markdown
+Schreibstil: Expositorisch ohne Form du/sie
+Erstelle je nach Schreibstil eine ansprechende Zusammenfassung zum Lerninhalt in Aufzählungsform und gleichzeitig gebe   die wichtigsten Informationen (Didaktische Reduktion) genau wieder. Bereite die Antwort gehirngerecht auf.
+
+Lerninhalt: " "
+\end{lstlisting}
+\item
+  \textbf{Keywords:} Erstelle mir eine Liste mit Keywords und
+  Beispielen.
+\item
+  \textbf{Fragen:} Erstelle 5x Fragen zum Lerninhalt (beachte den Focus:
+  tieferes Verständnis und kritisches Denken zu fördern) mit Lösung.
+\item
+  \textbf{Projekt:} Erstelle ein Projekt zum Anwenden des gelernten mit
+  Lösung.
+\end{itemize}
+
+\hypertarget{notizen-in-latex-und-html}{%
+\subsubsection{Notizen in Latex und
+HTML}\label{notizen-in-latex-und-html}}
+
+\begin{lstlisting}[language=bash]
+# Workflow.md
+# Konvertierung .png und .HEIC => .pdf und .webp
+python ImageResizer.py
+
+# Konvertierung .md => Latex und HTML
+python scriptauswahl.py
+
+# Latex manuell kompilieren
+xelatex neu
+xelatex neu
+\end{lstlisting}
+
+\hypertarget{mit-lizenz}{%
+\subsubsection{MIT-Lizenz}\label{mit-lizenz}}
+
+MIT License
+
+Copyright (c) 2023 Jan Unger
+
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the
+>>Software<<), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be included
+in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED >>AS IS<<, WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+\hypertarget{git-versionierung}{%
+\subsection{Git-Versionierung}\label{git-versionierung}}
+
+\textbf{Git Aliases}
+
+\begin{lstlisting}[language=bash]
+st = status
+cl = clone
+c = commit -m
+cam = commit -am
+ca = commit --amend
+co = checkout
+br = branch -a
+brm = branch --merged
+r = reset
+lg = log --oneline --graph --decorate
+lo = log --oneline --decorate
+ls = log --pretty=format:"%C(green)%h\\ %C(yellow)[%ad]%Cred%d\\ %Creset%s%Cblue\\ [%an]" --decorate --date=relative
+ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [a:%an,c:%cn]" --decorate --numstat
+d = diff --word-diff
+dc = diff --cached
+\end{lstlisting}
+
+\hypertarget{schritt-1-initialisierung-des-git-repositories}{%
+\subsubsection{Schritt 1: Initialisierung des
+Git-Repositories}\label{schritt-1-initialisierung-des-git-repositories}}
+
+\begin{lstlisting}[language=bash]
+# Git Konfigurationsdatei
+vim .git/config
+vim ~/.gitconfig
+
+git config --local --list
+git config --global --list
+git config user.name
+
+# Projektverzeichnis betreten
+cd /Users/jan/daten/start/Programmierung/JanSchaffranek/C-Programmierung/c-projekte
+
+# .gitignore erstellen und konfigurieren
+# GitHub Vorlagen: https://github.com/github/gitignore/blob/main/C.gitignore
+touch .gitignore
+
+# Git-Repository initialisieren
+# rm -rf .git
+git init
+\end{lstlisting}
+
+\hypertarget{schritt-2-erste-dateien-hinzufuxfcgen-und-commiten}{%
+\subsubsection{Schritt 2: Erste Dateien hinzufügen und
+commiten}\label{schritt-2-erste-dateien-hinzufuegen-und-commiten}}
+
+\begin{lstlisting}[language=bash]
+# Dateien zum Staging-Bereich hinzufügen
+git add .
+# Dateien commiten
+git commit -m "Initial commit"
+\end{lstlisting}
+
+\hypertarget{schritt-3-branches-verwalten}{%
+\subsubsection{Schritt 3: Branches
+verwalten}\label{schritt-3-branches-verwalten}}
+
+\begin{lstlisting}[language=bash]
+# Neuen Branch für die Entwicklung erstellen
+git branch dev
+git checkout dev
+# oder: git checkout -b dev
+\end{lstlisting}
+
+\hypertarget{schritt-4-uxe4nderungen-verwalten}{%
+\subsubsection{Schritt 4: Änderungen
+verwalten}\label{schritt-4-aenderungen-verwalten}}
+
+\begin{lstlisting}[language=bash]
+# Status der Änderungen überprüfen
+git status
+
+# Geänderte Dateien zum Staging-Bereich hinzufügen und commiten
+git add <Dateiname>
+git commit -m "Beschreibung der Änderungen"
+\end{lstlisting}
+
+\hypertarget{schritt-5-uxe4nderungen-zusammenfuxfchren}{%
+\subsubsection{Schritt 5: Änderungen
+zusammenführen}\label{schritt-5-aenderungen-zusammenfuehren}}
+
+\begin{lstlisting}[language=bash]
+# Zum Hauptbranch wechseln und Änderungen zusammenführen
+git checkout main
+git merge dev
+\end{lstlisting}
+
+\hypertarget{schritt-6-remote-repository-hinzufuxfcgen-auf-dem-mac}{%
+\subsubsection{Schritt 6: Remote-Repository hinzufügen (auf dem
+Mac)}\label{schritt-6-remote-repository-hinzufuegen-auf-dem-mac}}
+
+\begin{lstlisting}[language=bash]
+# Bare Git-Repository lokal auf dem Mac erstellen
+# Git-Repository Verzeichnis
+cd /Users/jan/daten/start
+git init --bare c-projekt.git
+
+# Remote-Repository verwenden
+# Projekt Verzeichnis
+cd /Users/jan/daten/start/Programmierung/JanSchaffranek/C-Programmierung/c-projekte
+git remote add origin /Users/jan/daten/start/c-projekt.git
+git remote add origin /Users/jan/daten/start/notizen_latex_html_python_v1
+
+# Lokalen Branch umbenennen
+#git branch -m master main
+
+# Neuen Branch 'main' auf Remote-Repository pushen und als Upstream setzen
+git remote -v
+#git remote set-url origin <korrekte-URL>
+git pull origin main
+git push -u origin main
+\end{lstlisting}
+
+\hypertarget{schritt-7-branches-synchron-halten}{%
+\subsubsection{Schritt 7: Branches synchron
+halten}\label{schritt-7-branches-synchron-halten}}
+
+\hypertarget{synchronisation-vom-hauptbranch-zum-entwicklungszweig}{%
+\paragraph{Synchronisation vom Hauptbranch zum
+Entwicklungszweig}\label{synchronisation-vom-hauptbranch-zum-entwicklungszweig}}
+
+\begin{lstlisting}[language=bash]
+# Anzeigen des aktuellen Branch-Status
+git lg
+# Wechseln zum Hauptbranch und Aktualisieren
+git checkout main
+git lg
+################################################
+# CODE bearbeiten
+################################################
+git st
+git add .
+git commit -m "Beschreibung"
+
+git pull
+git push
+
+# wechseln zum Entwicklungszweig und Zusammenführen der Änderungen aus main
+git checkout dev
+git merge main
+
+# Änderungen im Hauptbranch zum Remote-Repository pushen
+# git push -u origin dev
+# Tracking-Informationen für den Branch setzen
+# git branch --set-upstream-to=origin/dev dev
+git st
+git pull
+git push
+
+git lg
+    * 0dfad45 (HEAD -> dev, origin/main, origin/dev, main) Git Workflow überarbeitet
+    * 4b6a496 main
+    * 4a153f9 Doku
+    * 677d4fd gitignore
+    * edbdc2b Workflow beschreiben
+    * e64d046 Initial commit
+\end{lstlisting}
+
+\hypertarget{synchronisation-vom-entwicklungszweig-zum-hauptbranch}{%
+\paragraph{Synchronisation vom Entwicklungszweig zum
+Hauptbranch}\label{synchronisation-vom-entwicklungszweig-zum-hauptbranch}}
+
+\begin{lstlisting}[language=bash]
+# Wechseln zum Entwicklungszweig
+git checkout dev
+git lg
+################################################
+# CODE bearbeiten
+################################################
+git st
+git add .
+git commit -m "Beschreibung"
+
+# Nur beim ersten Mal:
+# Erstellen und Pushen des Remote-Branches
+# git push -u origin dev
+# Tracking-Informationen für den Branch setzen
+# git branch --set-upstream-to=origin/dev dev
+git pull
+git push
+
+# Wechseln zum Hauptbranch und Zusammenführen der Änderungen aus dev
+git checkout main
+git merge dev
+
+# Änderungen im Hauptbranch zum Remote-Repository pushen
+git st
+git pull
+git push
+
+git lg
+    * 4a153f9 (HEAD -> main, origin/main, origin/dev, dev) Doku
+    * 677d4fd gitignore
+    * edbdc2b Workflow beschreiben
+    * e64d046 Initial commit
+\end{lstlisting}
+
+\hypertarget{git-clone}{%
+\subsubsection{git clone}\label{git-clone}}
+
+\begin{lstlisting}[language=bash]
+# git clone
+git clone https://github.com/ju1-eu/hello-world.git
+git clone /Users/jan/daten/start/c-projekt.git
+git clone /Users/jan/daten/start/notizen_latex_html_python_v1
+\end{lstlisting}
+
+\hypertarget{github}{%
+\subsubsection{GitHub}\label{github}}
+
+\begin{lstlisting}[language=bash]
+git clone https://github.com/ju1-eu/hello-world.git
+cd hello-world
+\end{lstlisting}
+
+\begin{lstlisting}[language=bash]
+# Entwickeln auf Feature-Branches
+# Dokumentationsupdates auf docs/update-readme
+# Erstellen eines Branches für Dokumentationsupdates:
+git branch -a
+git log --oneline --graph --all
+git checkout dev
+git checkout -b docs/update-readme
+
+# Durchführen von Änderungen an der Dokumentation:
+vim README.md
+vim .gitignore
+git add .
+git commit -m "Update README und .gitignore mit neuen Informationen"
+git status
+
+# Pushen des Dokumentationsbranches:
+git push --set-upstream origin docs/update-readme
+
+# Erstellen eines Pull Requests von `dev` nach `main`
+# Mergen des Dokumentationsbranches in `dev`:
+git checkout dev
+git pull origin main
+git merge docs/update-readme
+git push origin dev
+
+# Erstellen des Pull Requests von `dev` nach `main`:
+gh pr create --base main --head dev --title "Aktualisierung der Dokumentation" --body "Fügt detaillierte Informationen zur README hinzu."
+
+# Merge des Pull Requests:
+# Liste aller offenen Pull Requests anzeigen [PR-Nummer]
+gh pr list
+gh pr view 2
+#gh pr view 2 --web
+# Code-Review durchführen
+# Genehmigen eines Pull Requests
+gh pr review 2 --approve
+# PR ablehnen
+#gh pr review 2 --request-changes "Bitte Code überprüfen"
+gh pr merge 2
+gh pr view 2
+# Löschen des Feature-Branches:
+git branch -d docs/update-readme
+git push origin --delete docs/update-readme
+git branch -a
+git log --oneline --graph --all
+
+# Regelmäßige Updates und Synchronisation
+git checkout main
+git pull origin main
+git checkout dev
+git push origin dev
+git merge main
+git branch -a
+git log --oneline --graph --all
+\end{lstlisting}
+
+\hypertarget{github-repository-und-pull-requests}{%
+\subsubsection{GitHub-Repository und Pull
+Requests}\label{github-repository-und-pull-requests}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+
+\item
+  \textbf{Neues Repository auf GitHub erstellen:}
+
+  \begin{itemize}
+  
+  \item
+    Gehen Sie auf \href{https://github.com}{GitHub} und erstellen Sie
+    ein neues Repository. Für Ihre Anforderungen verwenden Sie
+    \verb|https://github.com/ju1-eu/c-projekt.git|
+    als Repository-URL.
+  \end{itemize}
+\item
+  \textbf{Repository lokal klonen:}
+
+  \begin{itemize}
+  
+  \item
+    Öffnen Sie das Terminal auf Ihrem Mac.
+  \item
+    Verwenden Sie den Befehl
+    \verb|git clone https://github.com/ju1-eu/c-projekt.git|,
+    um das Repository zu klonen.
+  \end{itemize}
+\item
+  \textbf{Änderungen vornehmen und hochladen:}
+
+  \begin{itemize}
+  
+  \item
+    Nehmen Sie Änderungen vor und führen Sie
+    \verb|git add .| aus, um die Änderungen zum
+    Staging-Bereich hinzuzufügen.
+  \item
+    Commiten Sie die Änderungen mit
+    \verb|git commit -m "Ihre Nachricht"|.
+  \item
+    Pushen Sie die Änderungen mit
+    \verb|git push origin main|.
+  \end{itemize}
+\item
+  \textbf{Branches erstellen und verwalten:}
+
+  \begin{itemize}
+  
+  \item
+    Erstellen Sie einen neuen Branch mit
+    \verb|git checkout -b <branch-name>| und pushen
+    Sie ihn mit \verb|git push origin <branch-name>|.
+  \end{itemize}
+\item
+  \textbf{Pull Requests erstellen und mergen:}
+
+  \begin{itemize}
+  
+  \item
+    Erstellen Sie auf GitHub einen Pull Request für Ihren Branch.
+  \item
+    Überprüfen Sie den Pull Request und mergen Sie ihn, wenn alles in
+    Ordnung ist.
+  \end{itemize}
+\end{enumerate}
+
+Diese Schritte ermöglichen Ihnen die effektive Erstellung, Verwaltung
+und Kollaboration in einem GitHub-Repository.
+
+\hypertarget{projektname}{%
+\section{Projektname}\label{projektname}}
+
+Eine kurze Beschreibung Ihres Projekts. Dies sollte das Hauptziel und
+den Zweck Ihres Projekts klar umreißen.
+
+\hypertarget{einleitung}{%
+\subsection{Einleitung}\label{einleitung}}
+
+Geben Sie eine detailliertere Beschreibung Ihres Projekts. Erklären Sie,
+was dieses Projekt macht und warum es nützlich ist.
+
+\hypertarget{git}{%
+\subsection{Git}\label{git}}
+
+\begin{lstlisting}[language=bash]
+git clone https://github.com/ju1-eu/hello-world.git
+cd hello-world
+\end{lstlisting}
+
+\hypertarget{verwendung}{%
+\subsection{Verwendung}\label{verwendung}}
+
+\hypertarget{mitwirken}{%
+\subsection{Mitwirken}\label{mitwirken}}
+
+Pull Requests sind willkommen. Für größere Änderungen öffnen Sie bitte
+zuerst ein Issue, um zu besprechen, was Sie ändern möchten.
+
+\hypertarget{lizenz}{%
+\subsection{Lizenz}\label{lizenz}}
+
+\href{https://choosealicense.com/licenses/mit/}{MIT}
+
+\hypertarget{kontakt}{%
+\subsection{Kontakt}\label{kontakt}}
+
+Jan Unger -- \href{https://bw-ju.de/}{Website} -- esel573@gmail.com
+
+Projektlink: \url{https://github.com/ju1-eu/hello-world} % Platzhalter
+
+%% Optional Anhang
+%\clearpage
+%\appendix
+
+\clearpage
+\printbibliography
+\end{document}

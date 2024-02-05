@@ -1,0 +1,258 @@
+:root {
+    /* Farben */
+    --primary-bg-color: #25383C;
+    --secondary-bg-color: #f4f4f4;
+    --primary-text-color: #333;
+    --secondary-text-color: #808080;
+    --accent-color: #B82327;
+    --link-color: #25383C;
+    --link-hover-color: #B82327;
+
+    /* Abstände und Größen */
+    --base-padding: 1em;
+    --double-padding: 2em;
+    --half-padding: 0.5em;
+    --container-shadow: 0 0 0.625em rgba(0, 0, 0, 0.1);
+    --container-max-width-small: 45em;
+    --container-max-width-large: 75em;
+    --base-font-size: 1em;
+    --small-font-size: 0.9em;
+    --large-font-size: 1.2em;
+
+    /* Schriftarten */
+    --primary-font: 'Source Sans Pro', sans-serif;
+
+    /* Bildgrößen */
+    --responsive-img-max-width: 12em;
+    --image-hover-opacity: 0.8;
+    --image-hover-brightness: 80%;
+    --code-font-size: 1em;
+
+    /* Karten */
+    --card-fixed-height: 12em; /* Setzt die Höhe der Inhaltskarten */
+    --card-bg-color: #ffffff;
+    --card-border-color: #e0e0e0;
+    --card-border-radius: 0.3em;
+    --card-padding: 1em;
+    --card-header-font-size: 1.2em;
+    --card-body-font-size: 1em;
+    --card-hover-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    --card-padding-mobile: 1.5em;
+    --card-bg-hover-color: var(--secondary-bg-color);
+}
+
+/* Verwende eine einzelne Regel für alle Elemente, die Flexbox verwenden */
+.flex {
+    display: flex;
+    align-items: center;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: start; /* Für die Vertikalzentrierung oben */
+    font-family: var(--primary-font);
+    line-height: 1.6;
+    margin: 0;
+    background-color: var(--secondary-bg-color);
+    color: var(--primary-text-color);
+    font-size: var(--base-font-size);
+    min-height: 100vh;
+}
+
+.container {
+    width: 100%;
+    max-width: var(--container-max-width-large);
+    padding: var(--base-padding);
+    background-color: #fff;
+    box-shadow: var(--container-shadow);
+    margin: var(--base-padding) 0;
+}
+
+header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;  /* um die Elemente in der Mitte auszurichten */
+    padding: var(--half-padding) var(--double-padding);
+    background-color: var(--primary-bg-color);
+    color: var(--secondary-text-color);
+}
+
+#header-logo {
+    height: 3em;
+    margin-left: 1em;
+}
+
+pre {
+    background-color: #f0f0f0;
+    border: 0.06em solid #ccc;
+    padding: 1em;
+    overflow-x: auto;
+}
+
+code {
+    font-family: 'Courier New', monospace;
+    line-height: 1.6;
+    font-size: var(--code-font-size);
+}
+
+/* Bilder und Tabellen */
+img {
+    max-width: 50%; /* Erlaubt, dass das Bild bis zu seiner maximalen Breite skaliert */
+    height: auto; /* Behält das Seitenverhältnis der Bilder bei */
+    display: block; /* Stellt sicher, dass das Bild als Block angezeigt wird */
+    margin: 0 auto; /* Zentriert das Bild horizontal innerhalb des Containers */
+}
+
+table {
+    border-collapse: collapse; /* Entfernt Zwischenräume zwischen den Zellen */
+    width: 50%; /* Erlaubt, dass die Tabelle bis zu ihrer maximalen Breite skaliert */
+    margin: 20px auto; /* Zentriert die Tabelle horizontal und fügt oben und unten einen Rand hinzu */
+}
+
+th, td {
+    border: 1px solid #ddd; /* Fügt einen Rand zu Zellen hinzu */
+    padding: 10px; /* Fügt Innenabstand zu Zellen hinzu */
+    text-align: left; /* Textausrichtung innerhalb der Zellen */
+}
+
+th {
+    background-color: #f2f2f2; /* Hintergrundfarbe für Kopfzeilen der Tabelle */
+}
+
+a, .nav-link {
+    text-decoration: none;
+    transition: color 0.3s ease, outline 0.3s ease, background-color 0.3s ease;
+    padding: 0.2em 0.4em;
+    color: var(--link-color);
+}
+
+a:hover, .nav-link:hover {
+    color: var(--link-hover-color);
+    background-color: var(--secondary-bg-color);
+}
+
+a:focus, .nav-link:focus {
+    outline: 3px solid var(--accent-color);
+    outline-offset: 3px;
+}
+
+.image-container {
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+    flex-wrap: wrap;
+}
+
+figure {
+    text-align: center;
+    margin: 0;
+}
+footer {
+    display: flex;
+    justify-content: center;
+    height: 1.5em;
+    padding: var(--base-padding) var(--double-padding);
+    background-color: var(--primary-bg-color);
+    color: var(--secondary-text-color);
+    align-items: center; /* Fügt vertikale Zentrierung hinzu */
+}
+
+footer nav[role="navigation"] {
+    --link-color: #808080;
+}
+
+img:hover {
+    opacity: var(--image-hover-opacity);
+    filter: brightness(var(--image-hover-brightness));
+}
+
+img.responsive, .card-header img {
+    max-width: 100%;
+    display: block;
+    margin: 0 auto;
+}
+
+.video-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%;
+    overflow: hidden;
+}
+
+.video-container video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+
+h1 {
+    font-size: 2.5em; /* Große Überschrift für h1 */
+    font-weight: bold;
+}
+
+h2 {
+    font-size: 2em; /* Etwas kleiner als h1 */
+    font-weight: bold;
+}
+
+h3 {
+    font-size: 1.75em; /* Etwas kleiner als h2 */
+    font-weight: bold;
+}
+
+h4, h5, h6 {
+    font-size: 1.5em; /* Kleinste der "großen" Überschriften */
+    font-weight: bold;
+}
+
+@media (max-width: 768px) {
+    /* Anpassungen für kleine Bildschirme */
+    .container {
+        max-width: var(--container-max-width-small);
+        padding: var(--half-padding);
+    }
+
+    body {
+        font-size: var(--small-font-size);
+    }
+
+    header, footer {
+        padding: var(--half-padding);
+    }
+    h1 {
+        font-size: 2em; /* Kleiner für mobile Ansicht */
+    }
+
+    h2 {
+        font-size: 1.75em;
+    }
+
+    h3 {
+        font-size: 1.5em;
+    }
+
+    h4, h5, h6 {
+        font-size: 1.25em;
+    }
+}
+
+
+@media (min-width: 769px) {
+    /* Weitere Anpassungen für große Bildschirme ... */
+    .container {
+        max-width: var(--container-max-width-large);
+        padding: var(--base-padding);
+    }
+
+    body {
+        font-size: var(--base-font-size);
+    }
+
+    header, footer {
+        padding: var(--base-padding);
+    }
+}

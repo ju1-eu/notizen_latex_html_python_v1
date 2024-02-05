@@ -1,0 +1,494 @@
+% ju 05-Feb-24 Python-Anaconda-Notebook.tex
+\documentclass{vorlage-design-main}
+\usepackage[utf8]{inputenc}
+\usepackage{longtable}
+\usepackage{blindtext,alltt}
+%% Ganze Überschrift
+\title{Thema}
+
+%% Kürzerer Titel zur Verwendung im Seitenkopf
+\runningtitle{Kurztitel}
+\author{Jan Unger}
+% \author{2.}
+\date{\today}
+
+%% Die .bib-Datei mit vollständigen Referenzen zur Verwendung mit biblatex. articleclass lädt das Paket biblatex-chicago mit Anpassungen
+\addbibresource{literatur.bib}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+
+\end{abstract}
+
+\hypertarget{python-und-anaconda-und-jupyter-notebook}{%
+\section{Python und Anaconda und Jupyter
+Notebook}\label{python-und-anaconda-und-jupyter-notebook}}
+
+\hypertarget{jupyter-notebook}{%
+\subsection{Jupyter Notebook}\label{jupyter-notebook}}
+
+Jupyter Notebook ist eine interaktive Umgebung, die das Ausführen von
+Python-Code in einer browserbasierten Anwendung ermöglicht.
+
+\hypertarget{jupyter-notebook-starten}{%
+\subsubsection{Jupyter Notebook
+Starten}\label{jupyter-notebook-starten}}
+
+\begin{lstlisting}[language=bash]
+# Terminal
+conda update --all
+# Umgebungen auflisten
+conda env list
+conda activate base
+conda deactivate
+# Navigieren zum Projekt-Verzeichnis
+jupyter notebook
+\end{lstlisting}
+
+\hypertarget{grundlegende-bedienung}{%
+\subsubsection{Grundlegende Bedienung}\label{grundlegende-bedienung}}
+
+\begin{itemize}
+
+\item
+  \textbf{Zellen}: Jupyter Notebooks bestehen aus Zellen, die entweder
+  Code oder Markdown enthalten können.
+\item
+  \textbf{Ausführung von Zellen}:
+
+  \begin{itemize}
+  
+  \item
+    \verb|Shift + Enter|
+  \end{itemize}
+\item
+  \textbf{Hinzufügen neuer Zellen}:
+
+  \begin{itemize}
+  
+  \item
+    \verb|Insert| \textgreater{}
+    \verb|Insert Cell Above| oder
+    \verb|Insert Cell Below|
+  \end{itemize}
+\end{itemize}
+
+\hypertarget{python-code-in-einer-zelle}{%
+\subsubsection{Python-Code in einer
+Zelle}\label{python-code-in-einer-zelle}}
+
+\begin{lstlisting}[language=Python]
+# Code
+print("Hallo Jupyter!")
+# Einfache Rechenoperation
+2 + 2
+\end{lstlisting}
+
+\hypertarget{markdown-fuxfcr-text-und-dokumentation}{%
+\subsubsection{Markdown für Text und
+Dokumentation}\label{markdown-fuer-text-und-dokumentation}}
+
+\begin{lstlisting}
+# Markdown
+# Überschrift 1
+### Überschrift 2
+- oder * für Listen
+[Linktext](URL)`
+![Alt-Text](Bild-URL)
+$2 + 2$
+\end{lstlisting}
+
+\hypertarget{magische-befehle}{%
+\subsubsection{Magische Befehle}\label{magische-befehle}}
+
+\textbf{Magische Befehle}
+
+\begin{itemize}
+
+\item
+  \verb|\%time|: Zeigt die Ausführungszeit einer
+  Zeile.
+\item
+  \verb|\%matplotlib inline|: Erlaubt das Anzeigen
+  von Matplotlib-Diagrammen direkt im Notebook.
+\end{itemize}
+
+\hypertarget{interaktive-widgets}{%
+\subsubsection{Interaktive Widgets}\label{interaktive-widgets}}
+
+dynamische, interaktive Benutzeroberflächen erstellen.
+
+\begin{lstlisting}[language=Python]
+from ipywidgets import interact
+def f(x):
+    return x
+interact(f, x=10)
+\end{lstlisting}
+
+\hypertarget{tastenkombinationen}{%
+\subsubsection{Tastenkombinationen}\label{tastenkombinationen}}
+
+\begin{itemize}
+
+\item
+  \verb|Shift + Enter|: Führe die aktuelle Zelle aus
+  und gehe zur nächsten.
+\item
+  \verb|Esc|: Wechsle in den Kommandomodus.
+\item
+  \verb|M|: Ändere die Zelle in Markdown.
+\item
+  \verb|Y|: Ändere die Zelle in Code.
+\end{itemize}
+
+\hypertarget{anaconda}{%
+\subsection{Anaconda}\label{anaconda}}
+
+\textbf{Anaconda installieren}
+\url{https://www.anaconda.com/products/individual}
+
+\begin{lstlisting}[language=bash]
+# Anaconda Navigator starten
+anaconda-navigator
+# Überprüfen der Anaconda-Installation
+conda info
+# Eine neue Conda-Umgebung erstellen
+conda create --name <umgebungsname> python=<version>
+# Aktivieren einer Conda-Umgebung
+conda activate <umgebungsname>
+# Deaktivieren der aktuellen Conda-Umgebung
+conda deactivate
+# Liste der installierten Pakete in der aktuellen Umgebung anzeigen
+conda list
+# Ein spezifisches Paket in der aktuellen Umgebung installieren
+conda install <paketname>
+# Ein spezifisches Paket in einer spezifischen Umgebung installieren
+conda install --name <umgebungsname> <paketname>
+# Anaconda-Umgebungen auflisten
+conda env list
+# Eine spezifische Anaconda-Umgebung entfernen
+conda env remove --name <umgebungsname>
+# Aktualisieren von Anaconda
+conda update --all
+# Anaconda-Pakete aktualisieren
+conda update <paketname>
+\end{lstlisting}
+
+\hypertarget{workflow---jupyter-notebook}{%
+\subsubsection{Workflow - Jupyter
+Notebook}\label{workflow---jupyter-notebook}}
+
+\begin{lstlisting}[language=bash]
+# Anaconda und alle Pakete aktualisieren
+conda update --all
+# Umgebungen auflisten
+conda env list
+# Eine Umgebung entfernen
+conda env remove --name meinenv
+# Erstellen einer neuen Umgebung
+conda create --name meinenv python=3.11
+# Aktivieren der Umgebung
+conda activate meinenv
+# Installation von Paketen
+conda install numpy pandas matplotlib
+# Start von Jupyter Notebook
+jupyter notebook
+# Deaktivieren der Umgebung
+conda deactivate
+\end{lstlisting}
+
+\hypertarget{workflow---python-script-in-einer-anaconda-umgebung}{%
+\subsubsection{Workflow - Python-Script in einer
+Anaconda-Umgebung}\label{workflow---python-script-in-einer-anaconda-umgebung}}
+
+\begin{lstlisting}[language=bash]
+# Erstelle eine neue Anaconda-Umgebung (optional, aber empfohlen):
+conda create --name PythonGrundlagen_env python=3.11
+# Anaconda-Umgebung aktivieren:
+conda activate PythonGrundlagen_env
+# Suche nach einem spezifischen Paket
+conda list | grep PyQt5
+# Installiere die benötigte Software
+conda install pyqt
+# Skript ausführen
+python3 kfz_datenbank.py
+# Deaktivieren einer Anaconda-Umgebung
+conda deactivate
+\end{lstlisting}
+
+\textbf{Test grafische Benutzeroberfläche (GUI)}
+
+\begin{lstlisting}[language=Python]
+# name_script.py
+# Test GUI
+import sys
+from PyQt5.QtWidgets import QApplication, QWidget
+
+app = QApplication(sys.argv)
+window = QWidget()
+window.setWindowTitle('Testfenster')
+window.show()
+sys.exit(app.exec_())
+
+# Terminal $ python3 name_script.py
+\end{lstlisting}
+
+\hypertarget{pep-8-stilrichtlinien}{%
+\subsection{PEP 8-Stilrichtlinien}\label{pep-8-stilrichtlinien}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \textbf{Einrückung}: Verwenden Sie 4 Leerzeichen pro Einrückungsebene.
+\item
+  \textbf{Zeilenlänge}: Beschränken Sie alle Zeilen auf maximal 79 - 120
+  Zeichen. Längere Zeilen sollten für verbesserte Lesbarkeit umgebrochen
+  werden.
+\item
+  \textbf{Importe}:
+
+  \begin{itemize}
+  
+  \item
+    Importe sollten immer am Anfang einer Datei stehen.
+  \item
+    Reihenfolge:
+
+    \begin{itemize}
+    
+    \item
+      Standardbibliothek-Importe,
+    \item
+      Importe von Drittanbietern,
+    \item
+      lokale Anwendungs-/Bibliotheks-spezifische Importe.
+    \end{itemize}
+  \item
+    Vermeiden Sie Wildcard-Importe
+
+    \begin{itemize}
+    
+    \item
+      \verb|from module import *|
+    \end{itemize}
+  \end{itemize}
+\item
+  \textbf{Leerzeichen in Ausdrücken und Anweisungen}:
+
+  \begin{itemize}
+  
+  \item
+    Unmittelbar vor einem Komma, Semikolon oder Doppelpunkt.
+  \item
+    Unmittelbar vor der Klammer, die eine Liste von Argumenten oder
+    Index-Operatoren öffnet.
+  \item
+    Zwischen dem Funktionsnamen und der folgenden Klammer.
+  \item
+    Vor oder nach einem Zuweisungs- oder Vergleichsoperator.
+  \end{itemize}
+\item
+  \textbf{Kommentare}: Kommentare sollten klar, präzise und so aktuell
+  wie möglich gehalten werden. Kommentare sollten sich auf das Warum,
+  nicht das Was konzentrieren.
+\item
+  \textbf{Benennungskonventionen}:
+
+  \begin{itemize}
+  
+  \item
+    Klassenname: \verb|CamelCase|
+  \item
+    Funktions- und Variablennamen: \verb|snake\_case|
+  \item
+    Konstanten: \verb|UPPER\_CASE|
+  \end{itemize}
+\item
+  \textbf{Leerzeilen}:
+
+  \begin{itemize}
+  
+  \item
+    Verwenden Sie zwei Leerzeilen zwischen Funktionen und
+    Klassendefinitionen.
+  \item
+    Verwenden Sie eine Leerzeile zwischen Methodendefinitionen innerhalb
+    einer Klasse.
+  \end{itemize}
+\item
+  \textbf{Leerzeichen um Operatoren}:
+
+\begin{lstlisting}[language=Python]
+= != < > :
+# Nicht jedoch für Klammerungen und Indexierungen/Slices
+() [] {}
+list[index]
+\end{lstlisting}
+\item
+  \textbf{Dokumentationsstrings (Docstrings)}:
+\end{enumerate}
+
+\begin{itemize}
+
+\item
+  Verwenden Sie dreifache doppelte Anführungszeichen für Docstrings.
+\item
+  Der erste Satz des Docstrings sollte kurz und eine zusammenfassende
+  Beschreibung sein.
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{9}
+
+\item
+  \textbf{Dateistruktur und Organisation}:
+\end{enumerate}
+
+\begin{itemize}
+
+\item
+  Definieren Sie alle Imports am Anfang des Skripts.
+\item
+  Dann definieren Sie Konstanten.
+\item
+  Anschließend kommen Funktionen und Klassen.
+\item
+  Der ausführbare Teil des Skripts sollte ganz am Ende stehen
+
+  \begin{itemize}
+  
+  \item
+    \verb|if \_\_name\_\_ == "\_\_main\_\_":|
+  \end{itemize}
+\end{itemize}
+
+\hypertarget{pruxfcfen-mit-tools-wie-flake8-oder-pylint}{%
+\subsubsection{Prüfen mit Tools wie flake8 oder
+pylint}\label{pruefen-mit-tools-wie-flake8-oder-pylint}}
+
+\hypertarget{installation}{%
+\paragraph{Installation}\label{installation}}
+
+\begin{lstlisting}[language=bash]
+pip install flake8
+pip install pylint
+\end{lstlisting}
+
+\hypertarget{verwendung}{%
+\paragraph{Verwendung}\label{verwendung}}
+
+\begin{lstlisting}[language=bash]
+flake8 script.py
+pylint script.py
+\end{lstlisting}
+
+\hypertarget{python-und-anaconda-update}{%
+\subsection{Python und Anaconda
+Update}\label{python-und-anaconda-update}}
+
+\textbf{Anaconda-Installation}
+
+\begin{lstlisting}[language=bash]
+# Anaconda
+# Aktualisieren von Conda
+conda info
+conda list python
+conda update conda
+# Aktualisieren aller Pakete
+conda update --all
+# Installieren des Anaconda Metapakets (optional):
+conda install anaconda
+# aktualisieren
+conda update anaconda
+conda update jupyter
+jupyter --version
+conda update pandas matplotlib
+conda info --envs
+conda deactivate
+conda create -n py312 python=3.12.1
+conda activate base
+conda update anaconda
+conda activate py312
+conda list python
+# Python-Pakete installieren
+conda install pillow
+\end{lstlisting}
+
+\textbf{Python-Installation}
+
+\begin{lstlisting}[language=Python]
+# Xcode Command Line Tools-Paket
+xcode-select -p
+#xcode-select --install
+export CC=/usr/bin/clang
+export CXX=/usr/bin/clang++
+
+# Python-Version-Manager
+# Python-Pfad
+which python
+which python3
+# Überprüfe die Python-Version
+python --version
+python3 --version
+pip3 --version
+brew update
+brew upgrade python
+brew install pyenv
+pyenv versions
+#  pyenv initialisieren und Pfad zur Umgebungsvariablen hinzugefügen
+# Homebrew-Link zu Python zu erneuern
+#unalias python
+#brew link --overwrite python
+vim ~/.zshrc
+    if command -v pyenv 1>/dev/null 2>&1; then
+        eval "$(pyenv init -)"
+    fi
+    export PATH="/usr/local/bin:$PATH"
+    export PATH="/Users/jan/.pyenv/versions/3.12.1/bin:$PATH"
+    alias python=python3
+source ~/.zshrc
+# aktuelles Python 3.12.1 mit pyenv installieren
+pyenv install 3.12.1
+pyenv global 3.12.1
+python --version
+# Python-Pakete installieren
+pip install Pillow
+\end{lstlisting}
+
+\hypertarget{homebrew-kurz-brew-dem-paketmanager-fuxfcr-macos}{%
+\subsection{Homebrew (kurz >>brew<<), dem Paketmanager für
+macOS}\label{homebrew-kurz-brew-dem-paketmanager-fuer-macos}}
+
+\begin{lstlisting}[language=bash]
+# Homebrew installieren
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+# Homebrew aktualisieren
+brew update
+brew install <paketname>
+# Installierte Pakete auflisten
+brew list
+# Informationen über ein Paket anzeigen
+brew info <paketname>
+# Paket aktualisieren
+brew upgrade <paketname>
+brew uninstall <paketname>
+# Überprüfen, ob Ihr System irgendwelche Probleme hat
+brew doctor
+# Suche nach Paketen
+brew search <suchbegriff>
+# Abhängigkeiten anzeigen
+brew deps <paketname>
+\end{lstlisting}
+ % Platzhalter
+
+%% Optional Anhang
+%\clearpage
+%\appendix
+
+\clearpage
+\printbibliography
+\end{document}

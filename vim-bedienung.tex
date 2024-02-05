@@ -1,0 +1,296 @@
+% ju 05-Feb-24 vim-bedienung.tex
+\documentclass{vorlage-design-main}
+\usepackage[utf8]{inputenc}
+\usepackage{longtable}
+\usepackage{blindtext,alltt}
+%% Ganze Überschrift
+\title{Thema}
+
+%% Kürzerer Titel zur Verwendung im Seitenkopf
+\runningtitle{Kurztitel}
+\author{Jan Unger}
+% \author{2.}
+\date{\today}
+
+%% Die .bib-Datei mit vollständigen Referenzen zur Verwendung mit biblatex. articleclass lädt das Paket biblatex-chicago mit Anpassungen
+\addbibresource{literatur.bib}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+
+\end{abstract}
+
+\hypertarget{vim-editor---bedienung}{%
+\section{Vim-Editor - Bedienung}\label{vim-editor---bedienung}}
+
+\hypertarget{grundlegende-befehle}{%
+\subsection{Grundlegende Befehle:}\label{grundlegende-befehle}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \textbf{Starten und Beenden}:
+
+\begin{lstlisting}[language=bash]
+vi dateiname oder vim dateiname
+# Beenden ohne Änderungen zu speichern - Drücke  Esc
+:q!
+# Speichern von Änderungen - Drücke Esc
+:wq
+\end{lstlisting}
+\item
+  \textbf{Modi}:
+
+  \begin{itemize}
+  
+  \item
+    \textbf{Normalmodus}: Der Standardmodus. Hier können Sie
+    Navigations- und Bearbeitungsbefehle ausführen.
+  \item
+    \textbf{Einfügemodus}: Fügen Sie Text in die Datei ein.
+
+    \begin{itemize}
+    
+    \item
+      \verb|i| (um vor dem Cursor einzufügen)
+    \item
+      \verb|a| (um nach dem Cursor einzufügen)
+    \item
+      \verb|Esc|, um zum Normalmodus zurückzukehren.
+    \end{itemize}
+  \item
+    \textbf{Befehlszeilenmodus}: Geben Sie Befehle wie Speichern oder
+    Beenden ein.
+
+    \begin{itemize}
+    
+    \item
+      \verb|:| im Normalmodus, um in diesen Modus zu
+      wechseln.
+    \end{itemize}
+  \end{itemize}
+\item
+  \textbf{Bewegung im Normalmodus}:
+
+  \begin{itemize}
+  
+  \item
+    Bewegen Sie den Cursor mit
+
+    \begin{itemize}
+    
+    \item
+      \verb|h| (links), \verb|j|
+      (unten), \verb|k| (oben) und
+      \verb|l| (rechts).
+    \end{itemize}
+  \item
+    Springen Sie zum Anfang der Datei mit
+
+    \begin{itemize}
+    
+    \item
+      \verb|gg| und zum Ende mit
+      \verb|G|
+    \end{itemize}
+  \item
+    Springen Sie zum Anfang oder Ende einer Zeile mit
+
+    \begin{itemize}
+    
+    \item
+      \verb|0| bzw. \verb|$|
+    \end{itemize}
+  \end{itemize}
+\item
+  \textbf{Bearbeiten im Normalmodus}:
+
+  \begin{itemize}
+  
+  \item
+    Löschen Sie einen Zeichen mit
+
+    \begin{itemize}
+    
+    \item
+      \verb|x|
+    \end{itemize}
+  \item
+    Löschen Sie eine Zeile mit
+
+    \begin{itemize}
+    
+    \item
+      \verb|dd|
+    \end{itemize}
+  \item
+    Kopieren (yank) Sie eine Zeile mit
+
+    \begin{itemize}
+    
+    \item
+      \verb|yy|
+    \end{itemize}
+  \item
+    Fügen Sie eine kopierte oder gelöschte Zeile ein
+
+    \begin{itemize}
+    
+    \item
+      \verb|p|
+    \end{itemize}
+  \end{itemize}
+\item
+  \textbf{Suchen und Ersetzen}:
+
+  \begin{itemize}
+  
+  \item
+    Suchen Sie nach einem Wort, indem Sie
+
+    \begin{itemize}
+    
+    \item
+      \verb|/wort| eingeben und
+      \verb|Enter| drücken.
+    \end{itemize}
+  \item
+    Ersetzen Sie ein Wort global in der Datei mit
+
+    \begin{itemize}
+    
+    \item
+      \verb|:\%s/alt/neu/g|
+    \end{itemize}
+  \end{itemize}
+\end{enumerate}
+
+\hypertarget{suchen}{%
+\subsection{Suchen:}\label{suchen}}
+
+\begin{itemize}
+
+\item
+  \textbf{Vorwärts nach einem Wort suchen}:
+  \verb|/Wort|
+\item
+  \textbf{Rückwärts nach einem Wort suchen}:
+  \verb|?Wort|
+\item
+  \textbf{Zum nächsten Treffer}: \verb|n|
+\item
+  \textbf{Zum vorherigen Treffer}: \verb|N|
+\end{itemize}
+
+\hypertarget{suchen-ersetzen}{%
+\subsection{Suchen \& Ersetzen:}\label{suchen-ersetzen}}
+
+\begin{itemize}
+
+\item
+  \textbf{Alle Vorkommen in der Datei ersetzen}:
+
+  \begin{itemize}
+  
+  \item
+    \verb|:\%s/altesWort/neuesWort/g|
+  \end{itemize}
+\item
+  \textbf{Alle Vorkommen zwischen bestimmten Zeilen ersetzen}:
+
+  \begin{itemize}
+  
+  \item
+    \verb|:StartZeile,EndZeile s/altesWort/neuesWort/g|
+  \item
+    (z.B. \verb|:5,10s/altes/neues/g|)
+  \end{itemize}
+\item
+  \textbf{Ersetzen mit Bestätigung}:
+
+  \begin{itemize}
+  
+  \item
+    \verb|:\%s/altesWort/neuesWort/gc|
+  \end{itemize}
+\item
+  \textbf{Erstes Vorkommen in jeder Zeile ersetzen}:
+
+  \begin{itemize}
+  
+  \item
+    \verb|:\%s/altesWort/neuesWort/|
+  \end{itemize}
+\item
+  \textbf{Ersetzen in einem ausgewählten Bereich}:
+
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi}.}
+  
+  \item
+    Markieren Sie den Bereich im visuellen Modus
+
+    \begin{itemize}
+    
+    \item
+      (drücken Sie \verb|v| und bewegen Sie den
+      Cursor).
+    \end{itemize}
+  \item
+    Dann \verb|:s/altesWort/neuesWort/g|
+  \end{enumerate}
+\item
+  \textbf{Vom Anfang der Datei bis zur aktuellen Position}:
+
+  \begin{itemize}
+  
+  \item
+    \verb|:1,.s/altesWort/neuesWort/g|
+  \end{itemize}
+\item
+  \textbf{Von der aktuellen Position bis zum Ende}:
+
+  \begin{itemize}
+  
+  \item
+    \verb|:.,$s/altesWort/neuesWort/g|
+  \end{itemize}
+\end{itemize}
+
+\hypertarget{navigieren}{%
+\subsection{Navigieren:}\label{navigieren}}
+
+\begin{itemize}
+
+\item
+  \textbf{Zum Anfang der Datei}: \verb|gg|
+\item
+  \textbf{Zum Ende der Datei}: \verb|G|
+\end{itemize}
+
+\hypertarget{inhalt-kopieren}{%
+\subsection{Inhalt kopieren:}\label{inhalt-kopieren}}
+
+\begin{itemize}
+
+\item
+  \textbf{Kopiere den gesamten Inhalt ohne Zeilennummern in die
+  Zwischenablage}:
+
+  \begin{itemize}
+  
+  \item
+    \verb|:\%y+|
+  \end{itemize}
+\end{itemize} % Platzhalter
+
+%% Optional Anhang
+%\clearpage
+%\appendix
+
+\clearpage
+\printbibliography
+\end{document}
