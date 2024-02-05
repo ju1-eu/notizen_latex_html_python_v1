@@ -423,21 +423,28 @@ Mac)}\label{schritt-6-remote-repository-hinzufuegen-auf-dem-mac}}
 # Git-Repository Verzeichnis
 cd /Users/jan/daten/start
 git init --bare c-projekt.git
+git init --bare notizen_latex_html_python_v1
 
 # Remote-Repository verwenden
 # Projekt Verzeichnis
 cd /Users/jan/daten/start/Programmierung/JanSchaffranek/C-Programmierung/c-projekte
 git remote add origin /Users/jan/daten/start/c-projekt.git
+cd /Users/jan/daten/latex/notizen_latex_html_python_v1
 git remote add origin /Users/jan/daten/start/notizen_latex_html_python_v1
 
 # Lokalen Branch umbenennen
 #git branch -m master main
-
 # Neuen Branch 'main' auf Remote-Repository pushen und als Upstream setzen
 git remote -v
 #git remote set-url origin <korrekte-URL>
-git pull origin main
+#git pull origin main
+git st
+git lg
+git commit -a -m "git Remote-Repository hinzufügen"
 git push -u origin main
+git pull
+git push
+git clone /Users/jan/daten/start/notizen_latex_html_python_v1
 \end{lstlisting}
 
 \hypertarget{schritt-7-branches-synchron-halten}{%
@@ -538,8 +545,8 @@ git clone /Users/jan/daten/start/notizen_latex_html_python_v1
 \subsubsection{GitHub}\label{github}}
 
 \begin{lstlisting}[language=bash]
-git clone https://github.com/ju1-eu/hello-world.git
-cd hello-world
+git clone /Users/jan/daten/start/notizen_latex_html_python_v1
+cd notizen_latex_html_python_v1
 \end{lstlisting}
 
 \begin{lstlisting}[language=bash]
