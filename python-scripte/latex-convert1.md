@@ -1,12 +1,4 @@
 # Beschreibung
 
-Dieser Quellcode ermöglicht die Konvertierung von Markdown-Dateien in LaTeX-Format mittels des Programms Pandoc. Nutzer können wählen, ob alle Dateien oder nur spezifische Dateien konvertiert werden sollen. Außerdem werden Systemchecks und Fehlermeldungen integriert, um eine reibungslose Konvertierung sicherzustellen.
-python3 ./latex-convert1.py # alle Dateien konvertieren (A) oder nur eine bestimmte (B)
-python3 ./latexcode-entfernen2.py # alle Dateien
-python3 ./latexcode-entfernen2.py -h # Hilfe
-python3 ./latexcode-entfernen2.py --datei DATEI # nur eine Datei ohne .tex
-make # pdflatex - alle Dateien
-make compile_with_xelatex # xelatex - alle Dateien
-make single_pdflatex FILE=datei # pdflatex - nur eine Datei ohne .tex
-make single_xelatex FILE=datei # xelatex - nur eine Datei ohne .tex
+Prüft, ob Pandoc auf dem System installiert ist.
 

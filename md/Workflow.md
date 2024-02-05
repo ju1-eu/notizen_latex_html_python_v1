@@ -348,9 +348,13 @@ git remote add origin /Users/jan/daten/start/notizen_latex_html_python_v1
 git remote -v
 #git remote set-url origin <korrekte-URL>
 #git pull origin main
+git st
+git lg
+git commit -a -m "git Remote-Repository hinzufügen"
 git push -u origin main
 git pull
 git push
+git clone /Users/jan/daten/start/notizen_latex_html_python_v1
 ```
 
 ### Schritt 7: Branches synchron halten
@@ -444,8 +448,8 @@ git clone /Users/jan/daten/start/notizen_latex_html_python_v1
 ### GitHub
 
 ```bash
-git clone https://github.com/ju1-eu/hello-world.git
-cd hello-world
+git clone /Users/jan/daten/start/notizen_latex_html_python_v1
+cd notizen_latex_html_python_v1
 ```
 
 ```bash
