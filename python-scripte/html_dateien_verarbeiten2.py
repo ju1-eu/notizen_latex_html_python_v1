@@ -52,18 +52,17 @@ def entferne_inhalt_zwischen_tags(inhalt: str, tag: str) -> str:
     return inhalt
 
 
-def bearbeite_dateien(VERZEICHNIS: str, VORLAGE_PFAD: str, PLATZHALTER: str):
+def bearbeite_dateien(VERZEICHNIS: str, vorlage_pfad: str, PLATZHALTER: str):
     """Hauptfunktion, um Dateien zu bearbeiten."""
     # Sicherstellen, dass die vorlage.html eine Markierung für den Inhalt enthält
     try:
-        with open(VORLAGE_PFAD, 'r', encoding='utf-8') as vorlage:
+        with open(vorlage_pfad, 'r', encoding='utf-8') as vorlage:
             vorlage_inhalt = vorlage.read()
             if PLATZHALTER not in vorlage_inhalt:
-                print(f"Die Datei {
-                      VORLAGE_PFAD} enthält keinen Platzhalter. Beende das Skript.")
+                print(f"Die Datei {vorlage_pfad} enthält keinen Platzhalter. Beende das Skript.")
                 return
     except IOError:
-        print(f"Fehler beim Lesen der Datei: {VORLAGE_PFAD}")
+        print(f"Fehler beim Lesen der Datei: {vorlage_pfad}")
         return
 
     # Alle HTML-Dateien im angegebenen Verzeichnis durchlaufen
@@ -79,18 +78,16 @@ def bearbeite_dateien(VERZEICHNIS: str, VORLAGE_PFAD: str, PLATZHALTER: str):
                 inhalt = entferne_inhalt_zwischen_tags(inhalt, '<hr />')
                 neuer_inhalt = vorlage_inhalt.replace(PLATZHALTER, inhalt)
 
-                with open(datei_pfad, 'w', encoding='utf-8') as datei:
-                    datei.write(neuer_inhalt)
+                with open(datei_pfad, 'w', encoding='utf-8') as datei:datei.write(neuer_inhalt)
             except IOError:
-                print(f"Fehler beim Lesen oder Schreiben der Datei: {
-                      datei_pfad}")
+                print(f"Fehler beim Lesen oder Schreiben der Datei: {datei_pfad}")
 
     print("Verarbeitung abgeschlossen.")
 
 
 if __name__ == "__main__":
     VERZEICHNIS = "html"
-    VORLAGE_PFAD = os.path.join("content/vorlage-main.html")
+    vorlage_pfad = os.path.join("content/vorlage-main.html")
     PLATZHALTER = "<!-- PLATZHALTER -->"
 
-    bearbeite_dateien(VERZEICHNIS, VORLAGE_PFAD, PLATZHALTER)
+    bearbeite_dateien(VERZEICHNIS, vorlage_pfad, PLATZHALTER)

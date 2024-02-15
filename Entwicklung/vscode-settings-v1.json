@@ -1,0 +1,119 @@
+{
+  "workbench.colorTheme": "Default Dark Modern",
+  "python.defaultInterpreterPath": "/usr/local/bin/python3.12",
+  "settingsSync.ignoredExtensions": [],
+  "editor.wordWrap": "on",
+  "files.autoSave": "afterDelay",
+
+  "markdown.preview.fontSize": 14,
+  "markdown.preview.lineHeight": 1.6,
+  "markdown.preview.breaks": true,
+  "markdownlint.config": {
+    "MD013": false, // Zeilenlänge
+    "MD033": false // Erlaubt inline HTML
+  },
+
+  "[markdown]": {
+  
+    "editor.quickSuggestions": {
+      "other": true, // Schnellvorschläge für Wörter, die nicht in einem Kommentar, einer Zeichenfolge oder einem RegEx sind
+      "comments": false, // Schnellvorschläge innerhalb von Kommentaren aktivieren oder deaktivieren
+      "strings": true // Schnellvorschläge in Zeichenfolgen aktivieren oder deaktivieren
+    },
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "darkriszty.markdown-table-prettify"
+  },
+  "window.zoomLevel": 2,
+  "markdown-preview-enhanced.previewTheme": "github-light.css",
+  // Python-spezifische Einstellungen
+  "python.pythonPath": "/Users/jan/anaconda3/bin/python", // Python-Interpreter
+  "python.linting.enabled": true,
+  "python.linting.pylintEnabled": true,
+  "python.linting.pylintArgs": ["--max-line-length=100"],
+  "python.formatting.provider": "autopep8", // oder "black"
+  "python.formatting.blackArgs": ["--line-length", "100"],
+  "python.formatting.autopep8Args": ["--max-line-length", "100"],
+  "editor.formatOnSave": true, // Automatische Formatierung beim Speichern
+  // IntelliSense-Einstellungen
+  "python.autoComplete.addBrackets": true,
+  // Terminal-Einstellungen
+  "terminal.integrated.shell.osx": "/bin/zsh", // oder "/bin/bash", je nach bevorzugter Shell
+  // Visuelle Einstellungen
+  //"workbench.colorTheme": "YourFavoriteTheme", // Name Ihres bevorzugten Themes
+  "editor.fontFamily": "Fira Code", // oder eine andere Schriftart
+  "editor.fontLigatures": true,
+  // Weitere Einstellungen
+  "editor.rulers": [100], // Visualisierung der Zeilenlänge
+  "editor.tabSize": 4,
+  "python.analysis.completeFunctionParens": true,
+  "terminal.integrated.inheritEnv": false,
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.pylint"
+  },
+  "terminal.integrated.sendKeybindingsToShell": true,
+  "editor.codeActionsOnSave": {}, // Tabulatorgröße auf 4 Zeichen einstellen
+  // Git-spezifische Einstellungen
+  "git.enableSmartCommit": true,
+  "git.autofetch": true,
+  "git.confirmSync": false,
+  "git.defaultCloneDirectory": "~/meine-projekte",
+  "git.ignoreLegacyWarning": true,
+  "git.ignoreMissingGitWarning": false,
+  "git.ignoreRebaseWarning": false,
+  "git.inputValidation": "warn",
+
+  // Git Merge-Konflikte
+  "merge-conflict.autoNavigateNextConflict.enabled": true,
+
+  // Git Dekorations-Einstellungen
+  "git.decorations.enabled": true,
+  "git.decorations.colors": true,
+
+  // Git-Commits
+  "git.inputValidationLength": 72,
+  "git.inputValidationSubjectLength": 50,
+  "editor.indentSize": "tabSize",
+
+  "latex-workshop.latex.tools": [
+    {
+      "name": "pdflatex",
+      "command": "pdflatex",
+      "args": [
+        "-synctex=1",
+        "-interaction=nonstopmode",
+        "-file-line-error",
+        "%DOC%"
+      ]
+    }
+  ],
+  "latex-workshop.latex.recipes": [
+    {
+      "name": "pdflatex -> bibtex -> pdflatex*2",
+      "tools": ["pdflatex", "bibtex", "pdflatex", "pdflatex"]
+    }
+  ],
+  "latex-workshop.view.pdf.viewer": "tab",
+
+  "C_Cpp.default.includePath": ["${workspaceFolder}/**"],
+  "C_Cpp.default.defines": [],
+  "C_Cpp.intelliSenseEngine": "default",
+  "C_Cpp.errorSquiggles": "enabled",
+  "[c]": {
+    "editor.defaultFormatter": "xaver.clang-format"
+  },
+  "editor.insertSpaces": true,
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "C_Cpp.clang_format_fallbackStyle": "{ BasedOnStyle: LLVM, UseTab: Never, IndentWidth: 4, TabWidth: 4 }",
+  "git.openRepositoryInParentFolders": "never",
+  "workbench.editor.enablePreview": false,
+  "files.associations": {
+    "*.md": "markdown"
+  },
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
+}

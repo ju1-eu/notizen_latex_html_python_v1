@@ -1,0 +1,49 @@
+# Verwendung:
+# make
+# make DEBUG=1 // für den Debug-Modus
+# make DEBUG=0 // Release-Modus
+# make clean
+
+# Einstellung für Debug-Modus, standardmäßig auf 1 gesetzt
+DEBUG ?= 1
+
+# Compiler-Definition
+CC = gcc
+# Grundlegende Compiler Flags
+CFLAGS = -Wall -Wextra -std=c11
+# Linker Flags
+LDFLAGS = -lm
+
+# Findet alle .c-Dateien im Verzeichnis
+SOURCES = $(wildcard *.c)
+# Erstellt eine Liste der ausführbaren Dateien, eine für jede .c-Datei
+EXECUTABLES = $(SOURCES:.c=)
+
+# Bedingte Einstellungen basierend auf dem DEBUG-Flag
+ifeq ($(DEBUG), 1)
+    CFLAGS += -g3
+    EXECUTABLES := $(addsuffix Debug, $(EXECUTABLES))
+else
+    CFLAGS += -O2
+    EXECUTABLES := $(addsuffix Release, $(EXECUTABLES))
+endif
+
+# Hauptziel
+all: $(EXECUTABLES)
+
+# Regeln zum Erstellen der ausführbaren Programme
+%Debug: %.c
+	$(CC) $(CFLAGS) $< -o $@ $(LDFLAGS)
+
+%Release: %.c
+	$(CC) $(CFLAGS) $< -o $@ $(LDFLAGS)
+
+# Clean up
+clean:
+	rm -f $(EXECUTABLES)
+	rm -f *Debug *Release
+	rm -rf *.dSYM
+
+
+# Spezielle Ziele, die keine Dateien sind
+.PHONY: all clean

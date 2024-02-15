@@ -96,8 +96,7 @@ def update_figure_environment(content):
         floatnotes = '\\floatnotes{}\n'
         label = '%\\label{fig:}'  # Der \label Befehl
         # Zusammenfügen des neuen Inhalts
-        new_content = f"{before}{includegraphics}{
-            path_and_rest}\n{floatnotes}{label}"
+        new_content = f"{before}{includegraphics}{path_and_rest}\n{floatnotes}{label}"
         return new_content
 
     # Anwenden der Ersetzung

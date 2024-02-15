@@ -71,8 +71,7 @@ def erstelle_navigationsseite(ordnerpfad, vorlagenpfad, vorlagenname, ausgabe_da
     with open(ausgabe_dateiname, 'w', encoding='utf-8') as nav_file:
         nav_file.write(vorlage.render(dateinamen=dateinamen))
 
-    print(f"'{ausgabe_dateiname}' wurde erfolgreich erstellt mit {
-          len(dateinamen)} Links.")
+    print(f"'{ausgabe_dateiname}' wurde erfolgreich erstellt mit {len(dateinamen)} Links.")
 
 
 def main():

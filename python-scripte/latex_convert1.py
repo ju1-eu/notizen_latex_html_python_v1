@@ -89,8 +89,7 @@ def konvertiere_md_zu_tex(md_pfad, tex_pfad):
             check=True,
         )
     except subprocess.CalledProcessError as e:
-        print(f"Fehler bei der Konvertierung der Datei {
-              md_pfad}:\n{e.stderr.decode()}")
+        print(f"Fehler bei der Konvertierung der Datei {md_pfad}:\n{e.stderr.decode()}")
 
 
 def konvertiere_dateien(dateiname=None):

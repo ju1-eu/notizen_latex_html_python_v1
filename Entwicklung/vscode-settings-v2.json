@@ -1,0 +1,35 @@
+{
+	"editor.tabSize": 4,
+	"editor.formatOnSave": true,
+	"eslint.alwaysShowStatus": true,
+	"python.analysis.typeCheckingMode": "basic",
+	"python.linting.enabled": true,
+	"python.linting.pylintEnabled": true,
+	"python.linting.flake8Enabled": true,
+	"python.formatting.provider": "black",
+	"C_Cpp.updateChannel": "Default",
+	"cmake.configureOnOpen": true,
+	"clang-format.style": "file",
+	"liveServer.settings.donotShowInfoMsg": true,
+	"html-css-class-completion.enableEmmetSupport": true,
+	"latex-workshop.latex.autoBuild.run": "onSave",
+	"gitlens.views.repositories.files.layout": "tree",
+	"markdown-all-in-one.italic.indicator": "_",
+	"markdown-preview-enhanced.previewTheme": "github-dark.css",
+	"latex-workshop.view.pdf.viewer": "tab",
+	"markdown.preview.fontSize": 14,
+	"markdown.preview.lineHeight": 1.6,
+	"python.linting.flake8Args": [
+		"--max-line-length=120"
+	],
+	"editor.codeActionsOnSave": {
+		"source.fixAll.eslint": true
+	},
+	"python.testing.pytestArgs": [],
+	"python.testing.unittestEnabled": false,
+	"python.testing.nosetestsEnabled": false,
+	"python.testing.pytestEnabled": true,
+	"C_Cpp.clang_format_fallbackStyle": "Google",
+	"files.autoSave": "onFocusChange",
+	"editor.fontSize": 14
+}

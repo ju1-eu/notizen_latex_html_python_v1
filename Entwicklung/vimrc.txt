@@ -1,0 +1,74 @@
+" Allgemeine Einstellungen
+set nocompatible              " Vim-Einstellungen nutzen, nicht Vi
+set backspace=indent,eol,start " Macht das Backspace-Verhalten "normaler"
+set mouse=a                   " Mausunterstützung in allen Modi
+set history=50                " Behalte die letzten 50 Eingabezeilen
+set ruler                     " Zeige die aktuelle Position (Zeile:Spalte) in der Statusleiste
+
+" Suchen & Navigieren
+set incsearch                 " Inkrementelle Suche
+set hlsearch                  " Suchergebnisse hervorheben
+set ignorecase                " Suche ist standardmäßig nicht case-sensitiv
+set smartcase                 " Wenn Großbuchstaben enthalten sind, wird die Suche case-sensitiv
+
+" Visuelle Einstellungen
+set number                    " Zeilennummern anzeigen
+set relativenumber            " Relative Zeilennummern anzeigen
+set cursorline                " Aktuelle Zeile hervorheben
+set showmatch                 " Klammern beim Tippen hervorheben
+colorscheme desert            " Ein Farbschema setzen
+
+" Einrückung und Tabs
+set autoindent                " Automatisches Einrücken
+set tabstop=4                 " Ein Tab ist 4 Leerzeichen breit
+set shiftwidth=4              " Einrückung um 4 Leerzeichen
+set expandtab                 " Tabs in Leerzeichen umwandeln
+set smarttab                  " Tab und Backspace-Tasten verhalten sich intelligent
+
+" Code-Faltung
+set foldmethod=syntax         " Falten basierend auf Syntax
+set foldlevelstart=10         " Beginnen Sie mit allem aufgeklappt
+set foldnestmax=10            " Maximale Faltennesttiefe
+set nofoldenable              " Falten standardmäßig deaktivieren
+
+" Statusleiste
+set laststatus=2              " Immer die Statusleiste anzeigen
+
+" Für Plugins (Beispiel)
+" Plug 'VundleVim/Vundle.vim'  " Ein Plugin-Manager (Sie müssen Vundle separat installieren)
+
+" Initialisiere Plugin-Management (wenn Sie Vundle verwenden)
+" call vundle#begin()
+" call vundle#end()
+
+
+" Plugin-Management mit vim-plug
+" Stellen Sie sicher, dass Sie vim-plug zuerst installiert haben: https://github.com/junegunn/vim-plug
+call plug#begin('~/.vim/plugged')
+
+" Plugins
+Plug 'preservim/nerdtree'             " NERDTree, Datei-Explorer
+Plug 'ycm-core/YouCompleteMe'         " YouCompleteMe, Code-Completion
+Plug 'vim-airline/vim-airline'        " Airline, Status- und Tab-Leisten
+Plug 'vim-airline/vim-airline-themes' " Themes für Airline
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } " fzf, Datei- und Befehlsfinder
+
+call plug#end()
+
+" NERDTree Konfiguration
+nmap <C-n> :NERDTreeToggle<CR>
+
+" Airline Konfiguration
+set laststatus=2
+let g:airline_powerline_fonts = 1
+
+" YouCompleteMe Konfiguration
+let g:ycm_autoclose_preview_window_after_completion=1
+let g:ycm_global_ycm_extra_conf='~/.vim/plugged/YouCompleteMe/third_party/ycmd/.ycm_extra_conf.py'
+let g:ycm_confirm_extra_conf=0
+let g:ycm_collect_identifiers_from_comments_and_strings = 1
+let g:ycm_filetype_specific_completion_to_disable = { 'gitcommit': 1 }
+
+" fzf Konfiguration
+set rtp+=~/.fzf
+

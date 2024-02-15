@@ -7,6 +7,12 @@ html/*.html
 images/output/
 tex/*.tex
 
+Git-Info.pdf
+Python-Anaconda-Notebook.pdf
+Workflow.pdf
+neu.pdf
+vim-bedienung.pdf
+
 # Ignorieren von C/C++-spezifischen Dateien
 # Ignoriere Release-Dateien
 *Release
