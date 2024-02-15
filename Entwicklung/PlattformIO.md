@@ -390,12 +390,12 @@ void serialPrintMessage(const char* message);
 cd /Users/jan/PlatformIO/Projects
 zip -r Projekt_Backup_hallo_welt.zip hallo_welt/
 zip -r Projekt_Backup_Projektstruktur.zip Projektstruktur/
-mv *.zip /Users/jan/daten/start/Firmware-WROOM/c++
+mv *.zip /Users/jan/daten/start/IOT/Projekte-ESP32/Firmware-WROOM/c++
 
 # Workspace-Datei  .code-workspace
-/Users/jan/daten/start/Firmware-WROOM
+/Users/jan/daten/start/IOT/Projekte-ESP32/Firmware-WROOM
   c++    python
-/Users/jan/daten/start/Firmware-WROVER-Kamera
+/Users/jan/daten/start/IOT/Projeke-ESP32/Firmware-WROVER-Kamera
   c++    python
 ```
 
