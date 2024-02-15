@@ -35,7 +35,7 @@ pandoc Git-Info.md -o Git-Info.html -c inhalt.css --mathjax
 
 ```bash
 # https://github.com/settings/tokens
-# Zugangstoken: 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
+# Zugangstoken: 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
 
 # 1
 gh auth refresh -h github.com -s delete_repo
