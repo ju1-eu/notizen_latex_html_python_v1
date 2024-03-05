@@ -20,6 +20,7 @@ import re
 import os
 import datetime
 
+
 # ANPASSEN
 TEX_PANDOC = "./tex"
 TIMESTAMP = datetime.datetime.now().strftime('%d-%b-%y')
@@ -45,37 +46,69 @@ def replace_german_chars_in_label(match):
         label_content = label_content.replace(char, replacement)
     return f"\\label{{{label_content}}}"
 
-# nicht verwenden sonst keine Linie -------------------- möglich
+
+def clean_up_table_content(content):
+    # Entfernen der spezifischen Sequenzen
+    patterns_to_remove = [
+        r'\\toprule\\noalign{}\n',
+        r'\\noalign{}\n\\endhead\n',
+        r'\\bottomrule\\noalign{}\n\\endlastfoot\n',
+    ]
+    for pattern in patterns_to_remove:
+        content = re.sub(pattern, '', content)
+
+    return content
 
 
-def ersetze_match(match):
-    label_text = match.group(1)
-    return f"\\label{{{label_text.replace('---', '-')}}}"
+def replace_longtable_with_table(match):
+    column_definitions = match.group(1)
+    content = match.group(2)
+    cleaned_content = clean_up_table_content(content)
+    # Verwenden von [h] für die Platzierung und Hinzufügen von \bottomrule am Ende der Tabelle
+    return f"\\begin{{table}}[ht]\n  %\\caption{{}}\n  %\\label{{tab:my-table}}\n  \\begin{{tabular}}{{@{{}}{column_definitions}@{{}}}}\n  \\toprule\n" + cleaned_content + "  \\bottomrule\n  \\end{tabular}%\n\\end{table}"
+
+def convert_longtable_to_table(latex_content):
+    pattern = r'\\begin{longtable}\[\]{@{}(.*?)@{}}(.*?)\\end{longtable}'
+    replaced_content = re.sub(pattern, replace_longtable_with_table, latex_content, flags=re.DOTALL)
+    return replaced_content
 
 
-def remove_hypertargets(text):
-    return re.sub(r'\\hypertarget{[^}]*?}{[^}]*?}', '', text)
+def adjust_table_format(latex_content):
+    def extract_and_clean_table_content(table_content):
+        # Extrahieren des Hauptinhalts der Tabelle
+        main_content_match = re.search(r'\\toprule(.*?)\\bottomrule', table_content, flags=re.DOTALL)
+        if main_content_match:
+            main_content = main_content_match.group(1)
+        else:
+            main_content = "Inhalt konnte nicht extrahiert werden."
 
+        # Entfernen von 'minipage' und anderen spezifischen Formatierungen
+        clean_content = re.sub(r'\\begin{minipage}\[.*?\]{.*?}\\raggedright', '', main_content)
+        clean_content = re.sub(r'\\end{minipage}', '', clean_content)
 
-def replace_tables(match):
-    column_spec = match.group(1)
-    table_content = match.group(2)
+        return clean_content.strip()
 
-    # Entferne doppelte \\toprule
-    table_content = re.sub(r"\\\\toprule\s+\\\\toprule",
-                           r"\\\\toprule", table_content)
+    def replacement_function(match):
+        original_table_structure = match.group(0)
+        table_content = extract_and_clean_table_content(original_table_structure)
 
-    # Entferne \\endhead
-    table_content = table_content.replace("\\endhead", "")
+        # Berechnung der Spaltenanzahl
+        columns_count = table_content.count('&') // table_content.count('\\\\') + 1
 
-    # Erstelle die neue table-Umgebung
-    return f"""\\begin{{table}}[!ht]
-\\caption{{}}% \\label{{tab:}}%% anpassen
-\\begin{{tabular}}{{@{{}}{column_spec}@{{}}}}
-{table_content}
-\\end{{tabular}}
-\\floatnotes{{}}
-\\end{{table}}"""
+        # Erstellen der neuen Tabellenstruktur
+        new_table_structure = f'\\begin{{tabular}}{{@{{}}{"l" * columns_count}@{{}}}}\n\\toprule\n{table_content}\n\\bottomrule\n\\end{{tabular}}'
+        
+        return new_table_structure
+
+    # Ersetzen spezifisch formatierter Tabellen
+    adjusted_content = re.sub(
+        r'\\begin{tabular}{@{}\s*>\s*{\\raggedright.*?\\end{tabular}',
+        replacement_function,
+        latex_content,
+        flags=re.DOTALL
+    )
+
+    return adjusted_content
 
 
 def update_figure_environment(content):
@@ -93,7 +126,7 @@ def update_figure_environment(content):
         # Der Pfad und alles danach, bis zum Ende der figure Umgebung
         path_and_rest = match.group(3)
         # Der einzufügende \floatnotes Befehl
-        floatnotes = '\\floatnotes{}\n'
+        floatnotes = '%\\floatnotes{}\n'
         label = '%\\label{fig:}'  # Der \label Befehl
         # Zusammenfügen des neuen Inhalts
         new_content = f"{before}{includegraphics}{path_and_rest}\n{floatnotes}{label}"
@@ -113,14 +146,12 @@ for filename in os.listdir('.'):
         with open(filename, 'r', encoding='utf-8') as file:
             content = file.read()
 
+        print(f"Verarbeite {filename}...")  # Bestätigung, dass die Datei gelesen wird
+
         content = add_or_replace_comment(content, filename)
         # Anwenden der Funktion zur Aktualisierung der figure Umgebung
         content = update_figure_environment(content)
-        # FEHLER
-        # content = remove_hypertargets(content)
-        # content = re.sub(r'\\label{([^}]*?)}', ersetze_match, content)
-        # Ersetze \midrule durch \midrule[\heavyrulewidth]
-        content = content.replace('\\midrule', '\\midrule[\\heavyrulewidth]')
+
         content = content.replace(',height=\\textheight', '')
         content = content.replace('``', '>>')
         content = content.replace("''", '<<')
@@ -129,9 +160,12 @@ for filename in os.listdir('.'):
                          replace_german_chars_in_label, content)
         content = re.sub(
             r'\\passthrough{\\lstinline!(.*?)!}', r'\\verb|\1|', content)
+        
         # Ersetzen Sie alle longtable-Umgebungen und deren Inhalt durch table
-        content = re.sub(
-            r'\\begin{longtable}\[\]{@{}(.*?)@{}}(.+?)\\end{longtable}', replace_tables, content, flags=re.DOTALL)
+        content = convert_longtable_to_table(content)
+        # Ersetze
+        content = content.replace('\\midrule', '\\midrule[\\heavyrulewidth]\n')
+        content = adjust_table_format(content)
 
         content = re.sub(r'\\\(', '$', content)
         content = re.sub(r'\\\)', '$', content)

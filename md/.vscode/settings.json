@@ -1,8 +1,7 @@
 {
   "spellright.spellCheck": true,
   "spellright.documentTypes": [
-    "plaintext",
-    "latex"
+    "plaintext"
   ],
   "spellright.language": [
     "de"

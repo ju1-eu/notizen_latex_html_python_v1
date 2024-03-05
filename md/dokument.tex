@@ -1,0 +1,59 @@
+\documentclass{vorlage-design-main}
+\usepackage[utf8]{inputenc}
+\usepackage{longtable}
+\usepackage{blindtext,alltt}
+
+\makeatletter
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newenvironment{CSLReferences}%
+  {\setlength{\parindent}{0pt}%
+   \everypar{\setlength{\hangindent}{\cslhangindent}}\ignorespaces}%
+  {\par}
+\makeatother
+
+
+%% Ganze Überschrift
+\title{Langer Titel}
+
+%% Kürzerer Titel zur Verwendung im Seitenkopf
+\runningtitle{Kurztitel}
+\author{Jan Unger}
+% \author{2.}
+\date{\today}
+
+%% Die .bib-Datei mit vollständigen Referenzen zur Verwendung mit biblatex. articleclass lädt das Paket biblatex-chicago mit Anpassungen
+\addbibresource{literatur.bib}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Hier steht die Zusammenfassung des Dokuments. Sie kann über mehrere
+Zeilen gehen und unterstützt auch Markdown-Formatierungen.
+\end{abstract}
+
+\section{Thema}\label{thema}
+
+Text, der sich auf die Quelle bezieht {[}1{]}.
+
+Hier ist ein Text, der eine Fußnote benötigt.\footnote{Hier steht der
+  Text der Fußnote.}
+
+\phantomsection\label{refs}
+\begin{CSLReferences}{0}{0}
+\bibitem[\citeproctext]{ref-spanner:2019:robotik}
+\CSLLeftMargin{{[}1{]} }%
+\CSLRightInline{G. Spanner, \emph{Robotik und künstliche intelligenz}.
+2019.}
+
+\end{CSLReferences}
+
+%% Anhang
+%\clearpage
+%\appendix
+
+\clearpage
+\printbibliography
+\end{document}

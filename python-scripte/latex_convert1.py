@@ -51,6 +51,7 @@ import glob
 QUELLPFAD = "./md"
 ZIELPFAD = "./tex"
 VORLAGEPFAD = "content/vorlage-main.tex"  # Latexvorlage
+FILTERPFAD = "content/combined-filter.lua"
 
 
 def ist_pandoc_installiert():
@@ -70,20 +71,20 @@ def extrahiere_thema_aus_dateiname(dateiname):
 
 
 def konvertiere_md_zu_tex(md_pfad, tex_pfad):
-    """Konvertiert eine einzelne .md-Datei in .tex mit Pandoc, einer benutzerdefinierten CSL-Datei
-    und einer Bibliographie."""
+    """Konvertiert eine einzelne .md-Datei in .tex mit Pandoc, einer benutzerdefinierten Vorlage und einem Lua-Filter."""
     thema = extrahiere_thema_aus_dateiname(md_pfad)
 
     try:
         subprocess.run(
             [
                 "pandoc",
-                "--template=" + VORLAGEPFAD,
-                "--listings",
-                "--variable=title:" + thema,
                 md_pfad,
-                "-o",
-                tex_pfad,
+                "--to", "latex",
+                "--output", tex_pfad,
+                "--template", VORLAGEPFAD,
+                "--lua-filter", FILTERPFAD,
+                "--variable", "title:" + thema,
+                "--listings",
             ],
             capture_output=True,
             check=True,

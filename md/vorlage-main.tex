@@ -1,13 +1,13 @@
-% ju 15-Feb-24 neu.tex
 \documentclass{vorlage-design-main}
 \usepackage[utf8]{inputenc}
 \usepackage{longtable}
 \usepackage{blindtext,alltt}
+
 %% Ganze Überschrift
-\title{Thema}
+\title{$thema$}
 
 %% Kürzerer Titel zur Verwendung im Seitenkopf
-\runningtitle{Kurztitel}
+\runningtitle{$runningtitle$}
 \author{Jan Unger}
 % \author{2.}
 \date{\today}
@@ -15,18 +15,20 @@
 %% Die .bib-Datei mit vollständigen Referenzen zur Verwendung mit biblatex. articleclass lädt das Paket biblatex-chicago mit Anpassungen
 \addbibresource{literatur.bib}
 
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
 \begin{document}
 
 \maketitle
 
 \begin{abstract}
-
+$abstract$
 \end{abstract}
 
-\hypertarget{neu}{%
-\section{Neu}\label{neu}} % Platzhalter
+$body$
 
-%% Optional Anhang
+%% Anhang
 %\clearpage
 %\appendix
 

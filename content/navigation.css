@@ -1,7 +1,9 @@
 /* Variablen */
 :root {
   --text-color: #333; /* Dunklere, gut lesbare Farbe */
-  --hover-color: #a30404;
+  --hover-color: #a30404; /* Farbe beim Überfahren mit der Maus */
+  --link-color: #007bff; /* Schönes Blau für Links */
+  --visited-link-color: #d63447; /* Schönes Rot für besuchte Links */
   --background-color: #f4f4f4;
   --container-background-color: #fff;
   --box-shadow-color: rgba(0, 0, 0, 0.1);
@@ -192,6 +194,102 @@ script[type="text/javascript"] {
 .hljs-string {
   color: rgb(255, 140, 0); /* DarkOrange */
 }
+
+
+/* Grundlegende Tabellenstile */
+table {
+  width: 100%; /* Stellt sicher, dass die Tabelle die volle Breite des Containers nutzt */
+  border-collapse: collapse; /* Entfernt doppelte Ränder zwischen Zellen */
+  margin: 20px 0; /* Fügt oben und unten einen Außenabstand hinzu */
+}
+
+/* Stil für die Spaltengruppen */
+colgroup col {
+  background-color: #f4f4f4; /* Leichter Hintergrund für die Spalten */
+}
+
+/* Kopfzeilen der Tabelle */
+thead {
+  background-color: #010625; /* Dunkler Hintergrund für Kopfzeilen */
+  color: #a30404; /* Rote Schriftfarbe */
+}
+
+th, td {
+  padding: 10px; /* Innenabstand in Zellen */
+  text-align: left; /* Text linksbündig ausrichten */
+  border-bottom: 1px solid #ddd; /* Trennlinie zwischen den Zeilen */
+}
+
+/* Zeilen-Styles */
+tr.header {
+  font-weight: bold; /* Macht den Kopfzeilentext fett */
+}
+
+tr.odd {
+  background-color: #f9f9f9; /* Hintergrund für ungerade Zeilen */
+}
+
+tr.even {
+  background-color: #fefefe; /* Hintergrund für gerade Zeilen */
+}
+
+/* Anpassung für Code-Elemente innerhalb der Tabelle */
+code {
+  background-color: #eaeaea; /* Hintergrund für Code-Elemente */
+  padding: 2px 4px; /* Innenabstand für Code-Elemente */
+  border-radius: 4px; /* Abgerundete Ecken für Code-Elemente */
+  font-family: monospace; /* Schriftart für Code */
+}
+
+
+/* Link-Stile */
+a {
+  color: var(--link-color); /* Setzt die Linkfarbe auf das definierte Blau */
+  text-decoration: none; /* Entfernt den Unterstrich */
+  transition: color 0.3s; /* Sanfter Übergang für Farbänderungen */
+}
+
+a:visited {
+  color: var(--visited-link-color); /* Setzt die Farbe besuchter Links auf das definierte Rot */
+}
+
+a:hover, a:focus {
+  color: var(--hover-color); /* Ändert die Farbe beim Überfahren oder Fokussieren auf das Hover-Rot */
+  text-decoration: underline; /* Fügt Unterstrich beim Überfahren hinzu */
+}
+
+
+/* Anpassung der Bildgröße */
+figure embed {
+  max-width: 100%; /* Begrenzt die Breite des Bildes auf die Breite seines Containers */
+  height: auto; /* Passt die Höhe automatisch an, um das Seitenverhältnis beizubehalten */
+}
+
+/* Optional: Styling für Bildunterschriften */
+figcaption {
+  text-align: center; /* Zentriert die Bildunterschrift unter dem Bild */
+  margin-top: 0.5em; /* Fügt einen oberen Abstand zwischen Bild und Bildunterschrift hinzu */
+  color: var(--text-color); /* Verwendet die definierte Textfarbe für Bildunterschriften */
+  font-style: italic; /* Optional: Stilisiert die Bildunterschrift kursiv */
+}
+
+
+/* Anpassung der Größe für normale Bilder */
+figure img {
+  width: 80%; /* Setzt die Breite des Bildes auf 80% des umgebenden Containers */
+  height: auto; /* Passt die Höhe automatisch an, um das Seitenverhältnis beizubehalten */
+  display: block; /* Ermöglicht Zentrierung durch automatische margin */
+  margin: 0 auto; /* Zentriert das Bild horizontal */
+}
+
+/* Anpassung der Größe und Zentrierung für SVG */
+figure embed[src$=".svg"] {
+  width: 30%; /* Setzt die Breite des SVG auf 30% des umgebenden Containers */
+  height: auto; /* Passt die Höhe automatisch an, um das Seitenverhältnis beizubehalten */
+  display: block; /* Ermöglicht Zentrierung durch automatische margin */
+  margin: 0 auto; /* Zentriert das SVG horizontal */
+}
+
 
 /* Responsives Design */
 @media screen and (max-width: 768px) {
