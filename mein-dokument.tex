@@ -36,6 +36,48 @@ hinweg vereinfacht.
 \section{Dokumente in Markdown
 erstellen}\label{dokumente-in-markdown-erstellen}
 
+\begin{lstlisting}
+// Projektübersicht
+Entwicklung               git_hilfsprogramm.py      mein-dokument.fls
+LICENSE                   html                      mein-dokument.tex
+Makefile                  image_resizer.py          navigation.css
+NAVIGATION.html           images                    python-scripte
+README.md                 literatur-kfz.bib         scriptauswahl.py
+TODO.md                   literatur-sport.bib       tex
+Tabellen                  literatur.bib             vorlage-design-main.cls
+content                   md
+dokumentation.py
+\end{lstlisting}
+
+Git
+
+\begin{lstlisting}[language=bash]
+# Git Versionierung
+gh auth login
+git config --global credential.helper cache
+
+git remote -v
+
+git init --bare
+git remote add local /Users/jan/notizen_latex_html_python_v1.git
+git remote rename localBackup local
+git push local main
+git pull local main
+
+git init
+git remote set-url origin https://github.com/ju1-eu/notizen_latex_html_python_v1.git
+git push -u origin main
+git pull origin main
+
+git push
+git pull
+git  st
+git ls
+
+git clone https://github.com/ju1-eu/notizen_latex_html_python_v1.git
+git clone /Users/jan/notizen_latex_html_python_v1.git notizen_klon
+\end{lstlisting}
+
 Beispiel Quellenangabe
 
 \begin{itemize}

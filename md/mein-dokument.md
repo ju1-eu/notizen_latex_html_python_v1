@@ -46,7 +46,34 @@ content                   md
 dokumentation.py
 ```
 
+Git
 
+```bash
+# Git Versionierung
+gh auth login
+git config --global credential.helper cache
+
+git remote -v
+
+git init --bare
+git remote add local /Users/jan/notizen_latex_html_python_v1.git
+git remote rename localBackup local
+git push local main
+git pull local main
+
+git init
+git remote set-url origin https://github.com/ju1-eu/notizen_latex_html_python_v1.git
+git push -u origin main
+git pull origin main
+
+git push
+git pull
+git  st
+git ls
+
+git clone https://github.com/ju1-eu/notizen_latex_html_python_v1.git
+git clone /Users/jan/notizen_latex_html_python_v1.git notizen_klon
+```
 
 Beispiel Quellenangabe
 

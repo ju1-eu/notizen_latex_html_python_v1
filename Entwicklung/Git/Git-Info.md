@@ -61,7 +61,7 @@ The minimum required scopes are 'repo', 'read:org', 'workflow'.
 
 # 3
 unset GITHUB_TOKEN
-echo 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 | gh auth login --with-token
+echo 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 | gh auth login --with-token
 # Test - Authentifizierung mit dem GitHub CLI
 gh api user
 gh repo list
@@ -81,9 +81,9 @@ gh repo list
   gh auth refresh -h github.com -s delete_repo
   gh auth login
   # https://github.com/settings/tokens
-  # Zugangstoken: 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
+  # Zugangstoken: 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
   unset GITHUB_TOKEN
-  echo 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 | gh auth login --with-token
+  echo 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 | gh auth login --with-token
   ```
 
 - **Repositorys des angemeldeten Benutzers auflisten**:

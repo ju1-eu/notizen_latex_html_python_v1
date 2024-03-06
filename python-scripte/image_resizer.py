@@ -161,7 +161,7 @@ def process_images(input_folder, output_folder_web, output_folder_pres, resoluti
         output_path_pdf = os.path.join(output_folder_pres, base_name + '.pdf')
 
         # Konvertiert PNG und HEIC Bilder zu WebP für das Web
-        if filename.lower().endswith((".png", ".heic")):
+        if filename.lower().endswith((".png", ".heic", ".jpg", ".jpeg", ".webp")):
             convert_image_to_webp(
                 file_path, output_path_webp, resolution=resolution, quality=web_quality)
             temp_pdf_path = output_path_pdf.replace('.pdf', '_temp.pdf')

@@ -50,13 +50,6 @@ def kombinierte_html_verarbeitung():
 
 def sicherer_aufruf(befehl):
     """Führt einen Befehl sicher aus und fängt bekannte sowie unerwartete Fehler.
-
-    Args:
-        befehl (list): Der auszuführende Befehl als Liste, z.B. ['ls', '-l'].
-
-    Verarbeitet `subprocess.CalledProcessError` für Fehler, die auftreten, wenn der Prozess
-    mit einem Fehler beendet. Fängt allgemeine Ausnahmen für unerwartete Fehler, dokumentiert
-    die Entscheidung für diese breite Fehlerbehandlung.
     """
     print(f"Ausführender Befehl: {befehl}")  # Debug-Ausgabe
     try:
@@ -135,15 +128,6 @@ def main():
     """
     Hauptfunktion, die ein interaktives Menüsystem zur Ausführung verschiedener
     Befehle bereitstellt.
-
-    Diese Funktion zeigt ein Menü mit verfügbaren Befehlen an, die der Benutzer ausführen kann.
-    Der Benutzer wählt einen Befehl durch Eingabe der entsprechenden Nummer aus.
-    Bestimmte Befehle führen spezialisierte Aufgaben aus, wie z.B. die Verarbeitung von
-    LaTeX- oder HTML-Dateien. Die Funktion unterstützt auch kombinierte Befehle für
-    erweiterte Verarbeitungssequenzen. Die Ausführung endet, wenn der Benutzer 'q' eingibt.
-
-    Parameter: Keine
-    Rückgabewerte: Keine.
     """
     while True:
         auswahl = zeige_menue_und_waehle()
