@@ -1,17 +1,76 @@
 ---
-title: "Git-Visualisieren"
+thema: "Git-Visualisieren"
+runningtitle: "Git-Visualisieren"
+keywords: ""
+abstract: |
+	Git ist ein mächtiges Werkzeug für die Softwareentwicklung, das Teams ermöglicht, effizient zusammenzuarbeiten und den Code-Entwicklungsprozess zu verwalten. Im Herzen jedes Git-Projekts steht das \textbf{Repository}, ein spezieller Ordner, der den gesamten Code und die Änderungshistorie beinhaltet. Um an einem Projekt mitzuarbeiten, beginnen Entwickler oft mit einem \textbf{Clone}, einer lokalen Kopie des Repositories. Innerhalb dieses Repositories können sie über \textbf{Branches} parallel an verschiedenen Features oder Bugfixes arbeiten, ohne die Hauptentwicklungslinie zu beeinträchtigen. \textbf{Commits} zeichnen Änderungen auf und dienen als Checkpoints. Sobald die Arbeit in einem Branch abgeschlossen ist, kann dieser mit einem \textbf{Merge} in den Hauptbranch integriert werden. Für die Zusammenarbeit mit externen Repositories bieten \textbf{Forks} eine Kopie des Original-Repositories, auf der unabhängig gearbeitet werden kann. \textbf{Pull Requests} fördern die Diskussion über Änderungen, bevor diese in das Hauptprojekt eingefügt werden. Git hilft auch bei der \textbf{Konfliktlösung}, wenn beim Mergen Widersprüche auftreten. Dieser Leitfaden erleichtert den Einstieg in die Nutzung von Git und unterstreicht dessen Bedeutung für die moderne Softwareentwicklung.
+
+	\section*{Schlüsselwörter und Erklärungen}
+
+	\begin{description}
+		\item[Repository] Ein digitales Verzeichnis, das den Code und die Änderungshistorie eines Projekts speichert.
+		\item[Clone] Eine lokale Kopie eines Git-Repositories, die es erlaubt, Änderungen am Projekt vorzunehmen.
+		\item[Branch] Eine unabhängige Entwicklungslinie innerhalb eines Repositories, die parallele Arbeit an verschiedenen Features ermöglicht.
+		\item[Commit] Ein "Snapshot" der Änderungen im Repository, der Autor, Nachricht und Änderungen beinhaltet.
+		\item[Push] Das Hochladen von lokalen Änderungen an ein Remote-Repository.
+		\item[Pull] Das Herunterladen und Integrieren von Änderungen aus einem Remote-Repository in das lokale Repository.
+		\item[Merge] Das Zusammenführen von Änderungen aus verschiedenen Branches in einen einzigen Entwicklungsstrang.
+		\item[Pull Request/Merge Request] Eine Anfrage, Änderungen aus einem Branch oder Fork in das Hauptprojekt zu integrieren, die eine Diskussion und Überprüfung ermöglicht.
+		\item[Conflict] Eine Situation, die auftritt, wenn Git die Änderungen aus verschiedenen Branches nicht automatisch zusammenführen kann.
+		\item[Fork] Eine Kopie eines Repositories auf einer Plattform wie GitHub, die es ermöglicht, unabhängig an Änderungen zu arbeiten und diese später durch Pull Requests vorzuschlagen.
+	\end{description}
 author: 'ju'
 date: \today
-bibliography: literatur-kfz.bib
-csl: zitierstil-number.csl
 ---
-<!-----------------------------------------------------------------------
-ju 9-2-24 Git-Visualisieren.md
-pandoc Git-Visualisieren.md -o Git-Visualisieren.html -c inhalt.css --mathjax
-------------------------------------------------------------------------->
-# Git-Visualisieren
+<!-------------------------------------------------------------------------------------------------------------
+ju 2024-03-06 Git-Visualisieren.md
+pandoc Git-Visualisieren.md -o Git-Visualisieren.html -c navigation.css --mathjax --citeproc --bibliography=literatur.bib --csl=zitierstil-number.csl
 
-## Git-Begriffe
+Quelle [@spanner:2019:robotik].
+
+Fußnote.[^1]
+[^1]: Text der Fußnote.
+
+[Google](https://www.google.com)
+
+![Logo 2](images/Logo/Logo2.pdf)
+
+**Tabelle 1:** Beschreibung
+
+pandoc Git-Visualisieren.md --to latex --output Git-Visualisieren.tex --template=vorlage-main.tex --lua-filter=combined-filter.lua
+pdflatex Git-Visualisieren.tex
+biber Git-Visualisieren
+pdflatex Git-Visualisieren.tex
+pdflatex Git-Visualisieren.tex
+
+ChatGPT:
+
+Zusammenfassung in Latex: Schreibstil: Expositorisch ohne Form du/sie
+Erstellen Sie eine kurze (ca. 200 Wörter) und ansprechende Zusammenfassung zum nachfolgenden Text. Die Zusammenfassung sollte für jemanden ohne wissenschaftlichen Hintergrund verständlich sein und gleichzeitig die wichtigsten Fakten genau wiedergeben. Beachte den Zusammenhang. Textinhalt: " "
+
+Keywords: Erstelle mir eine Liste der wichtigsten Keywords zum Textinhalt.
+
+Erklärung in Latex: Erkläre die Schlüsselwörter. Bereite die Antwort gehirngerecht auf mit Didaktische Reduktion.
+
+neue Infos: Erklären Sie einem Gymnasiasten, der sich mit Programmierung beschäftigt, das Konzept von Git.
+
+Gedankenkette: Könnten Sie kurz das Konzept von Git erläutern? Wie beeinflusst Git die Programmiersprache und in welchen Zusammenhang steht es?
+
+Kognitives Prüfmuster: Wenn ich eine Frage zu Git stelle, teilen Sie sie in drei kleinere Fragen auf, die Ihnen helfen, eine genauere Antwort zu geben. Kombinieren Sie die Antworten auf diese Unterfragen, um die endgültige Antwort zu erhalten.
+
+Rolle: Nehmen Sie die Rolle eines erfahrenen Programmierexperten an. Führen Sie anhand dieser Person ein Codeüberprüfung durch.
+
+Zusammenfassung: Thema: C - Programmierung 
+Schreibstil: Expositorisch ohne Form du/sie, verwende Markdown
+Erstelle eine ansprechende Zusammenfassung zum nachfolgenden Text in Aufzählungsform und gleichzeitig gebe die wichtigsten Informationen genau wieder. Bereite die Antwort gehirngerecht auf mit Didaktische Reduktion. 
+Textinhalt: " "
+
+Fragen: Erstelle 5x Fragen zum Lerninhalt (beachte den Focus: tieferes Verständnis und kritisches Denken zu fördern) mit Lösung. Lerninhalt: " "
+
+Projekt: Erstelle ein Projekt zum Anwenden des gelernten mit Lösung.
+---------------------------------------------------------------------------------------------------------------->
+
+# Git-Begriffe
 
 Git ist ein unverzichtbares Werkzeug im modernen Softwareentwicklungs-Workflow, das die Zusammenarbeit und Versionierung von Code vereinfacht.
 
@@ -37,7 +96,7 @@ Git ist ein unverzichtbares Werkzeug im modernen Softwareentwicklungs-Workflow, 
 
 # Git-Arbeitsablauf
 
-**Arbeitsverzeichnis - Staging-Bereich - Lokales Repository - Remote-Repository**
+**Arbeitsverzeichnis - Staging-Bereich - Lokales Repository - Remote-Repository:**
 
 ```plaintext
 #  Git-Arbeitsablauf
@@ -56,7 +115,7 @@ Lokales Repository (Local Repo)
 Remote-Repository (Remote Repo)
 ```
 
-**Aktualisierungen holen und integrieren**
+**Aktualisierungen holen und integrieren:**
 
 ```plaintext
 # Aktualisierungen holen und integrieren:
@@ -75,7 +134,7 @@ Lokales Repository (Local Repo) [nach git fetch + git merge]
 Lokales Repository (Local Repo) [nach git pull, automatisch gemerged]
 ```
 
-**Branching und Mergin**
+**Branching und Mergin:**
 
 ```plaintext
 # Branching und Merging:
@@ -99,7 +158,7 @@ MAIN-Branch (inklusive der Änderungen aus NEW-BRANCH)
 
 # Änderungen rückgängig machen
 
-**Änderungen in der Arbeitskopie rückgängig machen**
+**Änderungen in der Arbeitskopie rückgängig machen:**
 
 ```plaintext
 # Änderungen in der Arbeitskopie rückgängig machen
@@ -120,7 +179,7 @@ Arbeitsverzeichnis (Working Directory)
      zurückgesetzt)                      zurückgesetzt)
 ```
 
-**Gestagede Änderungen rückgängig machen**
+**Gestagede Änderungen rückgängig machen:**
 
 ```plaintext
 # Gestagede Änderungen rückgängig machen
@@ -142,7 +201,7 @@ Staging-Bereich (Index)
     (Änderungen entfernt)
 ```
 
-**Letzten Commit rückgängig machen**
+**Letzten Commit rückgängig machen:**
 
 ```plaintext
 # Letzten Commit rückgängig machen
@@ -175,7 +234,7 @@ Lokales Repository (Commits)
      Zustand, Änderungen verworfen)
 ```
 
-**Änderungen an einer Datei rückgängig machen**
+**Änderungen an einer Datei rückgängig machen:**
 
 ```plaintext
 # Änderungen an einer Datei rückgängig machen
@@ -190,9 +249,9 @@ Lokales Repository (Commits)
     (Datei zurückgesetzt)
 ```
 
-**Einen früheren Commit wiederherstellen**
+**Einen früheren Commit wiederherstellen:**
 
-```
+```plaintext
 # Einen früheren Commit wiederherstellen
 +----------------------------+
 | Einen früheren Commit      |
@@ -208,6 +267,7 @@ Lokales Repository (Commits)
 ```
 
 \newpage
+
 # Python-Entwicklung
 
 1. **Repository erstellen auf GitHub**: Startpunkt des Projekts, wo das zentrale Remote-Repository angelegt wird.
@@ -221,6 +281,7 @@ Lokales Repository (Commits)
 ![Git Python-Entwicklung](images/Git-Python-Entwicklung.pdf)
 
 \newpage
+
 # Git Fork
 
 1. **Forken des Repositorys**: Erstelle eine eigene Kopie des Ziel-Repositorys auf GitHub.
@@ -237,12 +298,14 @@ Lokales Repository (Commits)
 
 ![Git Fork](images/Git-Fork.pdf)
 
+\newpage
 
 # Git C-Entwicklung
 
 Datei-Löschungen committen und den Stand Ihres lokalen Branches main auf den neuesten Stand mit dem Remote-Repository bringen.
 
 ```bash
+# Terminal: 
 git add -A
 git commit -m "Entferne ignorierte Dateien aus dem Repository"
 git push origin main
@@ -253,9 +316,9 @@ Arbeitsverzeichnis      Staging-Bereich       Lokales Repository     Remote-Repo
        |                       |                       |                      |
        |  Änderungen im        |                       |                      |
        |  Arbeitsverzeichnis   |                       |                      |
-       |  identifizieren        |                       |                      |
+       |  identifizieren       |                       |                      |
        |  (gelöschte und       |                       |                      |
-       |  modifizierte          |                       |                      |
+       |  modifizierte         |                       |                      |
        |  Dateien)             |                       |                      |
        |                       |                       |                      |
        +---------------------->+                       |                      |

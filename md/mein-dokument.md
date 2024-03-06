@@ -29,6 +29,35 @@ pdflatex mein-dokument.tex
 biber mein-dokument
 pdflatex mein-dokument.tex
 pdflatex mein-dokument.tex
+
+ChatGPT:
+
+Zusammenfassung in Latex: Schreibstil: Expositorisch ohne Form du/sie
+Erstellen Sie eine kurze (ca. 200 Wörter) und ansprechende Zusammenfassung zum nachfolgenden Text. Die Zusammenfassung sollte für jemanden ohne wissenschaftlichen Hintergrund verständlich sein und gleichzeitig die wichtigsten Fakten genau wiedergeben. Beachte den Zusammenhang. Textinhalt: " "
+
+Keywords: Erstelle mir eine Liste der wichtigsten Keywords zum Textinhalt.
+
+Erklärung in Latex: Erkläre die Schlüsselwörter. Bereite die Antwort gehirngerecht auf mit Didaktische Reduktion.
+
+neue Infos: Erklären Sie einem Gymnasiasten, der sich mit Programmierung beschäftigt, das Konzept von Git.
+
+Gedankenkette: Könnten Sie kurz das Konzept von Git erläutern? Wie beeinflusst Git die Programmiersprache und in welchen Zusammenhang steht es?
+
+Kognitives Prüfmuster: Wenn ich eine Frage zu Git stelle, teilen Sie sie in drei kleinere Fragen auf, die Ihnen helfen, eine genauere Antwort zu geben. Kombinieren Sie die Antworten auf diese Unterfragen, um die endgültige Antwort zu erhalten.
+
+Rolle - Programmierexperten: Nehmen Sie die Rolle eines erfahrenen Programmierexperten an. Führen Sie anhand dieser Person ein Codeüberprüfung durch.
+
+Rolle - Cybersicherheitsexperten: Nehmen Sie die Rolle eines erfahrenen Cybersicherheitsexperten an. Führen Sie anhand dieser Person ein Überprüfung durch.
+
+Zusammenfassung: Thema: C - Programmierung 
+Schreibstil: Expositorisch ohne Form du/sie, verwende Markdown
+Erstelle eine ansprechende Zusammenfassung zum nachfolgenden Text in Aufzählungsform und gleichzeitig gebe die wichtigsten Informationen genau wieder. Bereite die Antwort gehirngerecht auf mit Didaktische Reduktion. 
+Textinhalt: " "
+
+Fragen: Erstelle 5x Fragen zum Lerninhalt (beachte den Focus: tieferes Verständnis und kritisches Denken zu fördern) mit Lösung. Lerninhalt: " "
+
+Projekt: Erstelle ein Projekt zum Anwenden des gelernten mit Lösung.
+------------------------
 ---------------------------------------------------------------------------------------------------------------->
 # Dokumente in Markdown erstellen
 

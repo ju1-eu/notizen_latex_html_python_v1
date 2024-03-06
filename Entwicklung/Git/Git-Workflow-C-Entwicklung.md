@@ -1,22 +1,86 @@
 ---
-title: "Git-Workflow-C-Entwicklung"
+thema: "C-Entwicklung und Automatisierung"
+runningtitle: "Git"
+keywords: ""
+abstract: |
+	Im Herzen moderner Softwareentwicklung steht nicht nur die Codierung selbst, sondern auch eine Reihe von Praktiken und Werkzeugen, die den Entwicklungsprozess vereinfachen, beschleunigen und sicherer machen. Ein besonders anschauliches Beispiel hierfür bietet die C-Entwicklung, die durch Tools wie Doxygen, cppcheck und Makefile unterstützt wird. Doxygen dient dabei der Erstellung von Dokumentationen aus dem Quellcode, während cppcheck als statisches Analysewerkzeug hilft, gängige Fehlerquellen frühzeitig zu erkennen. Die Automatisierung des Build-Prozesses wird durch Makefiles ermöglicht, die klare Anweisungen für die Kompilierung des Codes und weitere Schritte wie das Ausführen von Tests bereitstellen.
+
+	Die Integration von GitHub Actions in diesen Prozess fügt eine weitere Schicht der Automatisierung hinzu, indem sie es ermöglicht, Workflows für die Continuous Integration und Continuous Deployment direkt auf GitHub zu definieren und auszuführen. Dies schließt automatisierte Tests und Qualitätssicherungsmaßnahmen mit ein, die sicherstellen, dass der Code den Anforderungen entspricht, bevor er in die Produktionsumgebung überführt wird.
+
+	Zusätzlich zur Code-Verwaltung und -Überprüfung ermöglicht Git eine effiziente Kollaboration durch das Branching-Modell und Pull Requests. Diese Werkzeuge unterstützen Entwickler dabei, parallel an verschiedenen Features zu arbeiten, Änderungen zu diskutieren und letztlich zusammenzuführen, um ein kohärentes Endprodukt zu schaffen.
+
+	\section*{Schlüsselwörter}
+
+	\begin{itemize}
+		\item \textbf{C-Entwicklung}: Bezieht sich auf die Programmierung in der Programmiersprache C, einer der grundlegenden Sprachen für systemnahe Softwareentwicklung.
+		\item \textbf{Doxygen}: Ein Dokumentationsgenerator, der speziell für das Schreiben von technischen Dokumentationen in Softwareprojekten verwendet wird. Doxygen unterstützt mehrere Programmiersprachen, darunter C und C++.
+		\item \textbf{cppcheck}: Ein statisches Analysewerkzeug für C- und C++-Code, das auf die Identifizierung von Fehlern, Speicherlecks und anderen häufigen Problemen in Codebasen abzielt.
+		\item \textbf{GitHub Actions}: Eine CI/CD (Continuous Integration/Continuous Deployment) Plattform, die in GitHub integriert ist und es ermöglicht, Workflows direkt im Zusammenhang mit Git-Repository-Events zu automatisieren.
+		\item \textbf{Makefile}: Eine Konfigurationsdatei, die von \texttt{make}, einem Build-Automatisierungstool, verwendet wird. Ein Makefile definiert Regeln, um Quellcode in ausführbare Programme zu kompilieren und andere Aufgaben wie das Ausführen von Tests zu automatisieren.
+		\item \textbf{npm}: Der Paketmanager für Node.js, der es Entwicklern ermöglicht, JavaScript-Bibliotheken zu verwalten. Wird in diesem Kontext zur Verwaltung von Abhängigkeiten und zur Automatisierung von Tests eingesetzt.
+		\item \textbf{nvm}: Node Version Manager, ein Tool zum Verwalten mehrerer Node.js-Versionen. Nützlich für Projekte, die eine spezifische Version von Node.js erfordern.
+		\item \textbf{ci.yml}: Eine YAML-Konfigurationsdatei für GitHub Actions, die definiert, wie der Build- und Testprozess für ein Projekt automatisiert werden soll.
+		\item \textbf{.gitignore}: Eine Datei in Git-Repositories, die Git anweist, bestimmte Dateien oder Verzeichnisse nicht zu verfolgen. Nützlich, um temporäre oder lokale Konfigurationsdateien aus dem Repository auszuschließen.
+		\item \textbf{Branch}: Ein paralleler Entwicklungspfad innerhalb eines Git-Repositories, der es ermöglicht, an verschiedenen Features oder Versionen eines Projekts gleichzeitig zu arbeiten, ohne den Hauptentwicklungspfad zu stören.
+		\item \textbf{Pull Request (PR)}: Eine Methode auf GitHub, um Änderungen aus einem Branch in einen anderen zu integrieren, typischerweise von einem Feature-Branch in den Hauptbranch, nachdem die Änderungen überprüft und diskutiert wurden.
+		\item \textbf{Merge}: Der Prozess des Zusammenführens von Änderungen aus einem Branch in einen anderen in einem Git-Repository.
+	\end{itemize}
 author: 'ju'
 date: \today
-bibliography: literatur-kfz.bib
-csl: zitierstil-number.csl
 ---
-<!-----------------------------------------------------------------------
-ju 9-2-24 Git-Workflow-C-Entwicklung.md
-pandoc Git-Workflow-C-Entwicklung.md -o Git-Workflow-C-Entwicklung.html -c inhalt.css --mathjax
-------------------------------------------------------------------------->
-# Git-Workflow C-Entwicklung
+<!-------------------------------------------------------------------------------------------------------------
+ju 2024-03-06 Git-Workflow-C-Entwicklung.md
+pandoc Git-Workflow-C-Entwicklung.md -o Git-Workflow-C-Entwicklung.html -c navigation.css --mathjax --citeproc --bibliography=literatur.bib --csl=zitierstil-number.csl
 
+Quelle [@spanner:2019:robotik].
 
+Fußnote.[^1]
+[^1]: Text der Fußnote.
 
-## C-Entwicklung
+[Google](https://www.google.com)
+
+![Logo 2](images/Logo/Logo2.pdf)
+
+**Tabelle 1:** Beschreibung
+
+pandoc Git-Workflow-C-Entwicklung.md --to latex --output Git-Workflow-C-Entwicklung.tex --template=vorlage-main.tex --lua-filter=combined-filter.lua
+pdflatex Git-Workflow-C-Entwicklung.tex
+biber Git-Workflow-C-Entwicklung
+pdflatex Git-Workflow-C-Entwicklung.tex
+pdflatex Git-Workflow-C-Entwicklung.tex
+
+ChatGPT:
+
+Zusammenfassung in Latex: Schreibstil: Expositorisch ohne Form du/sie
+Erstellen Sie eine kurze (ca. 200 Wörter) und ansprechende Zusammenfassung zum nachfolgenden Text. Die Zusammenfassung sollte für jemanden ohne wissenschaftlichen Hintergrund verständlich sein und gleichzeitig die wichtigsten Fakten genau wiedergeben. Beachte den Zusammenhang. Textinhalt: " "
+
+Keywords: Erstelle mir eine Liste der wichtigsten Keywords zum Textinhalt.
+
+Erklärung in Latex: Erkläre die Schlüsselwörter. Bereite die Antwort gehirngerecht auf mit Didaktische Reduktion.
+
+neue Infos: Erklären Sie einem Gymnasiasten, der sich mit Programmierung beschäftigt, das Konzept von Git.
+
+Gedankenkette: Könnten Sie kurz das Konzept von Git erläutern? Wie beeinflusst Git die Programmiersprache und in welchen Zusammenhang steht es?
+
+Kognitives Prüfmuster: Wenn ich eine Frage zu Git stelle, teilen Sie sie in drei kleinere Fragen auf, die Ihnen helfen, eine genauere Antwort zu geben. Kombinieren Sie die Antworten auf diese Unterfragen, um die endgültige Antwort zu erhalten.
+
+Rolle - Programmierexperten: Nehmen Sie die Rolle eines erfahrenen Programmierexperten an. Führen Sie anhand dieser Person ein Codeüberprüfung durch.
+
+Rolle - Cybersicherheitsexperten: Nehmen Sie die Rolle eines erfahrenen Cybersicherheitsexperten an. Führen Sie anhand dieser Person ein Überprüfung durch.
+
+Zusammenfassung: Thema: C - Programmierung 
+Schreibstil: Expositorisch ohne Form du/sie, verwende Markdown
+Erstelle eine ansprechende Zusammenfassung zum nachfolgenden Text in Aufzählungsform und gleichzeitig gebe die wichtigsten Informationen genau wieder. Bereite die Antwort gehirngerecht auf mit Didaktische Reduktion. 
+Textinhalt: " "
+
+Fragen: Erstelle 5x Fragen zum Lerninhalt (beachte den Focus: tieferes Verständnis und kritisches Denken zu fördern) mit Lösung. Lerninhalt: " "
+
+Projekt: Erstelle ein Projekt zum Anwenden des gelernten mit Lösung.
+---------------------------------------------------------------------------------------------------------------->
+# C-Entwicklung
 
 ```C
-// hallo-welt.c
+// Quellcode: hallo-welt.c
 #include <stdio.h>
 
 int main() {
@@ -28,6 +92,7 @@ int main() {
 ChatGPT <https://chat.openai.com/>
 
 ```markdown
+# ChatGPT Prompt
 # Für C- oder C++-Projekte wird oft der JavaDoc-Stil empfohlen
 Erstelle Code mit Doxygen-kompatiblen Kommentaren
 
@@ -38,6 +103,7 @@ Erstelle je nach Schreibstil eine ansprechende Zusammenfassung des folgenden Art
 ```
 
 ```bash
+# Terminal: 
 # Dokumentation aktualisieren
 # Dokumentation/html/index.html
 # Dokumentation/latex/refman.pdf
@@ -71,7 +137,7 @@ git commit -m"update "
 git push
 ```
 
-**cppcheck**
+**cppcheck:**
 
 Der Inhalt von `checkers_report.txt` bietet eine umfassende Übersicht über die von `cppcheck` während der Analyse aktivierten Prüfungen (Checker). Dieser Bericht zeigt, dass eine Vielzahl von Prüfungen für verschiedene Aspekte der Codequalität und -sicherheit durchgeführt wurden, einschließlich, aber nicht beschränkt auf:
 
@@ -84,9 +150,7 @@ Der Inhalt von `checkers_report.txt` bietet eine umfassende Übersicht über die
 
 Die Prüfungen sind in verschiedene Kategorien unterteilt, darunter kritische Fehler, Open-Source-Prüfungen, Premium-Prüfungen (nicht verfügbar in der Open-Source-Version von `cppcheck`), und spezifische Regelsätze für Standards wie AUTOSAR, CERT C/C++, und MISRA C/C++.
 
-
-
-## GitHub Actions Workflow
+# GitHub Actions Workflow
 
 Der GitHub Actions Workflow automatisiert den gesamten Prozess des Kompilierens und Testens Ihres Programms bei jedem Push oder Pull Request. Die Workflow-Datei (`ci.yml`), die Sie in Ihrem `.github/workflows` Verzeichnis erstellen, könnte folgendermaßen aussehen, um das Makefile und das Testskript auf einem macOS-Runner zu nutzen:
 
@@ -95,6 +159,7 @@ Der GitHub Actions Workflow automatisiert den gesamten Prozess des Kompilierens 
 3. Führt Tests aus (`make test`), was das `run_tests.sh` Skript aufruft.
 
 ```bash
+# Terminal:
 node -v
 npm -v
 # Initialisieren eines neuen Node.js-Projekts
@@ -132,7 +197,10 @@ vim package.json
     },
     "homepage": "https://github.com/ju1-eu/hello-world#readme"
     }
+```
 
+```bash
+# Terminal:
 # Erstellen einer Doxyfile
 doxygen -g Doxyfile
 vim Doxyfile
@@ -174,7 +242,11 @@ vim Doxyfile
 doxygen Doxyfile
 cd Dokumentation/latex/
 make
+```
 
+
+```bash
+# Terminal
 # C
 make
 # make DEBUG=1 // für den Debug-Modus
@@ -217,10 +289,10 @@ git commit -m""
 git push
 ```
 
-**github/workflows/ci.yml**
+**github/workflows/ci.yml:**
 
 ```yaml
-# .github/workflows/ci.yml
+# vim .github/workflows/ci.yml
 name: C/C++ CI on macOS
 
 on: [push, pull_request]
@@ -276,13 +348,11 @@ jobs:
           path: Dokumentation/latex/
 ```
 
-
-**GitHub Actions Workflow für ein Node.js-Projekt**
-
+**GitHub Actions Workflow für ein Node.js-Projekt:**
 
 ```yaml
 # GitHub Actions Workflow für ein Node.js-Projekt
-# .github/workflows/nodejs.yml
+# vim .github/workflows/nodejs.yml
 name: Node.js Workflow
 
 on: [push]
@@ -307,27 +377,27 @@ jobs:
         run: npm test
 ```
 
-## Makefile
+# Makefile
 
 Der bereitgestellte Makefile ist für die Verwendung mit GitHub Actions konzipiert und bietet verschiedene Modi für die Kompilierung von C-Programmen, einschließlich Debug- und Release-Modi, sowie Ziele für die Bereinigung, Dokumentationserstellung, Code-Qualitätsprüfung und Formatüberprüfung.
 
-### Grundkonfiguration und Modi
+## Grundkonfiguration und Modi
 
 - `DEBUG ?= 1`: Setzt den Debug-Modus standardmäßig auf aktiv (`1`). Dies kann durch das Setzen der `DEBUG`-Variable beim Aufruf von `make` überschrieben werden.
 - `CC = gcc`: Legt den Compiler auf GCC fest.
 - `CFLAGS = -Wall -Wextra -std=c11`: Setzt grundlegende Compiler-Flags, darunter Warnungen und den C11-Standard.
 - `LDFLAGS = -lm`: Linker-Flags, hier zum Linken der Mathematikbibliothek.
 
-### Dateien und Ziele
+## Dateien und Ziele
 
 - `SRCS = $(wildcard *.c)`: Findet alle `.c`-Dateien im aktuellen Verzeichnis.
 - `TARGETS = $(SRCS:.c=)`: Generiert Namen für die ausführbaren Ziele basierend auf den `.c`-Dateinamen.
 
-### Bedingte Kompilierung
+## Bedingte Kompilierung
 
 - Basierend auf dem `DEBUG`-Flag werden zusätzliche Compiler-Flags hinzugefügt (`-g3` für Debugging, `-O2` für Optimierung im Release-Modus), und die Namen der Ziele werden entsprechend angepasst, um `Debug` oder `Release` zu enthalten.
 
-### Regeln
+## Regeln
 
 - `all`: Das Hauptziel, das alle ausführbaren Dateien erstellt.
 - `%Debug` und `%Release`: Musterregeln zum Erstellen der ausführbaren Dateien im Debug- bzw. Release-Modus.
@@ -338,7 +408,8 @@ Der bereitgestellte Makefile ist für die Verwendung mit GitHub Actions konzipie
 - `check_format`: Formatierung des Codes mit `vim .clang-format` gemäß den Stilvorgaben Google C++ Style Guide in der Konfigurationsdatei.
 
 ```bash
-# .clang-format
+# Terminal:
+# vim .clang-format
 # Google C++ Style Guide
 # clang-format -i -style=file main.c
 BasedOnStyle: Google
@@ -347,11 +418,11 @@ ColumnLimit: 80
 AccessModifierOffset: -2
 ```
 
-### Spezielle Ziele
+## Spezielle Ziele
 
 - `.PHONY`: Gibt an, dass die nachfolgenden Ziele nicht physisch repräsentierte Dateien sind, sondern Aktionen darstellen.
 
-### Verwendung
+## Verwendung
 
 - Standardmäßige Kompilierung (Debug-Modus): `make`
 - Release-Modus: `make DEBUG=0`
@@ -361,6 +432,7 @@ AccessModifierOffset: -2
 - Formatüberprüfung: `make check_format`
 
 ```bash
+# Terminal:
 brew update
 brew upgrade
 brew doctor
@@ -442,8 +514,7 @@ check_format:
 .PHONY: all clean test docs quality check_format
 ```
 
-## Shell-Skript (run_tests.sh)
-
+# Shell-Skript (run_tests.sh)
 
 Das Skript `run_tests.sh` ist ein Bash-Skript, das für das automatisierte Testen von C-Programmen konzipiert ist. Es kompiliert die Programme mit `make`, führt eine Liste von Testprogrammen aus und prüft, ob diese erfolgreich abgeschlossen wurden.
 
@@ -463,9 +534,8 @@ Das Skript `run_tests.sh` ist ein Bash-Skript, das für das automatisierte Teste
 
 8. **Beendigung des Skripts**: Das Skript beendet sich mit dem `exit_code`, der den Erfolg der Tests widerspiegelt. Ein `exit_code` von `0` bedeutet, dass alle Tests erfolgreich waren, während `1` auf Fehler hinweist.
 
-
 ```bash
-# run_tests.sh
+# vim run_tests.sh
 # chmod +x run_tests.sh
 #!/bin/bash
 
@@ -536,8 +606,7 @@ fi
 exit $exit_code
 ```
 
-
-## Projekt: C-Programmierung mit Git-Versionierung
+# Projekt: C-Programmierung mit Git-Versionierung
 
 **Git-Versionierung und Collaboration**
 
@@ -546,13 +615,15 @@ exit $exit_code
 - Pull Requests zur Integration neuer Features in den main-Branch.
 - Nutzung von gh pr create zur Erstellung von Pull Requests und gh issue create zur Meldung von Bugs.
 
-#### Schritt 1: Einrichten des Projekts
+## Schritt 1: Einrichten des Projekts
 
 1. **Repository klonen**
+
    ```bash
-        # Konfigurieren von Git
-        # git config --global user.name "Ihr Name"
-        # git config --global user.email "ihre.email@example.com"
+   # Terminal:
+   # Konfigurieren von Git
+   # git config --global user.name "Ihr Name"
+   # git config --global user.email "ihre.email@example.com"
 
    gh repo list
    gh repo clone ju1-eu/hello-world
@@ -560,10 +631,12 @@ exit $exit_code
    mkdir Beispiele Projekte Dokumentation Tutorials
    ```
 
-#### Schritt 2: Arbeiten mit Branches
+## Schritt 2: Arbeiten mit Branches
 
 1. **Neuen Feature-Branch erstellen**:
+
    ```bash
+   # Terminal:
    git branch -a
    # Branch bereits im Remote-Repository existiert
    git checkout -b feature-coole-neuerung origin/feature-coole-neuerung
@@ -574,6 +647,7 @@ exit $exit_code
 
 2. **Änderungen implementieren und committen**:
     - Änderungen hinzufügen und committen:
+
     ```bash
     #--------------------------------------------------
     # Entwicklung starten
@@ -584,7 +658,7 @@ exit $exit_code
     git push origin feature-coole-neuerung
     ```
 
-#### Schritt 3: Pull Request erstellen
+## Schritt 3: Pull Request erstellen
 
 **Pull Request erstellen** mit `gh`:
 
@@ -594,9 +668,9 @@ gh pr create --base main --title "Neues cooles Feature" --body "Hier ist eine de
 gh pr create --base main --head feature-coole-neuerung --title "Neue coole Funktion" --body "Fügt eine neue coole Funktion hinzu, die XYZ verbessert." --reviewer ju1-eu
 ```
 
-#### Schritt 4: Interaktion und Collaboration
+## Schritt 4: Interaktion und Collaboration
 
-**Git Labels**
+**Git Labels:**
 
 - **bug** Etwas funktioniert nicht
 - **documentation** Verbesserungen oder Ergänzungen der Dokumentation
@@ -609,8 +683,10 @@ gh pr create --base main --head feature-coole-neuerung --title "Neue coole Funkt
 - **wontfix** Daran wird nicht gearbeitet
 
 1. **Issue erstellen**, um einen gefundenen Bug zu melden:
+
    ```bash
-        # gh issue --help
+   # Terminal:
+   # gh issue --help
    # Issue erstellen
    gh issue create --title "Titel des Issues" --body "Beschreibung des Issues"
    # Issue bearbeiten:
@@ -666,6 +742,7 @@ gh pr create --base main --head feature-coole-neuerung --title "Neue coole Funkt
 
 2. **Selbstüberprüfung und auf Pull Requests reagieren**:
    - Nehmen Sie sich Zeit, um offene Pull Requests zu überprüfen und konstruktives Feedback zu hinterlassen.
+
    ```bash
    gh pr status
    gh pr list
@@ -688,6 +765,7 @@ gh pr create --base main --head feature-coole-neuerung --title "Neue coole Funkt
    ```
 
 3. **Hauptbranch und Merging** (Feature ist fertig und getestet):
+
    ```bash
    # ANPASSEN
    git checkout main
@@ -717,26 +795,25 @@ gh pr create --base main --head feature-coole-neuerung --title "Neue coole Funkt
    git lg
    ```
 
-#### Schritt 5: GitHub Actions für C und Node.js
+## Schritt 5: GitHub Actions für C und Node.js
 
 - Zwei separate Workflows für C- und Node.js-Projekte automatisieren die Testausführung.
 - Workflows werden durch Pushes oder Pull Requests auf den main-Branch ausgelöst.
 
-
-**GitHub Actions Workflow**
+**GitHub Actions Workflow:**
 
 - Automatisiert Kompilierung und Tests für C-Programme bei jedem Push oder Pull Request zum main-Branch.
 - Workflow-Definition in .github/workflows/ci.yml und .github/workflows/nodejs.yml.
 
 - Nutzt macOS-Runner für C-Programme und Ubuntu-Latest-Runner für Node.js-Projekte.
 
-**Node.js-Projektinitialisierung**
+**Node.js-Projektinitialisierung:**
 
 - Befehle node -v und npm -v zeigen die installierten Versionen.
 - npm init startet ein neues Node.js-Projekt.
 - Node.js und npm werden aktualisiert (nvm install 20, nvm use 20, npm install -g npm@10.2.4).
 
-**Abhängigkeiten und Tests**
+**Abhängigkeiten und Tests:**
 
 - npm install installiert definierte Abhängigkeiten in package.json.
 - npm test führt definierte Tests aus, einschließlich Kompilierung von C-Programmen und Ausführung des run_tests.sh Skripts.
@@ -747,11 +824,9 @@ gh pr create --base main --head feature-coole-neuerung --title "Neue coole Funkt
 - **Automatisierung**: Die Einrichtung der Testautomatisierung über `npm test` ist erfolgreich. Dies erleichtert das kontinuierliche Testen Ihres Projekts während der Entwicklung und hilft, Fehler frühzeitig zu erkennen.
 - **Workflow**: Sie haben einen effektiven Workflow für die Ausführung von Tests eingerichtet, der leicht reproduzierbar ist und sich gut in CI/CD-Pipelines integrieren lässt.
 
-**Nächste Schritte**
+**Nächste Schritte:**
 
 - **Weiterentwicklung**: Sie können nun mit der Weiterentwicklung Ihres Projekts fortfahren, neue Features hinzufügen und sicher sein, dass Sie eine solide Basis für das Testen Ihrer Änderungen haben.
 - **Erweiterte Tests**: Erwägen Sie, erweiterte Testfälle und vielleicht sogar automatisierte Unit-Tests für komplexere Logik in Ihren Programmen zu schreiben.
 - **CI/CD-Integration**: Wenn Sie noch nicht damit begonnen haben, könnten Sie überlegen, Ihren Workflow in eine CI/CD-Pipeline zu integrieren, um Ihre Tests bei jedem Push zu einem Repository oder bei der Erstellung eines Pull Requests automatisch auszuführen.
 - **Dokumentation**: Stellen Sie sicher, dass Sie eine klare Dokumentation für Ihr Projekt haben, insbesondere wenn es wächst. Dies umfasst die Dokumentation des Codes selbst sowie Anleitungen für das Setup, die Konfiguration und die Verwendung Ihres Projekts.
-
-
