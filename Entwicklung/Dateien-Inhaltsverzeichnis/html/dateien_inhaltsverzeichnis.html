@@ -1,0 +1,160 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+  <title></title>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <link rel="stylesheet" href="pygments_style.css" type="text/css">
+</head>
+<body>
+<h2></h2>
+
+<div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Dieses Modul bietet Funktionen zur Konvertierung von Markdown- und C++-Dateien in HTML.</span>
+<span class="sd">Es durchsucht ein spezifiziertes Verzeichnis nach Dateien mit den Erweiterungen .md und .cc,</span>
+<span class="sd">konvertiert diese in HTML und speichert die Ergebnisse in einem ZIELVERZEICHNIS.</span>
+<span class="sd">Zusätzlich wird ein Inhaltsverzeichnis aller konvertierten Dateien erstellt und zusammen</span>
+<span class="sd">mit den HTML-Dateien in das ZIELVERZEICHNIS gespeichert. Für die Darstellung der HTML-Dateien</span>
+<span class="sd">wird ein einheitliches CSS-Design verwendet, das durch eine externe CSS-Datei definiert ist.</span>
+
+<span class="sd">Hauptfunktionalitäten:</span>
+<span class="sd">- Durchsuchen eines Verzeichnisses nach .md und .cc Dateien.</span>
+<span class="sd">- Konvertierung der gefundenen Dateien in HTML unter Verwendung von Pandoc für Markdown und</span>
+<span class="sd">  Pygments für C++ Dateien.</span>
+<span class="sd">- Erzeugung eines Inhaltsverzeichnisses der konvertierten Dateien als HTML.</span>
+<span class="sd">- Anwendung eines einheitlichen Designs auf die generierten HTML-Dateien durch eine CSS-Datei.</span>
+
+<span class="sd">Anforderungen:</span>
+<span class="sd">- Pandoc muss installiert sein, um Markdown-Dateien zu konvertieren.</span>
+<span class="sd">- Pygments muss installiert sein, um Syntax-Highlighting für C++ Code bereitzustellen.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+
+<span class="c1"># Globale Variablen</span>
+<span class="n">VERZEICHNIS</span> <span class="o">=</span> <span class="s2">&quot;./02_Basics&quot;</span>
+<span class="n">ZIELVERZEICHNIS</span> <span class="o">=</span> <span class="s2">&quot;./html&quot;</span>
+<span class="n">PYGMENTS_CSS_DATEI</span> <span class="o">=</span> <span class="s2">&quot;pygments_style.css&quot;</span>
+<span class="n">CUSTOM_CSS_DATEI</span> <span class="o">=</span> <span class="s2">&quot;custom_style.css&quot;</span>
+
+<span class="c1"># Mapping von Dateiendungen zu Sprachoptionen für pygmentize</span>
+<span class="n">sprachoptionen</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;.py&quot;</span><span class="p">:</span> <span class="s2">&quot;python&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;.php&quot;</span><span class="p">:</span> <span class="s2">&quot;php&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;.js&quot;</span><span class="p">:</span> <span class="s2">&quot;javascript&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;.c&quot;</span><span class="p">:</span> <span class="s2">&quot;c&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;.cc&quot;</span><span class="p">:</span> <span class="s2">&quot;cpp&quot;</span><span class="p">,</span>  <span class="c1"># Korrektur für C++ Dateien</span>
+<span class="p">}</span>
+
+<span class="k">def</span> <span class="nf">run_command</span><span class="p">(</span><span class="n">command</span><span class="p">):</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="c1"># Ausgabe unabhängig vom Erfolg, um zu helfen, das Problem zu diagnostizieren</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Ausgeführter Befehl: </span><span class="si">{</span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">command</span><span class="p">)</span><span class="si">}</span><span class="se">\n</span><span class="s2">Stdout: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">stdout</span><span class="si">}</span><span class="se">\n</span><span class="s2">Stderr: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">stderr</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span><span class="o">.</span><span class="n">returncode</span> <span class="o">==</span> <span class="mi">0</span>
+
+
+
+<span class="k">def</span> <span class="nf">konvertiere_zu_html_oder_kopiere</span><span class="p">(</span><span class="n">dateipfad</span><span class="p">,</span> <span class="n">zielverzeichnis</span><span class="p">):</span>
+    <span class="n">dateiname</span><span class="p">,</span> <span class="n">dateiendung</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">dateipfad</span><span class="p">))</span>
+    <span class="n">zieldateipfad</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">zielverzeichnis</span><span class="p">,</span> <span class="n">dateiname</span> <span class="o">+</span> <span class="s2">&quot;.html&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">dateiendung</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;.md&quot;</span><span class="p">:</span>
+        <span class="n">css_dateipfad</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ZIELVERZEICHNIS</span><span class="p">,</span> <span class="n">CUSTOM_CSS_DATEI</span><span class="p">))</span>
+        <span class="n">command</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;pandoc&quot;</span><span class="p">,</span> <span class="n">dateipfad</span><span class="p">,</span> <span class="s2">&quot;-o&quot;</span><span class="p">,</span> <span class="n">zieldateipfad</span><span class="p">,</span> <span class="s2">&quot;-s&quot;</span><span class="p">,</span> <span class="s2">&quot;--mathjax&quot;</span><span class="p">,</span> <span class="s2">&quot;-c&quot;</span><span class="p">,</span> <span class="n">css_dateipfad</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">run_command</span><span class="p">(</span><span class="n">command</span><span class="p">)</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">zieldateipfad</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Markdown-Datei erfolgreich konvertiert: </span><span class="si">{</span><span class="n">zieldateipfad</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Konvertierung fehlgeschlagen oder Ausgabedatei nicht erstellt für </span><span class="si">{</span><span class="n">zieldateipfad</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">dateiendung</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;.pdf&quot;</span><span class="p">:</span>
+        <span class="n">shutil</span><span class="o">.</span><span class="n">copy2</span><span class="p">(</span><span class="n">dateipfad</span><span class="p">,</span> <span class="n">zieldateipfad</span><span class="p">)</span>  <span class="c1"># Kopiert die PDF-Datei direkt ins Zielverzeichnis</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;PDF-Datei kopiert: </span><span class="si">{</span><span class="n">dateipfad</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">dateiendung</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="n">sprachoptionen</span><span class="p">:</span>
+        <span class="n">sprache</span> <span class="o">=</span> <span class="n">sprachoptionen</span><span class="p">[</span><span class="n">dateiendung</span><span class="o">.</span><span class="n">lower</span><span class="p">()]</span>
+        <span class="n">command</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;pygmentize&quot;</span><span class="p">,</span> <span class="s2">&quot;-l&quot;</span><span class="p">,</span> <span class="n">sprache</span><span class="p">,</span> <span class="s2">&quot;-f&quot;</span><span class="p">,</span> <span class="s2">&quot;html&quot;</span><span class="p">,</span> <span class="s2">&quot;-O&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;full,cssfile=</span><span class="si">{</span><span class="n">PYGMENTS_CSS_DATEI</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;-o&quot;</span><span class="p">,</span> <span class="n">zieldateipfad</span><span class="p">,</span> <span class="n">dateipfad</span><span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">run_command</span><span class="p">(</span><span class="n">command</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Konvertierung fehlgeschlagen für </span><span class="si">{</span><span class="n">dateipfad</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Code-Datei erfolgreich hervorgehoben und konvertiert: </span><span class="si">{</span><span class="n">dateipfad</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Keine Aktion definiert für Dateiendung: </span><span class="si">{</span><span class="n">dateiendung</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+
+
+<span class="k">def</span> <span class="nf">verzeichnisstruktur_erzeugen</span><span class="p">(</span><span class="n">ordnerpfad</span><span class="p">,</span> <span class="n">tiefe</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">root_verzeichnis</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Erzeugt die Verzeichnisstruktur als HTML.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">root_verzeichnis</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">root_verzeichnis</span> <span class="o">=</span> <span class="n">ordnerpfad</span>
+
+    <span class="n">struktur_html</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">ordnerpfad</span><span class="p">)):</span>
+        <span class="n">voller_pfad</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ordnerpfad</span><span class="p">,</span> <span class="n">element</span><span class="p">)</span>
+        <span class="n">einzug</span> <span class="o">=</span> <span class="s2">&quot;    &quot;</span> <span class="o">*</span> <span class="n">tiefe</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">voller_pfad</span><span class="p">):</span>
+            <span class="n">struktur_html</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">einzug</span><span class="si">}</span><span class="s2">&lt;li class=&#39;dir&#39;&gt;</span><span class="si">{</span><span class="n">element</span><span class="si">}</span><span class="s2">&lt;ul&gt;</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="n">struktur_html</span> <span class="o">+=</span> <span class="n">verzeichnisstruktur_erzeugen</span><span class="p">(</span><span class="n">voller_pfad</span><span class="p">,</span> <span class="n">tiefe</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">root_verzeichnis</span><span class="p">)</span>
+            <span class="n">struktur_html</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">einzug</span><span class="si">}</span><span class="s2">&lt;/ul&gt;&lt;/li&gt;</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">dateiname</span><span class="p">,</span> <span class="n">dateiendung</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+            <span class="c1"># Hier überprüfen Sie, ob die Datei eine .pdf-Datei ist</span>
+            <span class="k">if</span> <span class="n">dateiendung</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;.pdf&quot;</span><span class="p">:</span>
+                <span class="c1"># Für PDF-Dateien verwenden Sie den originalen Dateinamen und Pfad</span>
+                <span class="n">pfad_zur_datei</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">relpath</span><span class="p">(</span><span class="n">voller_pfad</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="n">root_verzeichnis</span><span class="p">)</span>
+                <span class="n">struktur_html</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">einzug</span><span class="si">}</span><span class="s2">&lt;li class=&#39;file&#39;&gt;&lt;a href=&#39;./</span><span class="si">{</span><span class="n">pfad_zur_datei</span><span class="si">}</span><span class="s2">&#39;&gt;</span><span class="si">{</span><span class="n">element</span><span class="si">}</span><span class="s2">&lt;/a&gt;&lt;/li&gt;</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="k">elif</span> <span class="n">dateiendung</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;.md&quot;</span><span class="p">,</span> <span class="s2">&quot;.cc&quot;</span><span class="p">,</span> <span class="s2">&quot;.py&quot;</span><span class="p">,</span> <span class="s2">&quot;.php&quot;</span><span class="p">,</span> <span class="s2">&quot;.css&quot;</span><span class="p">,</span> <span class="s2">&quot;.js&quot;</span><span class="p">,</span> <span class="s2">&quot;.c&quot;</span><span class="p">]:</span>
+                <span class="c1"># Für andere Dateitypen (außer .pdf) generieren Sie eine .html-Datei</span>
+                <span class="n">html_dateiname</span> <span class="o">=</span> <span class="n">dateiname</span> <span class="o">+</span> <span class="s2">&quot;.html&quot;</span>
+                <span class="n">struktur_html</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">einzug</span><span class="si">}</span><span class="s2">&lt;li class=&#39;file&#39;&gt;&lt;a href=&#39;./</span><span class="si">{</span><span class="n">html_dateiname</span><span class="si">}</span><span class="s2">&#39;&gt;</span><span class="si">{</span><span class="n">element</span><span class="si">}</span><span class="s2">&lt;/a&gt;&lt;/li&gt;</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="c1"># Für .pdf Dateien ist keine Konvertierung nötig, nur das Kopieren</span>
+    <span class="k">return</span> <span class="n">struktur_html</span>
+
+<span class="k">def</span> <span class="nf">schreibe_custom_css</span><span class="p">(</span><span class="n">zieldateipfad</span><span class="p">,</span> <span class="n">inhalt</span><span class="p">):</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">zieldateipfad</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">css_file</span><span class="p">:</span>
+        <span class="n">css_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">inhalt</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">schreibe_inhaltsverzeichnis</span><span class="p">(</span><span class="n">inhalt_html_pfad</span><span class="p">,</span> <span class="n">struktur_html</span><span class="p">,</span> <span class="n">custom_css_datei</span><span class="p">):</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">inhalt_html_pfad</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">html_datei</span><span class="p">:</span>
+        <span class="n">html_datei</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;&lt;!DOCTYPE html&gt;</span><span class="se">\n</span><span class="s2">&lt;html lang=&#39;de&#39;&gt;</span><span class="se">\n</span><span class="s2">&lt;head&gt;</span><span class="se">\n</span><span class="s2">&lt;meta charset=&#39;UTF-8&#39;&gt;</span><span class="se">\n</span><span class="s2">&lt;title&gt;Inhaltsverzeichnis&lt;/title&gt;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">html_datei</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&lt;link rel=&#39;stylesheet&#39; href=&#39;./</span><span class="si">{</span><span class="n">custom_css_datei</span><span class="si">}</span><span class="s2">&#39;&gt;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">html_datei</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;&lt;/head&gt;</span><span class="se">\n</span><span class="s2">&lt;body&gt;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">html_datei</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;&lt;div class=&#39;container&#39;&gt;</span><span class="se">\n</span><span class="s2">&lt;h1&gt;Inhaltsverzeichnis&lt;/h1&gt;</span><span class="se">\n</span><span class="s2">&lt;ul class=&#39;root&#39;&gt;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">html_datei</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struktur_html</span><span class="p">)</span>
+        <span class="n">html_datei</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;&lt;/ul&gt;</span><span class="se">\n</span><span class="s2">&lt;/div&gt;</span><span class="se">\n</span><span class="s2">&lt;/body&gt;</span><span class="se">\n</span><span class="s2">&lt;/html&gt;&quot;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">kopiere_css_in_zielverzeichnis</span><span class="p">(</span><span class="n">quellpfad</span><span class="p">,</span> <span class="n">zielverzeichnis</span><span class="p">,</span> <span class="n">css_dateiname</span><span class="p">):</span>
+    <span class="n">quell_dateipfad</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">quellpfad</span><span class="p">,</span> <span class="n">css_dateiname</span><span class="p">)</span>
+    <span class="n">ziel_dateipfad</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">zielverzeichnis</span><span class="p">,</span> <span class="n">css_dateiname</span><span class="p">)</span>
+    <span class="n">shutil</span><span class="o">.</span><span class="n">copy2</span><span class="p">(</span><span class="n">quell_dateipfad</span><span class="p">,</span> <span class="n">ziel_dateipfad</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;CSS-Datei &#39;</span><span class="si">{</span><span class="n">css_dateiname</span><span class="si">}</span><span class="s2">&#39; wurde nach &#39;</span><span class="si">{</span><span class="n">zielverzeichnis</span><span class="si">}</span><span class="s2">&#39; kopiert.&quot;</span><span class="p">)</span>
+
+<span class="c1"># Hauptlogik</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="c1"># Erstelle das Zielverzeichnis, falls es nicht existiert</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">ZIELVERZEICHNIS</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># Kopiere die CSS-Datei in das Zielverzeichnis</span>
+    <span class="n">kopiere_css_in_zielverzeichnis</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">ZIELVERZEICHNIS</span><span class="p">,</span> <span class="n">CUSTOM_CSS_DATEI</span><span class="p">)</span>
+
+    <span class="c1"># Unterstützte Dateiendungen für die Konvertierung</span>
+    <span class="n">unterstuetzte_dateiendungen</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;.md&quot;</span><span class="p">,</span> <span class="s2">&quot;.cc&quot;</span><span class="p">,</span> <span class="s2">&quot;.py&quot;</span><span class="p">,</span> <span class="s2">&quot;.php&quot;</span><span class="p">,</span> <span class="s2">&quot;.css&quot;</span><span class="p">,</span> <span class="s2">&quot;.pdf&quot;</span><span class="p">,</span> <span class="s2">&quot;.js&quot;</span><span class="p">,</span> <span class="s2">&quot;.c&quot;</span><span class="p">]</span>
+
+    <span class="c1"># Durchlaufe das Verzeichnis und konvertiere alle unterstützten Dateien</span>
+    <span class="k">for</span> <span class="n">root</span><span class="p">,</span> <span class="n">dirs</span><span class="p">,</span> <span class="n">files</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">VERZEICHNIS</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+            <span class="c1"># Prüfe, ob die Dateiendung in der Liste der unterstützten Endungen ist</span>
+            <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">endung</span><span class="p">)</span> <span class="k">for</span> <span class="n">endung</span> <span class="ow">in</span> <span class="n">unterstuetzte_dateiendungen</span><span class="p">):</span>
+                <span class="n">voller_pfad</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span>
+                <span class="n">konvertiere_zu_html_oder_kopiere</span><span class="p">(</span><span class="n">voller_pfad</span><span class="p">,</span> <span class="n">ZIELVERZEICHNIS</span><span class="p">)</span>
+
+    <span class="c1"># Erzeuge die Verzeichnisstruktur als HTML</span>
+    <span class="n">struktur_html</span> <span class="o">=</span> <span class="n">verzeichnisstruktur_erzeugen</span><span class="p">(</span><span class="n">VERZEICHNIS</span><span class="p">)</span>
+    <span class="n">inhalt_html</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ZIELVERZEICHNIS</span><span class="p">,</span> <span class="s2">&quot;inhaltverzeichnis.html&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Schreibe das Inhaltsverzeichnis und die Verzeichnisstruktur in eine HTML-Datei</span>
+    <span class="n">schreibe_inhaltsverzeichnis</span><span class="p">(</span><span class="n">inhalt_html</span><span class="p">,</span> <span class="n">struktur_html</span><span class="p">,</span> <span class="n">CUSTOM_CSS_DATEI</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Konvertierung abgeschlossen. Die HTML- und CSS-Dateien befinden sich im Verzeichnis:&quot;</span><span class="p">,</span> <span class="n">ZIELVERZEICHNIS</span><span class="p">)</span>
+</pre></div>
+</body>
+</html>

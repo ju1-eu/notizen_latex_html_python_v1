@@ -1,0 +1,36 @@
+# Verwendung von virtuellen Umgebungen
+
+Für Python-Projekte wird die Verwendung von virtuellen Umgebungen empfohlen, um Abhängigkeiten projekt-spezifisch und isoliert vom globalen Python-Interpreter zu verwalten. Dies verhindert Konflikte zwischen Projektanforderungen und erleichtert die Reproduzierbarkeit des Projekts auf anderen Systemen. Das Python-Modul `venv` ist Teil der Python-Standardbibliothek (ab Python 3.3) und ermöglicht die Erstellung virtueller Umgebungen. Hier ist, wie du eine virtuelle Umgebung für dieses Projekt einrichten und verwenden kannst:
+
+1. **Erstelle eine virtuelle Umgebung**:
+   Öffne ein Terminal oder eine Kommandozeile und navigiere zum Wurzelverzeichnis dieses Projekts. Führe dann den folgenden Befehl aus:
+
+   ```bash
+   python3 -m venv mein_projekt_env
+   ```
+
+   Dieser Befehl erstellt einen neuen Ordner `mein_projekt_env` im aktuellen Verzeichnis, der die virtuelle Umgebung beherbergt.
+
+2. **Aktiviere die virtuelle Umgebung**:
+   Um die virtuelle Umgebung zu aktivieren, führe den entsprechenden Befehl für dein Betriebssystem aus:
+
+   - **Linux oder macOS**:
+
+     ```bash
+     source mein_projekt_env/bin/activate
+     ```
+
+3. **Installiere die erforderlichen Abhängigkeiten**:
+   Nachdem die virtuelle Umgebung aktiviert ist, kannst du die erforderlichen Abhängigkeiten installieren. Wenn eine `requirements.txt`-Datei vorhanden ist, führe folgenden Befehl aus:
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+   Um eine neue `requirements.txt`-Datei basierend auf den aktuellen Abhängigkeiten der virtuellen Umgebung zu erstellen, verwende:
+
+   ```bash
+   pip freeze > requirements.txt
+   ```
+
+   Dieser Schritt ist besonders nützlich, wenn du neue Pakete installiert hast und sicherstellen möchtest, dass andere Entwickler oder Benutzer dieselben Versionen verwenden können.

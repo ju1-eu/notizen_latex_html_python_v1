@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Quellcodeverwaltung</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="/Users/jan/daten/latex/notizen_latex_html_python_v1/Entwicklung/Dateien-Inhaltsverzeichnis/html/custom_style.css" />
+</head>
+<body>
+<h1 id="backup-und-quellcodeverwaltung-mit-git">Backup und
+Quellcodeverwaltung mit Git</h1>
+<p>Git ermöglicht nicht nur die Versionierung und sichere Aufbewahrung
+deines Codes, sondern auch eine effiziente Zusammenarbeit in Teams.</p>
+<h2 id="git-repository-initialisieren">Git-Repository
+initialisieren</h2>
+<p>Starte damit, ein Git-Repository in deinem Projektverzeichnis zu
+erstellen. Dies ermöglicht es dir, Änderungen am Code zu verfolgen und
+Versionen zu verwalten.</p>
+<ol type="1">
+<li><p><strong>Öffne ein Terminal</strong> und navigiere zu deinem
+Projektverzeichnis:</p></li>
+<li><p><strong>Initialisiere das Git-Repository</strong>:</p></li>
+</ol>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> init</span></code></pre></div>
+<p>Dieser Befehl erstellt ein neues Git-Repository in deinem
+Projektverzeichnis.</p>
+<h2 id="erster-commit">Erster Commit</h2>
+<p>Nachdem du das Repository initialisiert hast, ist es Zeit, deinen
+ersten Commit zu erstellen.</p>
+<ol type="1">
+<li><p><strong>Füge alle Projektdateien zum Staging-Bereich
+hinzu</strong>:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add .</span></code></pre></div></li>
+<li><p><strong>Erstelle den ersten Commit</strong>: Mit dieser Aktion
+hast du den aktuellen Zustand deines Projekts in der Git-Historie
+gesichert.</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">&quot;Initialer Commit&quot;</span></span></code></pre></div></li>
+</ol>
+<h2 id="änderungen-verfolgen">Änderungen verfolgen</h2>
+<p>Mit Git kannst du fortlaufend Änderungen an deinem Projekt
+verfolgen.</p>
+<ol type="1">
+<li><p><strong>Füge geänderte Dateien zum Staging-Bereich
+hinzu</strong>:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add <span class="op">&lt;</span>Dateiname<span class="op">&gt;</span></span></code></pre></div></li>
+<li><p><strong>Erstelle einen neuen Commit</strong>: Wiederhole diesen
+Prozess, um die Entwicklung deines Projekts zu dokumentieren.</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">&quot;Beschreibe hier deine Änderungen&quot;</span></span></code></pre></div></li>
+</ol>
+<h2 id="zurückkehren-zu-früheren-versionen">Zurückkehren zu früheren
+Versionen</h2>
+<p>Git ermöglicht es dir, zu jedem früheren Zustand deines Projekts
+zurückzukehren.</p>
+<ol type="1">
+<li><p><strong>Finde die Commit-ID</strong>, zu der du zurückkehren
+möchtest, indem du die Commit-Historie ansiehst:</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> log</span></code></pre></div></li>
+<li><p><strong>Wechsle zu diesem Commit</strong>:</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout <span class="op">&lt;</span>Commit-ID<span class="op">&gt;</span></span></code></pre></div>
+<ul>
+<li>Um wieder zum aktuellen Zustand deines Hauptbranches (z.B.
+<code>main</code> oder <code>master</code>) zurückzukehren:</li>
+</ul>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout main</span></code></pre></div></li>
+</ol>
+<h2 id="änderungen-mit-remote-repositories-teilen">Änderungen mit
+Remote-Repositories teilen</h2>
+<p>Wenn du mit anderen zusammenarbeitest oder deine Änderungen sicher in
+der Cloud speichern möchtest, solltest du ein Remote-Repository
+einrichten.</p>
+<ol type="1">
+<li><p><strong>Erstelle ein Remote-Repository</strong> auf Plattformen
+wie GitHub, GitLab oder Bitbucket.</p></li>
+<li><p><strong>Verbinde dein lokales Repository mit dem
+Remote-Repository</strong>:</p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> remote add origin <span class="op">&lt;</span>URL-des-Remote-Repository<span class="op">&gt;</span></span></code></pre></div></li>
+<li><p><strong>Sende deine Commits an das
+Remote-Repository</strong>:</p>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push <span class="at">-u</span> origin main</span></code></pre></div></li>
+</ol>
+<h2 id="wiederherstellung">Wiederherstellung</h2>
+<h3 id="einrichten-eines-remote-repositories">Einrichten eines
+Remote-Repositories</h3>
+<p>Ein Remote-Repository auf einer Plattform wie GitHub, GitLab oder
+Bitbucket dient als externes Backup deines Projekts. Wenn du noch kein
+Remote-Repository eingerichtet hast, folge den Anweisungen der
+jeweiligen Plattform, um eines zu erstellen, und verknüpfe es dann mit
+deinem lokalen Repository:</p>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> remote add origin <span class="op">&lt;</span>URL-des-Remote-Repository<span class="op">&gt;</span></span></code></pre></div>
+<h3 id="regelmäßiges-pushen-von-änderungen">Regelmäßiges Pushen von
+Änderungen</h3>
+<p>Um sicherzustellen, dass deine lokale Arbeit regelmäßig gesichert
+wird, pushe deine Änderungen häufig zum Remote-Repository:</p>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push origin main</span></code></pre></div>
+<h3 id="klonen-eines-repositories">Klonen eines Repositories</h3>
+<p>Wenn du auf einem neuen Gerät arbeiten oder eine Kopie deines
+Projekts wiederherstellen möchtest, kannst du das Remote-Repository
+klonen. Dies erstellt eine vollständige Kopie des Repositories auf
+deinem lokalen Gerät:</p>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone <span class="op">&lt;</span>URL-des-Repository<span class="op">&gt;</span></span></code></pre></div>
+<h3 id="wiederherstellung-eines-früheren-zustands">Wiederherstellung
+eines früheren Zustands</h3>
+<p>Wenn du zu einem bestimmten früheren Zustand deines Projekts
+zurückkehren musst, kannst du dies tun, indem du zu dem entsprechenden
+Commit wechselst oder einen Branch auscheckst, der diesen Zustand
+repräsentiert. Um zu einem bestimmten Commit zurückzukehren,
+verwende:</p>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Commit-Historie</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> log</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> log <span class="at">--oneline</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Liste aller lokalen Branches anzeigen</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> branch</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Zurückkehren zu einem bestimmten Commit</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co"># die ersten 7 Zeichen der Commit-ID reichen</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="co"># alte Zustände zu betrachten</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout <span class="op">&lt;</span>Commit-ID<span class="op">&gt;</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="co"># zum neuesten Stand des main Branches zurückkehren</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout main</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout <span class="at">-</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Fehler oder unerwünschte Änderungen sicher rückgängig zu machen</span></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> revert <span class="op">&lt;</span>Commit-ID<span class="op">&gt;</span></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Zurücksetzen des Arbeitsverzeichnisses und der Index (Staging Area) ohne Änderung der Working Directory-Dateien:</span></span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> reset <span class="at">--mixed</span> <span class="op">&lt;</span>commit-id<span class="op">&gt;</span></span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Zum vollständigen Zurücksetzen inklusive aller Änderungen im Arbeitsverzeichnis:</span></span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> reset <span class="at">--hard</span> <span class="op">&lt;</span>commit-id<span class="op">&gt;</span></span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Erstellen eines neuen Branches basierend auf einem älteren Commit</span></span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout <span class="at">-b</span> <span class="op">&lt;</span>neuer-branch-name<span class="op">&gt;</span> <span class="op">&lt;</span>commit-id<span class="op">&gt;</span></span></code></pre></div>
+<h3 id="nutzen-von-tags-für-wichtige-meilensteine">Nutzen von Tags für
+wichtige Meilensteine</h3>
+<p>Um wichtige Versionen deines Projekts leicht wiederherstellen zu
+können, kannst du Git Tags verwenden. Ein Tag erstellt einen benannten
+Ankerpunkt in der Projektgeschichte, den du leicht auschecken
+kannst:</p>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> tag <span class="at">-a</span> v1.0 <span class="at">-m</span> <span class="st">&quot;Mein erster Meilenstein&quot;</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push origin <span class="at">--tags</span></span></code></pre></div>
+<h3 id="erstellen-von-branches-für-experimentelle-features">Erstellen
+von Branches für experimentelle Features</h3>
+<p>Für experimentelle Features oder größere Änderungen ist es ratsam,
+separate Branches zu verwenden. Dies ermöglicht es dir, Veränderungen zu
+isolieren und bei Bedarf leicht zum stabilen Zustand deines Projekts
+(z.B. dem <code>main</code> Branch) zurückzukehren:</p>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout <span class="at">-b</span> feature-branch</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout main</span></code></pre></div>
+<h3 id="backup-des-.git-verzeichnisses">Backup des
+.git-Verzeichnisses</h3>
+<p>Für ein manuelles Backup kannst du das gesamte
+<code>.git</code>-Verzeichnis deines Projekts kopieren. Dieses
+Verzeichnis enthält die gesamte Git-Historie und alle Branches. Beachte
+jedoch, dass es besser ist, für regelmäßige Backups und
+Wiederherstellungen die standardmäßigen Git-Werkzeuge und
+Remote-Repositories zu verwenden.</p>
+<h2 id="richtlinien-für-commit-kommentare">Richtlinien für
+Commit-Kommentare</h2>
+<h3 id="strukturierte-kommentare">1. Strukturierte Kommentare</h3>
+<p>Klare Struktur verwenden:</p>
+<ul>
+<li><strong>Kurze Zusammenfassung</strong>: Starte mit einer kurzen,
+prägnanten Zusammenfassung des Commits. Versuche, diese unter 50 Zeichen
+zu halten.</li>
+<li><strong>Detaillierte Beschreibung</strong>: Falls notwendig, füge
+nach einer Leerzeile eine detailliertere Beschreibung hinzu, die
+erläutert, was geändert wurde und vor allem warum.</li>
+</ul>
+<h3 id="verwende-den-imperativ">2. Verwende den Imperativ</h3>
+<p>Auch im Deutschen solltest du den Imperativ verwenden, um Konsistenz
+mit den Git-Konventionen zu wahren (z.B. “Füge Feature hinzu” statt
+“Feature hinzugefügt”).</p>
+<h3 id="fokussiere-auf-das-warum">3. Fokussiere auf das “Warum”</h3>
+<p>Der Kommentar sollte erklären, warum die Änderungen vorgenommen
+wurden. Dies ist besonders wichtig bei komplexen Änderungen oder
+Fehlerbehebungen.</p>
+<h3 id="beispiele">Beispiele</h3>
+<ul>
+<li><p><strong>Feature hinzufügen</strong>:</p>
+<div class="sourceCode" id="cb17"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">&quot;Füge Suchfunktion zur Kontaktliste hinzu&quot;</span></span></code></pre></div></li>
+<li><p><strong>Fehler beheben</strong>:</p>
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">&quot;Behebe Absturz beim Versuch, einen nicht existierenden Kontakt zu bearbeiten&quot;</span></span></code></pre></div></li>
+<li><p><strong>Dokumentation aktualisieren</strong>:</p>
+<div class="sourceCode" id="cb19"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">&quot;Aktualisiere README mit neuen Installationsanweisungen&quot;</span></span></code></pre></div></li>
+<li><p><strong>Abhängigkeiten aktualisieren</strong>:</p>
+<div class="sourceCode" id="cb20"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">&quot;Aktualisiere Django auf Version 3.2.1 für Sicherheitspatch&quot;</span></span></code></pre></div></li>
+<li><p><strong>Code aufräumen</strong>:</p>
+<div class="sourceCode" id="cb21"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">&quot;Refaktorisiere Kontaktverwaltungsmodul für mehr Klarheit&quot;</span></span></code></pre></div></li>
+<li><p><strong>Leistungsverbesserungen</strong>:</p>
+<div class="sourceCode" id="cb22"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">&quot;Optimiere Datenbankabfragen im Berichtsmodul&quot;</span></span></code></pre></div></li>
+</ul>
+<h2 id="unterschied-zwischen-git-checkout-und-git-revert">Unterschied
+zwischen git checkout und git revert</h2>
+<p><code>git checkout &lt;commit-id&gt;</code> und
+<code>git revert &lt;commit-id&gt;</code> sind zwei verschiedene
+Git-Befehle, die auf unterschiedliche Weise mit der Historie eines
+Git-Repositorys arbeiten. Beide können verwendet werden, um auf frühere
+Zustände eines Projekts zuzugreifen oder Änderungen rückgängig zu
+machen, aber sie tun dies auf sehr unterschiedliche Art und Weise.</p>
+<h3
+id="git-checkout-commit-id"><code>git checkout &lt;commit-id&gt;</code></h3>
+<ul>
+<li><strong>Zweck</strong>: Der
+<code>git checkout &lt;commit-id&gt;</code>-Befehl wird verwendet, um
+den Arbeitsbaum (die Dateien in deinem Projektverzeichnis) und den HEAD
+(den aktuellen Branch-Zeiger) auf den Zustand zu setzen, den sie zum
+Zeitpunkt des angegebenen Commits hatten. Dieser Befehl ändert nicht die
+Projektgeschichte oder die aktuellen Branches; er wechselt lediglich in
+einen “detached HEAD”-Zustand, in dem du den Zustand des Repositories zu
+einem bestimmten Zeitpunkt betrachten kannst.</li>
+<li><strong>Verwendung</strong>: Typischerweise nutzt du
+<code>git checkout</code> für die Untersuchung oder das Experimentieren
+mit alten Versionen deines Projekts. Änderungen, die du im “detached
+HEAD”-Zustand machst, können durch Erstellen eines neuen Branches
+gespeichert werden, sonst riskierst du, sie zu verlieren, wenn du zu
+einem anderen Commit wechselst.</li>
+<li><strong>Wichtig</strong>: <code>git checkout</code> ändert nichts an
+der Historie deines Repositories. Wenn du zurück zu einem früheren
+Commit gehst, um von dort aus weiterzuarbeiten, musst du einen neuen
+Branch erstellen, sonst sind deine neuen Commits nicht an einen Branch
+gebunden.</li>
+</ul>
+<h3
+id="git-revert-commit-id"><code>git revert &lt;commit-id&gt;</code></h3>
+<ul>
+<li><strong>Zweck</strong>: Der
+<code>git revert &lt;commit-id&gt;</code>-Befehl wird verwendet, um die
+Änderungen eines bestimmten Commits rückgängig zu machen, indem ein
+neuer Commit erstellt wird. Im Gegensatz zu <code>git checkout</code>
+ändert <code>git revert</code> die Projektgeschichte, indem aktiv ein
+neuer Zustand erzeugt wird, der die Änderungen des ursprünglichen
+Commits nicht mehr enthält.</li>
+<li><strong>Verwendung</strong>: Du würdest <code>git revert</code>
+verwenden, wenn du einen Fehler oder unerwünschte Änderungen in deinem
+Projekt rückgängig machen möchtest, ohne die Historie zu verlieren. Es
+ist eine sichere Methode, Änderungen rückgängig zu machen, die bereits
+gepusht wurden, da es die Zusammenarbeit nicht stört.</li>
+<li><strong>Wichtig</strong>: <code>git revert</code> erstellt einen
+neuen Commit, der das Gegenteil des angegebenen Commits bewirkt. Die
+ursprünglichen Commits bleiben im Repository-Verlauf erhalten.</li>
+</ul>
+<h3 id="zusammenfassung">Zusammenfassung</h3>
+<ul>
+<li><strong><code>git checkout &lt;commit-id&gt;</code></strong>:
+Wechselt in einen Zustand, der dem angegebenen Commit entspricht, ohne
+die Projektgeschichte zu ändern. Wird hauptsächlich verwendet, um alte
+Zustände zu betrachten oder darauf basierend zu experimentieren.</li>
+<li><strong><code>git revert &lt;commit-id&gt;</code></strong>: Erstellt
+einen neuen Commit, der die Änderungen eines früheren Commits rückgängig
+macht, und ändert damit effektiv die Projektgeschichte, ohne jedoch
+frühere Commits zu entfernen. Wird verwendet, um Fehler oder
+unerwünschte Änderungen sicher rückgängig zu machen.</li>
+</ul>
+</body>
+</html>
