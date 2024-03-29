@@ -1,6 +1,7 @@
 """
-Dieses Skript automatisiert die Konvertierung verschiedener Dateitypen (Markdown, C++, Python, PDF)
-in HTML-Dateien. Es wurde primär entwickelt, um Lehrmaterialien und Übungen effizient
+Dieses Skript automatisiert die Konvertierung verschiedener Dateitypen
+(".md", ".cc", ".py", ".php", ".css", ".js", ".c") in HTML-Dateien.
+Es wurde primär entwickelt, um Lehrmaterialien und Übungen effizient
 für die Webdarstellung aufzubereiten. Neben der Konvertierung einzelner Dateien erzeugt das Skript
 auch eine strukturierte Inhaltsübersicht aller verarbeiteten Materialien.
 
