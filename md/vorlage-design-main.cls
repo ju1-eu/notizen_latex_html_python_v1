@@ -54,6 +54,9 @@
 \RequirePackage{multicol,multirow}
 %\RequirePackage{amssymb,amsmath,amsthm,amsfonts}
 \RequirePackage{eurosym}
+\RequirePackage{tikz}
+\usetikzlibrary{mindmap,trees}
+\RequirePackage{pdfpages}
 
 \geometry{
   paperwidth=20.99cm,       % Papierbreite
@@ -126,7 +129,7 @@
   \begin{tikzpicture}[remember picture,overlay]
     \node[anchor=north west, minimum width=\paperwidth, fill=mydarkblue] at (current page.north west) {
       \parbox{\textwidth}{
-        \vspace*{8pt} % Abstand am Anfang der Box von oben
+        \vspace*{5pt} % Abstand am Anfang der Box von oben
         {\color{webgrau}\LARGE\bfseries\@title\par} % Titel
         %\vspace{5pt} % Abstand zwischen Titel und Autor
         %{\color{mydarkred}\Large\@author\par} % Autor

@@ -53,6 +53,10 @@
 \RequirePackage{url}
 \RequirePackage{multicol,multirow}
 %\RequirePackage{amssymb,amsmath,amsthm,amsfonts}
+\RequirePackage{eurosym}
+\RequirePackage{tikz}
+\usetikzlibrary{mindmap,trees}
+\RequirePackage{pdfpages}
 
 \geometry{
   paperwidth=20.99cm,       % Papierbreite

@@ -1,16 +1,22 @@
 ---
+title: "Markdown"
 thema: "Anwendung von Markdown-Techniken für Dokumentationen"
 runningtitle: "Dokumentation mit Markdown"
-keywords: "Markdown, Dokumentation, Pandoc, Konvertierung, Fußnoten, Tabellen, Code-Blöcke, Hyperlinks, Bilder, Multimedia-Integration"
+keywords: "\\textbf{Keywords:} Markdown, Dokumentation, Pandoc, Konvertierung, Fußnoten, Tabellen, Code, Hyperlinks, Bilder, Literatur"
 abstract: |
-  In der heutigen schnelllebigen Zeit ist die Fähigkeit, komplexe Informationen klar und effizient zu kommunizieren, von entscheidender Bedeutung. Markdown, eine leichtgewichtige Markup-Sprache, hat sich als ein wertvolles Werkzeug für die Erstellung technischer Dokumentationen und die Unterstützung von Entwicklungsprojekten etabliert.
+  \includegraphics[width=0.6\textwidth]{images/Mindmap-Markdown.pdf}
 
-  Ein weiterer Vorteil von Markdown ist die nahtlose Konvertierung in andere Formate wie HTML und PDF durch Werkzeuge wie Pandoc, was die Verbreitung von Dokumenten über verschiedene Plattformen und Medien hinweg vereinfacht.
-author: 'ju'
+  Markdown ist eine leichtgewichtige Auszeichnungssprache, die entwickelt wurde, um das Schreiben von Webinhalten zu vereinfachen. Sie ermöglicht es Autoren, mit einer einfachen Textformatierungssyntax Dokumente zu erstellen, die dann in HTML umgewandelt werden können. Markdown wurde 2004 von John Gruber in Zusammenarbeit mit Aaron Swartz entworfen, mit dem Ziel, Lesbarkeit und Einfachheit in den Vordergrund zu stellen.
+
+  Git ist ein weit verbreitetes Versionskontrollsystem, das von Entwicklern verwendet wird, um den Überblick über Änderungen an ihren Codeprojekten zu behalten. Es unterstützt die Zusammenarbeit, indem es mehreren Benutzern ermöglicht, an denselben Projekten zu arbeiten, ohne sich gegenseitig zu behindern.
+
+  Eine Mindmap ist ein visuelles Diagramm, das dazu dient, Informationen hierarchisch und in einem vernetzten Format darzustellen, wobei ein zentrales Konzept oder Thema in der Mitte platziert und verwandte Themen oder Ideen drum herum angeordnet werden.
+
+  Python ist eine weit verbreitete, hochgradig vielseitige Programmiersprache, die für ihre Einfachheit und Lesbarkeit bekannt ist. Sie unterstützt verschiedene Programmierparadigmen wie objektorientiert, imperativ und in gewissem Maße auch funktional.
 date: \today
 ---
 <!-------------------------------------------------------------------------------------------------------------
-ju 5-2-24 mein-dokument.md
+ju 30-3-24 mein-dokument.md
 pandoc mein-dokument.md -o mein-dokument.html -c navigation.css --mathjax --citeproc --bibliography=literatur.bib --csl=zitierstil-number.csl
 
 Quelle [@spanner:2019:robotik].
@@ -32,14 +38,20 @@ pdflatex mein-dokument.tex
 
 ChatGPT:
 
+Schreibstil: Expositorisch ohne Form du/sie
+Prüfe Rechtschreibung und Grammatik
+Erstelle eine ansprechende Zusammenfassung zum nachfolgenden Text in Aufzählungsform und gleichzeitig gebe die wichtigsten Informationen genau wieder.
+
 Zusammenfassung in Latex: Schreibstil: Expositorisch ohne Form du/sie
 Erstellen Sie eine kurze (ca. 200 Wörter) und ansprechende Zusammenfassung zum nachfolgenden Text. Die Zusammenfassung sollte für jemanden ohne wissenschaftlichen Hintergrund verständlich sein und gleichzeitig die wichtigsten Fakten genau wiedergeben. Beachte den Zusammenhang. Textinhalt: " "
 
-Keywords: Erstelle mir eine Liste der wichtigsten Keywords zum Textinhalt.
+Keywords: Erstelle mir eine kommagetrennte Liste der wichtigsten Keywords zum Textinhalt.
 
 Erklärung in Latex: Erkläre die Schlüsselwörter. Bereite die Antwort gehirngerecht auf mit Didaktische Reduktion.
 
-Welche angemessene Behandlung ist erforderlich, um Heilung zu fördern und weitere Schäden zu vermeiden?
+Basierend auf den Schlüsselwörtern und deren Zusammenhang
+erstelle eine detaillierte Struktur für eine Mindmap
+erstelle eine Mindmap in LaTeX, benutze das Paket tikz
 
 neue Infos: Erklären Sie einem Gymnasiasten, der sich mit Programmierung beschäftigt, das Konzept von Git.
 
@@ -79,6 +91,8 @@ dokumentation.py
 
 Git
 
+![Was ist Git?](images/Mindmap-Git.pdf)
+
 ```bash
 # Git Versionierung
 gh auth login
@@ -105,6 +119,26 @@ git ls
 git clone https://github.com/ju1-eu/notizen_latex_html_python_v1.git
 git clone /Users/jan/notizen_latex_html_python_v1.git notizen_klon
 ```
+
+Latex
+
+```bash
+wget https://mirror.ctan.org/systems/texlive/tlnet/update-tlmgr-latest.sh
+sudo sh update-tlmgr-latest.sh -- --accept
+
+sudo chown -R $(whoami) /usr/local/texlive/
+
+# Pakete installieren
+tlmgr install pgf
+
+# alle installierten Pakete zu aktualisieren
+tlmgr update --all
+
+# Überprüfung der Installation
+tlmgr --version
+tlmgr list --installed
+```
+
 
 Beispiel Quellenangabe
 
@@ -158,4 +192,6 @@ Website [Google](https://www.google.com) und GitHub <https://github.com/ju1-eu> 
 
 ![Logo 2](images/Logo/Logo2.pdf)
 
-![Git-Python-Entwicklung](images/Git-Python-Entwicklung.pdf)
+![Was ist eine Mindmap?](images/Mindmap.pdf)
+
+![Was ist Python?](images/Mindmap-Python.pdf)

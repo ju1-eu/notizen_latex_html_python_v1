@@ -42,7 +42,7 @@ endif
 
 # Clean target to remove generated non-PDF files
 clean:
-	rm -f *.aux *.bbl *.blg *.log *.out *.run.xml *.bcf
+	rm -f *.aux *.bbl *.blg *.log *.out *.run.xml *.bcf *.fls
 
 # New target to remove PDF files
 clean-pdf:
