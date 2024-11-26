@@ -71,67 +71,92 @@ Für Python-Projekte wird die Verwendung von virtuellen Umgebungen empfohlen, um
       # pip 24.0
    ```
 
-## Python-Bibliotheken: Datenanalyse, maschinellem Lernen oder allgemeiner wissenschaftlicher Programmierung in Python
+## Python-Bibliotheken
 
-Wenn Sie mit Datenanalyse, maschinellem Lernen oder allgemeiner wissenschaftlicher Programmierung in Python beginnen, gibt es mehrere Bibliotheken, die zusammen mit Pandas häufig verwendet werden. Die Installation dieser Bibliotheken über den Python Package Installer (pip) erweitert Ihre Werkzeugkiste für eine Vielzahl von Aufgaben.
-
-1. **Pandas**
-   1. **Datenmanipulation**: Mit Pandas können Sie Daten auf einfache Weise filtern, sortieren, gruppieren, aggregieren und transformieren. Dies ist besonders nützlich bei der Vorverarbeitung von Daten vor der Analyse.
-   2. **Datenreinigung**: Pandas erleichtert das Identifizieren und Behandeln von fehlenden Daten oder Dateninkonsistenzen. Es bietet Funktionen zum Auffüllen, Entfernen oder Ersetzen fehlerhafter Werte.
-   3. **Dateiformate**: Pandas unterstützt eine breite Palette von Dateiformaten zum Einlesen und Schreiben von Daten, einschließlich CSV, Excel, JSON, HTML und SQL-Datenbanken, was die Interoperabilität mit verschiedenen Datenquellen und -formaten ermöglicht.
-   4. **Zeitreihendaten**: Die Verarbeitung und Analyse von Zeitreihendaten wird durch spezielle Funktionen unterstützt, die das Arbeiten mit Datums- und Zeitstempeln vereinfachen.
-   5. **Leistung**: Für eine Python-Bibliothek ist Pandas relativ leistungsfähig und kann effizient mit großen Datensätzen umgehen, insbesondere durch die Verwendung von optimierten Datenstrukturen wie `DataFrame` und `Series`.
-   6. **Einfache Integration**: Pandas lässt sich gut mit anderen Datenanalyse- und Wissenschaftsbibliotheken in Python integrieren, wie Matplotlib für die Datenvisualisierung oder Scikit-learn für maschinelles Lernen.
-   7. **Gemeinschaft und Dokumentation**: Pandas hat eine große und aktive Gemeinschaft, was bedeutet, dass viele Ressourcen, Tutorials und Beispiele zur Verfügung stehen. Die offizielle Dokumentation ist umfassend und gut organisiert.
-
-2. **NumPy**: Bietet Unterstützung für große, mehrdimensionale Arrays und Matrizen, zusammen mit einer Sammlung von mathematischen Funktionen, um diese zu bearbeiten. Es ist die Grundlage für viele andere Python-Datenwissenschaftsbibliotheken, einschließlich Pandas.
-
+1. **Wähle das gewünschte Conda-Umfeld**:
+   Aktiviere das Conda-Umfeld, in dem du die Pakete installieren möchtest. Zum Beispiel, wenn du die Pakete in `mein_projekt_env` installieren möchtest, benutze:
    ```bash
-   pip install numpy
+   conda activate mein_projekt_env
    ```
 
-3. **SciPy**: Baut auf NumPy auf und fügt eine Sammlung von Algorithmen für wissenschaftliche und technische Berechnungen hinzu, einschließlich Optimierung, lineare Algebra, Integration und Interpolation.
-
+2. **Installiere die Pakete**:
+   Stelle sicher, dass die Datei `requirements.txt` im aktuellen Verzeichnis vorhanden ist oder gib den vollständigen Pfad zur Datei an, und führe dann:
    ```bash
-   pip install scipy
+   pip install -r requirements.txt
    ```
 
-4. **Matplotlib**: Eine umfangreiche Bibliothek für die Erstellung statischer, animierter und interaktiver Visualisierungen in Python. Es ist sehr anpassbar und kann für die Erstellung von Grafiken und Plots aller Art verwendet werden.
+   Diese Anweisung wird alle in `requirements.txt` aufgeführten Pakete installieren, wobei Konflikte und Abhängigkeiten automatisch von `pip` verwaltet werden.
 
+3. **Überprüfe die Installation**:
+   Um sicherzustellen, dass die Installation erfolgreich war und die Pakete im richtigen Umfeld installiert sind, kannst du mit:
    ```bash
-   pip install matplotlib
+   pip list
+   ```
+   alle installierten Pakete auflisten.
+
+4. **Probleme bei der Installation**:
+   Sollten bei der Installation Probleme auftreten, wie z.B. Versionskonflikte oder fehlgeschlagene Installationen, prüfe die Fehlermeldungen sorgfältig und passe die Versionen in der `requirements.txt` gegebenenfalls an, oder installiere problematische Pakete einzeln, um bessere Kontrolle über den Prozess zu haben.
+
+5. **Deaktiviere das Conda-Umfeld**:
+   Nachdem du fertig bist, kannst du das Umfeld mit:
+   ```bash
+   conda deactivate
+   ```
+   verlassen.
+
+### Schritte, um sicherzustellen, dass du die gewünschte Python-Version nutzt:
+
+1. **Priorisieren der Nutzung dieser Python-Version**:
+   Stelle sicher, dass dein System diese Version bevorzugt. Du könntest dies tun, indem du sicherstellst, dass der Pfad `/usr/local/bin` höher in der `PATH`-Umgebungsvariablen aufgeführt ist als andere Python-Pfade. Dies kannst du überprüfen, indem du dein `PATH` ansiehst:
+   ```bash
+   echo $PATH
    ```
 
-5. **Seaborn**: Baut auf Matplotlib auf und ermöglicht die Erstellung schöner und informativer statistischer Grafiken. Es ist besonders gut für explorative Datenanalyse geeignet.
-
+2. **Aktualisieren deiner Shell-Konfiguration**:
+   Um sicherzustellen, dass diese Version immer verwendet wird, kannst du deiner Shell-Konfigurationsdatei (z.B. `.zshrc` oder `.bashrc`) folgende Zeile hinzufügen:
    ```bash
-   pip install seaborn
+   export PATH="/usr/local/bin:$PATH"
+   ```
+   Danach solltest du die Konfigurationsdatei neu laden:
+   ```bash
+   source ~/.zshrc  # oder entsprechend für bash: source ~/.bashrc
    ```
 
-6. **Scikit-learn**: Eine der beliebtesten Bibliotheken für maschinelles Lernen in Python. Es bietet einfache und effiziente Werkzeuge für Datenmining und Datenanalyse und ist auf die Zusammenarbeit mit NumPy und Pandas abgestimmt.
+3. **Deaktivieren oder Umgehen von `pyenv`**:
+   Wenn du `pyenv` derzeit nicht benötigst, kannst du dessen Einfluss minimieren, indem du entweder seine Initialisierung in deiner Shell-Konfiguration auskommentierst oder sicherstellst, dass `pyenv` keine Versionen festlegt, die mit deiner Installation in Konflikt stehen. Um `pyenv` temporär zu deaktivieren, kannst du einfach die `pyenv`-spezifischen Zeilen in deiner Konfigurationsdatei auskommentieren.
 
+4. **Überprüfen der Python-Version nach Änderungen**:
+   Nachdem du deine `PATH`-Variable angepasst und die Konfiguration neu geladen hast, überprüfe nochmals, welche Version von Python standardmäßig verwendet wird:
    ```bash
-   pip install scikit-learn
+   python --version  # oder /usr/local/bin/python3 --version
+   which python
    ```
 
-7. **TensorFlow** und **PyTorch**: Beide sind fortschrittliche Bibliotheken für maschinelles Lernen und tiefe neuronale Netzwerke. TensorFlow wird von Google entwickelt, während PyTorch von Facebook unterstützt wird. Ihre Auswahl hängt von persönlichen Vorlieben und spezifischen Projektanforderungen ab.
+### Paketliste requirements.txt
 
-   ```bash
-   pip install tensorflow
-   pip install torch
-   ```
+1. **NumPy (numpy)** - Eine Kernbibliothek für numerische Berechnungen in Python. Sie bietet Unterstützung für große, mehrdimensionale Arrays und Matrizen, zusammen mit einer großen Sammlung von mathematischen Funktionen.
 
-8. **Jupyter Notebook**: Bietet eine interaktive Umgebung für das Schreiben und Ausführen von Python-Code, ideal für Datenanalyse und explorative Programmierung. Es unterstützt die Einbettung von Visualisierungen und Texterklärungen.
+2. **Pandas (pandas)** - Bietet Datenstrukturen und Datenanalysewerkzeuge. Es ist ideal für den Umgang mit strukturierten Daten (wie Tabellen).
 
-   ```bash
-   pip install notebook
-   ```
+3. **Matplotlib (matplotlib)** - Eine Zeichenbibliothek für Python, die Plots und Grafiken in verschiedenen Formaten erzeugen kann.
 
-9. **Plotly**: Eine weitere Bibliothek für interaktive und browserbasierte Visualisierungen. Es ist kompatibel mit vielen Programmiersprachen und Frameworks und bietet eine Vielzahl von Diagrammtypen.
+4. **SciPy (scipy)** - Erweitert die Funktionalität von NumPy um weitere mathematische Algorithmen, einschließlich statistischer Verteilungen, Optimierungsalgorithmen und Signalverarbeitung.
 
-   ```bash
-   pip install plotly
-   ```
+5. **TensorFlow (tensorflow) und Keras (keras)** - Beliebte Frameworks für maschinelles Lernen und tiefe neuronale Netzwerke. TensorFlow bietet umfassende und flexible Werkzeuge, Bibliotheken und Community-Ressourcen, die Forscher nutzen können, um komplexe ML-Prozesse zu entwickeln und zu trainieren, während Keras sich auf schnelle Experimente spezialisiert.
+
+6. **Scikit-learn (scikit-learn)** - Eine einfache und effiziente Werkzeugkiste für maschinelles Lernen und statistische Modellierung, einschließlich Klassifikation, Regression, Clustering und Dimensionsreduktion.
+
+7. **Jupyter (jupyterlab, notebook, ipykernel, etc.)** - Ein Set von Open-Source-Tools für interaktive und explorative Programmierung. Jupyter unterstützt über 40 Programmiersprachen, einschließlich Python.
+
+8. **BeautifulSoup (beautifulsoup4)** - Wird für Web Scraping verwendet, um Daten aus HTML- und XML-Dateien zu extrahieren.
+
+9. **Plotly (plotly)** - Eine Graphenbibliothek, die interaktive Plots erstellt, die in Webbrowsern verwendet werden können.
+
+10. **Seaborn (seaborn)** - Eine Python-Datenvisualisierungsbibliothek, die auf Matplotlib basiert. Sie bietet eine hochgradig interaktive Schnittstelle für die Erstellung ansprechender Statistikgrafiken.
+
+11. **Requests (requests)** - Ermöglicht das Senden von HTTP-Anfragen in Python. Es ist einfach zu bedienen und macht das Arbeiten mit APIs oder Webseiten einfacher.
+
+12. **Babel (Babel)** - Eine Bibliothek, die Tools zum Internationalisieren und Lokalisieren von Python-Anwendungen bietet.
 
 ## Keywords: Datenwissenschaft und Maschinelles Lernen mit Python
 
@@ -671,7 +696,7 @@ jupyter --version
 conda update pandas matplotlib
 conda info --envs
 conda deactivate
-conda create -n py312 python=3.12.1
+conda create -n py312 python=3.12.3
 conda activate base
 conda update anaconda
 conda activate py312
@@ -710,12 +735,12 @@ vim ~/.zshrc
         eval "$(pyenv init -)"
     fi
     export PATH="/usr/local/bin:$PATH"
-    export PATH="/Users/jan/.pyenv/versions/3.12.1/bin:$PATH"
+    export PATH="/Users/jan/.pyenv/versions/3.12.3/bin:$PATH"
     alias python=python3
 source ~/.zshrc
-# aktuelles Python 3.12.1 mit pyenv installieren
-pyenv install 3.12.1
-pyenv global 3.12.1
+# aktuelles Python 3.12.3 mit pyenv installieren
+pyenv install 3.12.3
+pyenv global 3.12.3
 python --version
 # Python-Pakete installieren
 pip install Pillow

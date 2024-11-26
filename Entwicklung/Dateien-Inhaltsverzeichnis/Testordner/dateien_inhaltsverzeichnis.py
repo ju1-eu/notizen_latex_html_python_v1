@@ -17,6 +17,7 @@ Anforderungen:
 - Pandoc muss installiert sein, um Markdown-Dateien zu konvertieren.
 - Pygments muss installiert sein, um Syntax-Highlighting für C++ Code bereitzustellen.
 """
+
 import os
 import subprocess
 import shutil
@@ -36,12 +37,14 @@ sprachoptionen = {
     ".cc": "cpp",  # Korrektur für C++ Dateien
 }
 
+
 def run_command(command):
     result = subprocess.run(command, capture_output=True, text=True)
     # Ausgabe unabhängig vom Erfolg, um zu helfen, das Problem zu diagnostizieren
-    print(f"Ausgeführter Befehl: {' '.join(command)}\nStdout: {result.stdout}\nStderr: {result.stderr}")
+    print(
+        f"Ausgeführter Befehl: {' '.join(command)}\nStdout: {result.stdout}\nStderr: {result.stderr}"
+    )
     return result.returncode == 0
-
 
 
 def konvertiere_zu_html_oder_kopiere(dateipfad, zielverzeichnis):
@@ -54,20 +57,32 @@ def konvertiere_zu_html_oder_kopiere(dateipfad, zielverzeichnis):
         if run_command(command) and os.path.exists(zieldateipfad):
             print(f"Markdown-Datei erfolgreich konvertiert: {zieldateipfad}")
         else:
-            print(f"Konvertierung fehlgeschlagen oder Ausgabedatei nicht erstellt für {zieldateipfad}")
+            print(
+                f"Konvertierung fehlgeschlagen oder Ausgabedatei nicht erstellt für {zieldateipfad}"
+            )
     elif dateiendung.lower() == ".pdf":
         shutil.copy2(dateipfad, zieldateipfad)  # Kopiert die PDF-Datei direkt ins Zielverzeichnis
         print(f"PDF-Datei kopiert: {dateipfad}")
     elif dateiendung.lower() in sprachoptionen:
         sprache = sprachoptionen[dateiendung.lower()]
-        command = ["pygmentize", "-l", sprache, "-f", "html", "-O", f"full,cssfile={PYGMENTS_CSS_DATEI}", "-o", zieldateipfad, dateipfad]
+        command = [
+            "pygmentize",
+            "-l",
+            sprache,
+            "-f",
+            "html",
+            "-O",
+            f"full,cssfile={PYGMENTS_CSS_DATEI}",
+            "-o",
+            zieldateipfad,
+            dateipfad,
+        ]
         if not run_command(command):
             print(f"Konvertierung fehlgeschlagen für {dateipfad}")
         else:
             print(f"Code-Datei erfolgreich hervorgehoben und konvertiert: {dateipfad}")
     else:
         print(f"Keine Aktion definiert für Dateiendung: {dateiendung}")
-
 
 
 def verzeichnisstruktur_erzeugen(ordnerpfad, tiefe=0, root_verzeichnis=None):
@@ -89,32 +104,44 @@ def verzeichnisstruktur_erzeugen(ordnerpfad, tiefe=0, root_verzeichnis=None):
             if dateiendung.lower() == ".pdf":
                 # Für PDF-Dateien verwenden Sie den originalen Dateinamen und Pfad
                 pfad_zur_datei = os.path.relpath(voller_pfad, start=root_verzeichnis)
-                struktur_html += f"{einzug}<li class='file'><a href='./{pfad_zur_datei}'>{element}</a></li>\n"
+                struktur_html += (
+                    f"{einzug}<li class='file'><a href='./{pfad_zur_datei}'>{element}</a></li>\n"
+                )
             elif dateiendung.lower() in [".md", ".cc", ".py", ".php", ".css", ".js", ".c"]:
                 # Für andere Dateitypen (außer .pdf) generieren Sie eine .html-Datei
                 html_dateiname = dateiname + ".html"
-                struktur_html += f"{einzug}<li class='file'><a href='./{html_dateiname}'>{element}</a></li>\n"
+                struktur_html += (
+                    f"{einzug}<li class='file'><a href='./{html_dateiname}'>{element}</a></li>\n"
+                )
             # Für .pdf Dateien ist keine Konvertierung nötig, nur das Kopieren
     return struktur_html
 
+
 def schreibe_custom_css(zieldateipfad, inhalt):
-    with open(zieldateipfad, 'w', encoding='utf-8') as css_file:
+    with open(zieldateipfad, "w", encoding="utf-8") as css_file:
         css_file.write(inhalt)
 
+
 def schreibe_inhaltsverzeichnis(inhalt_html_pfad, struktur_html, custom_css_datei):
-    with open(inhalt_html_pfad, 'w', encoding='utf-8') as html_datei:
-        html_datei.write("<!DOCTYPE html>\n<html lang='de'>\n<head>\n<meta charset='UTF-8'>\n<title>Inhaltsverzeichnis</title>\n")
+    with open(inhalt_html_pfad, "w", encoding="utf-8") as html_datei:
+        html_datei.write(
+            "<!DOCTYPE html>\n<html lang='de'>\n<head>\n<meta charset='UTF-8'>\n<title>Inhaltsverzeichnis</title>\n"
+        )
         html_datei.write(f"<link rel='stylesheet' href='./{custom_css_datei}'>\n")
         html_datei.write("</head>\n<body>\n")
-        html_datei.write("<div class='container'>\n<h1>Inhaltsverzeichnis</h1>\n<ul class='root'>\n")
+        html_datei.write(
+            "<div class='container'>\n<h1>Inhaltsverzeichnis</h1>\n<ul class='root'>\n"
+        )
         html_datei.write(struktur_html)
         html_datei.write("</ul>\n</div>\n</body>\n</html>")
+
 
 def kopiere_css_in_zielverzeichnis(quellpfad, zielverzeichnis, css_dateiname):
     quell_dateipfad = os.path.join(quellpfad, css_dateiname)
     ziel_dateipfad = os.path.join(zielverzeichnis, css_dateiname)
     shutil.copy2(quell_dateipfad, ziel_dateipfad)
     print(f"CSS-Datei '{css_dateiname}' wurde nach '{zielverzeichnis}' kopiert.")
+
 
 # Hauptlogik
 if __name__ == "__main__":
@@ -142,4 +169,7 @@ if __name__ == "__main__":
     # Schreibe das Inhaltsverzeichnis und die Verzeichnisstruktur in eine HTML-Datei
     schreibe_inhaltsverzeichnis(inhalt_html, struktur_html, CUSTOM_CSS_DATEI)
 
-    print("Konvertierung abgeschlossen. Die HTML- und CSS-Dateien befinden sich im Verzeichnis:", ZIELVERZEICHNIS)
+    print(
+        "Konvertierung abgeschlossen. Die HTML- und CSS-Dateien befinden sich im Verzeichnis:",
+        ZIELVERZEICHNIS,
+    )

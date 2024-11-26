@@ -1,670 +1,564 @@
-"""
-Dieses Skript bietet eine Benutzeroberfläche für verschiedene Git-Operationen,
-die über ein einfaches Menüsystem zugänglich gemacht werden. Es ermöglicht Benutzern,
-verschiedene Git-Befehle wie das Erstellen und Initialisieren von lokalen Repositories,
-das Verknüpfen mit GitHub, das Hinzufügen, Commiten, Pushen und Pullen von Änderungen,
-sowie fortgeschrittenere Operationen wie das Mergen von Branches, Stashing von Änderungen,
-Anzeigen von Merge-Konflikten, Auflisten von Pull Requests und Verwalten der .gitignore-Datei
-durchzuführen. Die `main`-Funktion dient als Einstiegspunkt und verarbeitet Benutzereingaben,
-um die entsprechenden Aktionen basierend auf der Auswahl zu initiieren.
+"""Git-Hilfsprogramm.
 
-Jeder Befehl im `BEFEHLE`-Mapping ist einem Schlüssel zugeordnet, der eine Nummer enthält,
-die die Aktion beschreibt, und einem Wert, der ein Dictionary mit dem Befehl selbst und einer
-Beschreibung der Aktion enthält. Benutzer interagieren mit dem Menü, indem sie die Nummer der
-gewünschten Aktion eingeben. Das Programm führt dann die entsprechende Funktion aus und zeigt
-Ergebnisse oder Statusmeldungen im Terminal an.
+Dieses Skript bietet eine benutzerfreundliche Schnittstelle für gängige Git-Operationen.
 
-Benutzung:
-    python git_hilfsprogramm.py <Ordnername>
+Hauptfunktionalitäten:
+1. Verwaltung lokaler und Remote-Repositories
+2. Ausführung verschiedener Git-Befehle
+3. Interaktive Benutzeroberfläche für Git-Operationen
 
-Argumente:
-    Ordnername - Der Name des Verzeichnisses, in dem die Git-Operationen durchgeführt werden sollen.
+Hauptkomponenten:
+- GitConfig: Konfigurationsklasse für Git-Operationen
+- GitHelper: Hauptklasse für Git-Operationen
+- GitUI: Benutzeroberfläche für Git-Operationen
 
+Verwendung:
+    python git_hilfsprogramm.py <ordnername>
+
+Args:
+    ordnername: Name des zu bearbeitenden Verzeichnisses
+
+Die Konfiguration enthält:
+- github_url: URL des GitHub-Repositories
+- readme_file: Name der README-Datei
+- github_token: GitHub-Token für API-Zugriff (optional)
+
+Voraussetzungen:
+- Git muss auf dem System installiert sein
+- GitHub CLI (gh) für bestimmte Operationen
+
+Version: 1.0
 Autor: Jan Unger
-Version: 1.1
-Datum: 2024-02-06
+Datum: 26.11.2024
 """
+
+import logging
 import os
 import re
 import subprocess
 import sys
 import traceback
-from dotenv import load_dotenv
+from dataclasses import dataclass, field
+from pathlib import Path
+from typing import Any, Dict, List, Optional, Union
 
 import requests
+from dotenv import load_dotenv
+
+# Logging-Konfiguration
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
+)
 
 
-GITHUB_URL = "https://github.com/ju1-eu/"
-README_FILE = "README.md"
-# Umgebungsvariablen aus der .env-Datei laden
-load_dotenv()
+@dataclass
+class GitConfig:
+    """Konfigurationsklasse für Git-Operationen."""
 
-# Zugriff auf den Token
-github_token = os.getenv('GITHUB_TOKEN')
+    github_url: str = "https://github.com/ju1-eu/"
+    readme_file: str = "README.md"
+    github_token: Optional[str] = field(default=None)
 
-def ausfuehren_befehl(befehl, ordner):
-    """
-    Führt einen gegebenen Shell-Befehl im spezifizierten Ordner aus und fängt Fehler ab.
-    Unterscheidet zwischen echten Fehlern und informativen Nachrichten in der Fehlerausgabe.
-    """
-    try:
-        ergebnis = subprocess.run(befehl, check=True, cwd=ordner,
-                                  text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        # Drucke normale Ausgabe
-        if ergebnis.stdout:
-            print("Ausgabe:", ergebnis.stdout)
-
-        # Untersuche Fehlerausgabe, um echte Fehler von informativen Nachrichten zu unterscheiden
-        # gh pr list  => no open pull requests in ju1-eu/testOrdner
-        if ergebnis.stderr:
-            # Beispiel: Erkenne bekannte informative Nachrichten
-            if "Zu Branch" in ergebnis.stderr or "Bereits aktuell" in ergebnis.stderr:
-                print("Info:", ergebnis.stderr)
-            else:  # Für alle anderen Fälle, betrachte es als echten Fehler
-                print("Fehlerausgabe  (Ignorierbar):", ergebnis.stderr)
-    except subprocess.CalledProcessError as error:
-        # Echte Fehler werden hier behandelt
-        print(f"Fehler bei Ausführung des Befehls: {error.cmd}\nFehlerausgabe:\n{error.stderr}")
+    def __post_init__(self) -> None:
+        """Lädt Umgebungsvariablen nach der Initialisierung."""
+        load_dotenv()
+        self.github_token = os.getenv("GITHUB_TOKEN")
 
 
+class GitHelper:
+    """Hauptklasse für Git-Operationen."""
 
-def sichere_eingabe(eingabeaufforderung):
-    """
-    Fordert den Benutzer zur Eingabe auf und validiert diese, um sicherzustellen,
-    dass sie keine potenziell gefährlichen Zeichen enthält.
-    """
-    eingabe = input(eingabeaufforderung)
-    if re.search(r"[;&|<>]", eingabe):
-        print("Potenziell unsichere Eingabe erkannt. Bitte versuchen Sie es erneut.")
-        return sichere_eingabe(eingabeaufforderung)
-    return eingabe
+    def __init__(self, config: GitConfig):
+        """Initialisiert den GitHelper mit der Konfiguration."""
+        self.config = config
 
+    def ausfuehren_befehl(self, befehl: Union[List[str], str], ordner: Union[str, Path]) -> bool:
+        """Führt einen Shell-Befehl sicher aus.
 
-def lokales_repo_erstellen_und_initialisieren(ordner):
-    """
-    Erstellt ein lokales Git-Repository in einem gegebenen Ordner und initialisiert es.
-    """
-    ordner_pfad = os.path.join(os.getcwd(), ordner)
+        Args:
+            befehl: Auszuführender Befehl
+            ordner: Arbeitsverzeichnis
 
-    # ueberpruefen und Erstellen des Ordners, falls er nicht existiert
-    if not os.path.exists(ordner_pfad):
-        os.makedirs(ordner_pfad)
+        Returns:
+            bool: True bei Erfolg, False bei Fehler
+        """
+        try:
+            if isinstance(befehl, str):
+                befehl_str = befehl
+                shell = True
+            else:
+                befehl_str = " ".join(befehl)
+                shell = False
 
-    # ueberpruefen, ob die .gitignore-Datei vorhanden ist, und erstellen, falls nicht
-    gitignore_pfad = os.path.join(ordner_pfad, ".gitignore")
-    if not os.path.exists(gitignore_pfad):
-        with open(gitignore_pfad, 'w', encoding='utf-8') as gitignore:
-            gitignore.write(
-                "# Hier Dateien und Verzeichnisse angeben, die von der Versionskontrolle"
-                " ausgeschlossen werden sollen\n")
-    # Erstellen der README-Datei mit der ersten Zeile
-    with open(os.path.join(ordner_pfad, README_FILE), 'w', encoding='utf-8') as readme:
-        readme.write(
-            "# " + ordner + " Repository\nThis is the README for the " + ordner + " repository.\n")
+            result = subprocess.run(
+                befehl,
+                check=True,
+                cwd=ordner,
+                text=True,
+                shell=shell,
+                capture_output=True,
+            )
 
-    # Git-Befehle ausfuehren
-    befehle = [
-        f"git init {ordner_pfad}",
-        f"cd {ordner_pfad} && git add {README_FILE}"
-    ]
-    for befehl in befehle:
-        ausfuehren_befehl(befehl, ordner_pfad)
+            if result.stdout:
+                logging.info("Ausgabe: %s", result.stdout)
 
-    # ueberpruefen, ob es aenderungen gibt, die committet werden können
-    prozess = subprocess.run(
-        f"git -C {ordner_pfad} status -s", shell=True, text=True, check=True, capture_output=True)
-    if prozess.stdout.strip():
-        ausfuehren_befehl(
-            f'cd {ordner_pfad} && git commit -m "first commit"', ordner_pfad)
-    else:
-        print(
-            "Keine aenderungen im Arbeitsverzeichnis vorhanden. Es gibt nichts zu committen.")
+            if result.stderr:
+                if any(msg in result.stderr for msg in ["Zu Branch", "Bereits aktuell"]):
+                    logging.info("Info: %s", result.stderr)
+                else:
+                    logging.warning("Fehlerausgabe (Ignorierbar): %s", result.stderr)
 
+            return True
 
-def abfrage_repository_art():
-    """
-    Fragt den Benutzer, ob ein vorhandenes oder ein neues GitHub-Repository verwendet werden soll.
-    """
-    while True:
-        entscheidung = input(
-            "Möchten Sie ein bereits vorhandenes GitHub-Repository verwenden oder ein "
-            "neues erstellen und verknuepfen? (vorhanden/neu): ").lower()
-        if entscheidung in ['vorhanden', 'neu']:
-            return entscheidung
-        print("Ungueltige Auswahl. Bitte 'vorhanden' oder 'neu' eingeben.")
+        except subprocess.CalledProcessError as e:
+            logging.error(
+                "Fehler bei Ausführung des Befehls: %s\nFehlerausgabe:\n%s",
+                befehl_str,
+                e.stderr,
+            )
+            return False
 
+    def _hat_aenderungen(self, ordner: Path) -> bool:
+        """Prüft, ob es Änderungen im Repository gibt."""
+        try:
+            result = subprocess.run(
+                ["git", "status", "--porcelain"],
+                cwd=ordner,
+                capture_output=True,
+                text=True,
+                check=True,
+            )
+            return bool(result.stdout.strip())
+        except subprocess.CalledProcessError:
+            return False
 
-def lokales_repo_mit_github_verknuepfen(ordner):
-    """
-    Verknüpft ein lokales Git-Repository mit einem GitHub-Repository.
-    """
-    if not os.path.exists(ordner):
-        print(f"Das Verzeichnis '{ordner}' existiert nicht.")
-        return
+    def lokales_repo_erstellen(self, ordner: Path) -> None:
+        """Erstellt und initialisiert ein lokales Git-Repository."""
+        try:
+            ordner.mkdir(parents=True, exist_ok=True)
+            gitignore_path = ordner / ".gitignore"
+            readme_path = ordner / self.config.readme_file
 
-    try:
-        prozess = subprocess.run(
-            "git remote get-url origin", shell=True, text=True, check=True, capture_output=True,
-            cwd=ordner)
-        if prozess.stdout:
-            print("Fehler: Externes Repository origin existiert bereits.")
-            return
-    except subprocess.CalledProcessError:
-        # Wenn dieser Block erreicht wird, bedeutet das, dass 'origin' nicht existiert
-        pass
+            if not gitignore_path.exists():
+                gitignore_path.write_text(
+                    "# Dateien und Verzeichnisse für Git-Ignorierung\n",
+                    encoding="utf-8",
+                )
 
-    entscheidung = abfrage_repository_art()
+            readme_content = (
+                f"# {ordner.name} Repository\n"
+                f"This is the README for the {ordner.name} repository.\n"
+            )
+            readme_path.write_text(readme_content, encoding="utf-8")
 
-    if entscheidung == "vorhanden":
-        github_repo_url = input("Geben Sie die URL des vorhandenen GitHub-Repositorys ein: ")
-        subprocess.run(f"git remote add origin {github_repo_url}", shell=True, check=True,
-                       cwd=ordner)
-        subprocess.run("git branch -M main", shell=True, check=True, cwd=ordner)
-        subprocess.run("git push -u origin main", shell=True, check=True, cwd=ordner)
-        print(f"Das lokale Repository '{ordner}' wurde erfolgreich mit dem "
-              "GitHub-Repository verknüpft.")
-    elif entscheidung == "neu":
-        # Stellen Sie sicher, dass GITHUB_URL korrekt definiert ist,
-        # z.B. GITHUB_URL = "https://github.com/USERNAME/"
-        github_repo_url = "https://github.com/USERNAME/"  # Beispiel-URL
-        repo_name = input("Geben Sie den Namen für das neue GitHub-Repository ein: ")
-        subprocess.run(f"gh repo create {repo_name} --public", shell=True, check=True, cwd=ordner)
-        subprocess.run(f"git remote add origin https://github.com/ju1-eu/{repo_name}.git",
-                       shell=True, check=True, cwd=ordner)
-        subprocess.run("git branch -M main", shell=True, check=True, cwd=ordner)
-        subprocess.run("git push -u origin main", shell=True, check=True, cwd=ordner)
-        print(f"Das lokale Repository '{ordner}' wurde erfolgreich erstellt und mit "
-              "einem neuen GitHub-Repository verknüpft.")
-    else:
-        print("Ungültige Auswahl. Bitte 'vorhanden' oder 'neu' eingeben.")
+            self.ausfuehren_befehl(["git", "init"], ordner)
+            self.ausfuehren_befehl(["git", "add", self.config.readme_file], ordner)
 
+            if self._hat_aenderungen(ordner):
+                self.ausfuehren_befehl(["git", "commit", "-m", "Initial commit"], ordner)
 
+        except Exception as e:
+            logging.error("Fehler beim Erstellen des Repositories: %s", e)
+            raise
 
-def commiten_und_pushen(ordner):
-    """
-    Führt Git-Operationen aus, um Dateien hinzuzufügen, zu commiten und zu pushen.
-    """
-    dateien = input(
-        "Welche Dateien möchten Sie hinzufuegen? (z.B. 'file1.txt file2.txt' oder '.' fuer alle): ")
-    commit_nachricht = input("Geben Sie eine Commit-Nachricht ein: ")
-    befehl = (
-        f"cd {ordner} && git add {dateien} && git commit -m '{commit_nachricht}' "
-        "&& git push origin main"
-    )
-    ausfuehren_befehl(befehl, ordner)
+    def github_repo_verbinden(self, ordner: Path) -> None:
+        """Verbindet ein lokales Repository mit GitHub."""
+        entscheidung = self._abfrage_repo_art()
 
+        if entscheidung == "vorhanden":
+            self._verbinde_mit_bestehendem_repo(ordner)
+        elif entscheidung == "neu":
+            self._erstelle_und_verbinde_neues_repo(ordner)
 
+    def _abfrage_repo_art(self) -> str:
+        """Fragt den Benutzer nach der Art des GitHub-Repositories."""
+        while True:
+            auswahl = input(
+                "Möchten Sie ein bestehendes Repository verwenden oder ein "
+                "neues erstellen? (vorhanden/neu): "
+            ).lower()
+            if auswahl in ["vorhanden", "neu"]:
+                return auswahl
+            logging.warning("Ungültige Auswahl. Bitte 'vorhanden' oder 'neu' eingeben.")
 
-def aenderungen_ziehen(ordner):
-    """
-    Zieht Änderungen vom Hauptzweig des Remote-Repositorys in das lokale Repository.
-    """
-    ausfuehren_befehl(f"cd {ordner} && git pull origin main", ordner)
+    def _verbinde_mit_bestehendem_repo(self, ordner: Path) -> None:
+        """Verbindet mit einem bestehenden GitHub-Repository."""
+        repo_url = input("GitHub-Repository URL: ")
+        self.ausfuehren_befehl(["git", "remote", "add", "origin", repo_url], ordner)
+        self.ausfuehren_befehl(["git", "branch", "-M", "main"], ordner)
+        self.ausfuehren_befehl(["git", "push", "-u", "origin", "main"], ordner)
 
+    def _erstelle_und_verbinde_neues_repo(self, ordner: Path) -> None:
+        """Erstellt ein neues GitHub-Repository und verbindet es."""
+        repo_name = input("Name für das neue Repository: ")
+        self.ausfuehren_befehl(["gh", "repo", "create", repo_name, "--public"], ordner)
+        repo_url = f"{self.config.github_url}{repo_name}.git"
+        self.ausfuehren_befehl(["git", "remote", "add", "origin", repo_url], ordner)
+        self.ausfuehren_befehl(["git", "branch", "-M", "main"], ordner)
+        self.ausfuehren_befehl(["git", "push", "-u", "origin", "main"], ordner)
 
-def aenderungen_hinzufuegen(ordner):
-    """
-    Fügt Änderungen zu einem lokalen Git-Repository hinzu.
-    """
-    datei = input("Welche Datei möchten Sie hinzufuegen? (Alles: .): ")
-    ausfuehren_befehl(f"git add {datei}", os.path.join(os.getcwd(), ordner))
+    def aenderungen_hinzufuegen(self, ordner: Path) -> None:
+        """Fügt Änderungen zum Staging-Bereich hinzu."""
+        datei = input("Welche Datei hinzufügen? (. für alle): ")
+        self.ausfuehren_befehl(["git", "add", datei], ordner)
 
-
-def aenderungen_commiten(ordner):
-    """
-    Commitet Änderungen in einem lokalen Git-Repository.
-    """
-    # Vor dem Commit ueberpruefen, ob es aenderungen gibt
-    status_prozess = subprocess.run(
-        f"git -C {ordner} status -s", shell=True, text=True, check=True, capture_output=True)
-    status_output = status_prozess.stdout.strip()
-    if not status_output:
-        print(
-            "Keine aenderungen im Arbeitsverzeichnis vorhanden. Es gibt nichts zu committen.")
-        return
-
-    nachricht = input("Geben Sie eine Commit-Nachricht ein: ")
-    ausfuehren_befehl(f'git commit -m "{nachricht}"', ordner)
-
-
-def repo_klonen(ordner):
-    """
-    Klont ein ausgewähltes GitHub-Repository in einen lokalen Ordner.
-
-    Fragt den Benutzer nach der Auswahl eines Repositories aus der Liste der verfügbaren
-    Repositories eines GitHub-Benutzers. Das ausgewählte Repository wird dann in den angegebenen
-    lokalen Ordner geklont.
-    Stellt sicher, dass der Zielordner nicht existiert oder leer ist, bevor das Klonen durchgeführt
-    wird. Verwendet die globale Variable GITHUB_URL, um die Basis-URL für
-    GitHub-Repository-Operationen zu definieren.
-
-    Args:
-    - ordner (str): Der Pfad des lokalen Ordners, in den das Repository geklont werden soll.
-
-    Returns:
-    - None: Die Funktion gibt nichts zurück, druckt jedoch relevante Nachrichten während
-        der Ausführung.
-    """
-    # Stellen Sie sicher, dass GITHUB_URL korrekt definiert ist und
-    # das Schema beinhaltet, z.B. https://github.com/
-    repositories = get_user_repositories(get_username_from_url(GITHUB_URL))
-
-    if repositories:
-        print("Verfuegbare Repositories zum Klonen:\n")
-        for idx, repo in enumerate(repositories, start=1):
-            print(f"{idx}. Repository: {repo['name']}\n   URL: {GITHUB_URL}{repo['name']}\n")
-
-        auswahl = int(input("Geben Sie die Nummer des Repositories ein, das Sie klonen möchten, "
-                            "oder 0 zum Abbrechen: "))
-
-        if 0 < auswahl <= len(repositories):
-            repo_info = repositories[auswahl - 1]
-            ziel_ordner = os.path.join(ordner, repo_info["name"])
-
-            if os.path.exists(ziel_ordner) and os.listdir(ziel_ordner):
-                print("Fehler: Zielordner existiert bereits und ist nicht leer.")
-                return
-
-            print(f"Klone das Repository '{repo_info['name']}' in den Ordner '{repo_info['name']}'.")
-            #git clone https://github.com/ju1-eu/hello-world ./hello-world
-            ausfuehren_befehl(["git", "clone", GITHUB_URL + repo_info["name"], repo_info["name"]], ordner)
-            print(f"Repository '{repo_info['name']}' wurde erfolgreich geklont.")
-        elif auswahl == 0:
-            print("Befehl wurde abgebrochen.")
-        else:
-            print("Ungültige Auswahl.")
-    else:
-        print("Keine öffentlichen Repositories gefunden.")
-
-
-def aenderungen_pushen(ordner):
-    """
-    Führt das Pushen der lokalen Änderungen an den Hauptzweig (main) des Remote-Repositorys durch.
-
-    Nutzt die Funktion `ausfuehren_befehl`, um den Git-Befehl `git push -u origin main` im
-    spezifizierten Ordner auszuführen. Dies aktualisiert das Remote-Repository mit allen lokalen
-    Änderungen, die an den Hauptzweig (main) committed wurden.
-
-    Args:
-    - ordner (str): Der Pfad des lokalen Repository-Ordners, von dem aus die Änderungen gepusht
-        werden sollen.
-    """
-    ausfuehren_befehl("git push -u origin main", ordner)
-
-
-
-def alle_branches_anzeigen(ordner):
-    """
-    Zeigt alle lokalen und Remote-Branches in einem Git-Repository an.
-    """
-    try:
-        subprocess.run("git fetch --all", shell=True, check=True, cwd=ordner, text=True)
-        prozess = subprocess.run("git branch -a", shell=True, text=True, check=True,
-                                 capture_output=True, cwd=ordner)
-        print(prozess.stdout)
-    except subprocess.CalledProcessError as error:
-        print(f"Fehler beim Anzeigen der Branches: {error}")
-
-def aenderungen_pullen(ordner):
-    """
-    Überprüft das Arbeitsverzeichnis auf uncommitierte Änderungen und ermöglicht
-    dem Benutzer, Änderungen von einem spezifischen Remote-Branch zu ziehen.
-    """
-    try:
-        prozess = subprocess.run("git status --porcelain", shell=True, check=True,  text=True,
-                                 capture_output=True, cwd=ordner)
-        if prozess.stdout.strip():
-            print("Es gibt uncommitierte Änderungen im Arbeitsverzeichnis. Bitte committen "
-                  "oder stashen Sie diese, bevor Sie Änderungen ziehen.")
+    def aenderungen_commiten(self, ordner: Path) -> None:
+        """Committet Änderungen im Repository."""
+        if not self._hat_aenderungen(ordner):
+            logging.info("Keine Änderungen zum Committen vorhanden.")
             return
 
-        # Zeigt alle Branches vor dem Pull an, um dem Benutzer zu helfen, eine Wahl zu treffen
-        alle_branches_anzeigen(ordner)
+        nachricht = input("Commit-Nachricht: ")
+        self.ausfuehren_befehl(["git", "commit", "-m", nachricht], ordner)
 
-        remote_branch = input("Geben Sie den Remote-Branch ein, von dem Sie Änderungen "
-                              "ziehen möchten (z.B. main): ")
-        # Entfernen des "remotes/origin/" Teils, falls vorhanden
-        if remote_branch.startswith("remotes/origin/"):
-            remote_branch = remote_branch.replace("remotes/origin/", "")
+    def aenderungen_pushen(self, ordner: Path) -> None:
+        """Pusht Änderungen zum Remote-Repository."""
+        self.ausfuehren_befehl(["git", "push", "origin", "main"], ordner)
 
-        ausfuehren_befehl(f"git pull origin {remote_branch}", ordner)
+    def aenderungen_pullen(self, ordner: Path) -> None:
+        """Pullt Änderungen vom Remote-Repository."""
+        if self._hat_aenderungen(ordner):
+            logging.warning("Bitte erst lokale Änderungen committen oder stashen.")
+            return
 
-    except subprocess.CalledProcessError as error:
-        print(f"Fehler beim Pullen der Änderungen: {error}")
+        self.ausfuehren_befehl(["git", "pull", "origin", "main"], ordner)
 
+    def repo_klonen(self, ordner: Path) -> None:
+        """Klont ein GitHub-Repository."""
+        repos = self._get_user_repositories()
+        if not repos:
+            logging.warning("Keine Repositories gefunden.")
+            return
 
-def branch_erstellen(ordner):
-    """
-    Erstellt einen neuen Branch im angegebenen lokalen Git-Repository.
-    """
-    branch_name = input("Geben Sie den Namen des neuen Branches ein: ")
-    ausfuehren_befehl(f"git checkout -b {branch_name}", ordner)
+        self._zeige_verfuegbare_repos(repos)
+        auswahl = self._waehle_repository(repos)
+        if auswahl is None:
+            return
 
+        repo = repos[auswahl]
+        ziel = ordner / repo["name"]
+        if ziel.exists() and any(ziel.iterdir()):
+            logging.error("Zielordner existiert bereits und ist nicht leer.")
+            return
 
-def branch_wechseln(ordner):
-    """Branch wechseln"""
-    branch_name = input("Zu welchem Branch möchten Sie wechseln?: ")
-    befehl = ["git", "checkout", branch_name]
-    ausfuehren_befehl(befehl, os.path.join(os.getcwd(), ordner))
-
-
-
-
-def merge_branch(ordner):
-    """"Diese Funktion ermöglicht die Integration der Änderungen aus einem separaten
-    Entwicklungszweig in den aktuellen Branch"""
-    branch_name = input(
-        "Welchen Branch möchten Sie in den aktuellen Branch mergen?: ")
-    ausfuehren_befehl(f"git merge {branch_name}", ordner)
-
-
-def stash_aenderungen(ordner):
-    """Funktion ermöglicht es dem Benutzer, uncommittete Änderungen im aktuellen Arbeitsverzeichnis
-    temporär zu sichern, ohne einen Commit erstellen zu müssen. Diese Funktionalität ist besonders
-    nützlich, um eine saubere Arbeitskopie zu erhalten, wenn man zwischen Branches wechseln muss,
-    ohne dabei den aktuellen Arbeitsfortschritt zu verlieren."""
-    ausfuehren_befehl("git stash", ordner)
-    print("aenderungen wurden gestashed.")
-
-
-def konflikte_anzeigen(ordner):
-    """Diese Funktion dient der Identifikation von Dateien, die Merge-Konflikte enthalten
-    Merge-Konflikte treten auf, wenn Git nicht in der Lage ist, Änderungen aus
-    unterschiedlichen Branches automatisch zusammenzuführen."""
-    ausfuehren_befehl("git diff --name-only --diff-filter=U", ordner)
-    print("Oben sind die Dateien mit Merge-Konflikten aufgelistet.")
-
-
-def pull_requests_auflisten(ordner):
-    """Liste der Pull Requests für das Repository anzuzeigen"""
-    print("Beachten Sie, dass dies nur funktioniert, wenn Sie ueber "
-          "das GitHub CLI-Tool 'gh' verfuegen.")
-    ausfuehren_befehl("gh pr list", ordner)
-
-
-
-def gitignore_verwalten(ordner):
-    """
-    Bietet eine Benutzerschnittstelle zur Verwaltung der .gitignore-Datei in einem gegebenen Ordner.
-
-    Erlaubt dem Benutzer, die aktuelle .gitignore-Datei anzuzeigen oder eine neue Regel
-    hinzuzufügen.
-    Bei der Auswahl werden die entsprechenden Aktionen ausgeführt: Anzeigen des Inhalts
-    von .gitignore oder Hinzufügen einer neuen Regel zur Datei.
-
-    Args:
-    - ordner (str): Der Pfad des Ordners, der das Git-Repository enthält und dessen .gitignore-Datei
-                    verwaltet werden soll.
-    """
-    print("1. .gitignore anzeigen")
-    print("2. Eine neue Regel zu .gitignore hinzufuegen")
-    auswahl = input("Wählen Sie eine Option: ")
-    gitignore_pfad = os.path.join(ordner, ".gitignore")  # Pfadoptimierung
-
-    if auswahl == "1":
-        # ueberpruefen, ob die .gitignore-Datei vorhanden ist
-        if os.path.exists(gitignore_pfad):
-            with open(gitignore_pfad, 'r', encoding='utf-8') as file:
-                print(file.read())
-        else:
-            print(".gitignore existiert nicht in diesem Repository.")
-    elif auswahl == "2":
-        regel = input("Geben Sie die Regel ein, die Sie hinzufuegen möchten: ")
-        with open(gitignore_pfad, 'a', encoding='utf-8') as file:
-            file.write(f"\n{regel}")
-        print(f"Regel '{regel}' zu .gitignore hinzugefuegt.")
-
-
-def log_anzeigen(ordner):
-    """
-    Zeigt den Git-Log für das angegebene lokale Repository an.
-    """
-    ausfuehren_befehl("git lg", ordner)
-
-
-def status_anzeigen(ordner):
-    """
-    Zeigt eine Erklärung der möglichen Statusmeldungen von Git und führt dann den Befehl `git status`
-    aus, um den aktuellen Status des Repositories im angegebenen Ordner anzuzeigen.
-
-    Die Ausgabe umfasst Informationen über den aktuellen Branch, Änderungen im Vergleich zum
-    Remote-Branch sowie den Status von Dateien (modifiziert, hinzugefügt, gelöscht, ungetrackt).
-
-    Args:
-    - ordner (str): Der Pfad des Ordners, der das Git-Repository enthält.
-    """
-    print("Erklärung")
-    print("## zeigt den aktuellen Branch an, gefolgt von den Änderungen "
-          "in Bezug auf den Remote-Branch.")
-    print("M - Geänderte Datei (modifiziert)")
-    print("A - Hinzugefügte Datei (neu hinzugefügt)")
-    print("D - Gelöschte Datei")
-    print("?? - Ungetrackte Datei\n")
-    ausfuehren_befehl("git status", ordner)
-
-
-def get_user_repositories(username):
-    """
-    Ruft alle öffentlichen GitHub-Repositories eines bestimmten Benutzers ab.
-    """
-    page_number = 1
-    repositories = []
-    headers = {"Authorization": f"token {github_token}"} if github_token else {}
-
-    while True:
-        response = requests.get(
-            f"https://api.github.com/users/{username}/repos?page={page_number}&per_page=100",
-            headers=headers,
-            timeout=10
+        self.ausfuehren_befehl(
+            ["git", "clone", f"{self.config.github_url}{repo['name']}.git"], ordner
         )
 
-        if response.status_code == 200:
-            current_page_repos = response.json()
+    def _get_user_repositories(self) -> List[Dict[str, Any]]:
+        """Holt die Liste der Repository des Benutzers von GitHub."""
+        username = self._get_username_from_url()
+        if not username:
+            logging.error("Konnte Benutzernamen nicht aus GitHub-URL extrahieren.")
+            return []
 
-            if not current_page_repos:
-                break
-
-            repositories.extend(current_page_repos)
-            page_number += 1
-        else:
-            print(
-                f"Fehler beim Abrufen der Repositories fuer Benutzer {username} "
-                f"auf Seite {page_number}. Statuscode: {response.status_code}")
-            break
-
-    return repositories
-
-def get_username_from_url(url):
-    """
-    Extrahiert den Benutzernamen aus einer GitHub-URL.
-    """
-    match = re.match(r"https://github.com/([^/]+)/?$", url)
-    if match:
-        return match.group(1)
-    return None
-
-
-
-def github_repositorys_anzeigen():
-    """
-    Zeigt eine Liste der öffentlichen GitHub-Repositories für einen Benutzer an.
-    """
-    username_match = re.match(r"https://github.com/(.*)/$", GITHUB_URL)
-    if username_match:
-        username = username_match.group(1)
-        repositories = get_user_repositories(username)
-
-        if repositories:
-            print(f"Öffentliche Repositories fuer Benutzer {username}:\n")
-            for index, repo in enumerate(repositories, start=1):
-                repo_name = repo["name"]
-                repo_url = GITHUB_URL + repo_name
-                print(f"{index}. Repository: {repo_name}\nURL: {repo_url}\n")
-        else:
-            print("Keine öffentlichen Repositories gefunden.")
-    else:
-        print("Ungueltige GITHUB_URL. Stellen Sie sicher, dass der Benutzername "
-              "in der URL enthalten ist.")
-
-
-def github_repository_loeschen(ordner):
-    repo_name = input("Geben Sie den Namen des zu löschenden Repositories ein: ")
-    ausfuehren_befehl(["gh", "repo", "delete", repo_name, "--yes"], ordner)
-
-
-
-
-
-def zeige_menue_und_waehle():
-    """
-    Zeigt ein Menü mit verschiedenen Git-Operationen und wartet auf die Benutzerauswahl.
-
-    Das Menü listet eine Reihe von Aktionen auf, die mit Git und GitHub durchgeführt werden können,
-    wie das Erstellen und Verbinden von Repositories, das Hinzufügen, Commiten, Pushen und Pullen
-    von Änderungen, das Verwalten von Branches und .gitignore, das Anzeigen von Logs und Status,
-    sowie das Anzeigen und Löschen von GitHub-Repositories.
-
-    Die Funktion erwartet die Eingabe des Benutzers und gibt die getroffene Auswahl zurück.
-    Der Benutzer kann 'q' eingeben, um das Programm zu beenden.
-
-    Returns:
-        str: Die vom Benutzer getroffene Auswahl als Zeichenkette.
-    """
-    print("""
-1. Neues lokales Repository erstellen
-2. Neues Repository auf GitHub verbinden
-3. Änderungen hinzufuegen (git add)
-4. Änderungen commiten (git commit)
-5. Änderungen pushen (git push)
-6. Änderungen pullen (git pull)
-7. Repository klonen
-8. Branch erstellen
-9. Zu einem Branch wechseln
-10. Alle Branches auflisten
-11. Merge eines Branches
-12. Änderungen stashen
-13. Merge-Konflikte anzeigen
-14. Pull Requests auflisten
-15. .gitignore verwalten
-16. Git-Logs anzeigen
-17. Git-Status anzeigen
-18. GitHub-Repositorys anzeigen
-19. GitHub-Repositorys löschen
-q. Beenden
-""")
-    auswahl = input("Wählen Sie eine Option (oder 'q' zum Beenden): ")
-    return auswahl
-
-
-
-def sicherer_aufruf(funktion, *args, **kwargs):
-    """
-    Führt eine übergebene Funktion sicher aus und fängt dabei gängige Ausnahmen.
-
-    Diese Funktion versucht, die übergebene Funktion mit den angegebenen Argumenten und
-    Schlüsselwortargumenten auszuführen. Sie fängt spezifische Ausnahmen wie FileNotFoundError
-    und PermissionError, sowie als Fallback alle anderen Exception-Ausnahmen,
-    um robuste Fehlerbehandlung zu ermöglichen. Bei einem unerwarteten Fehler wird
-    zusätzlich ein Stack-Trace ausgegeben.
-
-    Args:
-        funktion (callable): Die auszuführende Funktion.
-        *args: Variable Positionalargumente für die Funktion.
-        **kwargs: Variable Schlüsselwortargumente für die Funktion.
-
-    Returns:
-        None
-
-    Zeigt Fehlermeldungen in der Konsole an und gibt bei spezifischen Fehlern oder unerwarteten
-    Ausnahmen entsprechende Hinweise.
-    """
-    try:
-        funktion(*args, **kwargs)
-    except FileNotFoundError as error:
-        print(f"Datei nicht gefunden: {error}")
-    except PermissionError as error:
-        print(f"Keine Berechtigung zum Ausführen dieser Operation: {error}")
-    except Exception as error:  # Als Fallback, wenn Sie dennoch alle Fehler fangen möchten
-        print(f"Ein unerwarteter Fehler ist aufgetreten: {error}")
-        traceback.print_exc()  # Gibt den Stack-Trace des Fehlers aus
-
-
-
-
-def pause():
-    """
-    Pausiert die Ausführung des Programms, bis der Benutzer Enter drückt.
-
-    Diese Funktion wird verwendet, um den Programmfluss anzuhalten und dem Benutzer Zeit zu geben,
-    die bisherigen Ausgaben zu überprüfen, bevor das Programm mit der Ausführung fortfährt.
-    """
-    input("Drücken Sie Enter, um fortzufahren...")
-
-
-# Mapping der Befehle
-BEFEHLE = {
-    1: {"command": lokales_repo_erstellen_und_initialisieren, "description": "Neues lokales Repository erstellen"},
-    2: {"command": lokales_repo_mit_github_verknuepfen, "description": "Neues Repository auf GitHub verbinden"},
-    3: {"command": aenderungen_hinzufuegen, "description": "Änderungen hinzufügen (git add)"},
-    4: {"command": aenderungen_commiten, "description": "Änderungen commiten (git commit)"},
-    5: {"command": aenderungen_pushen, "description": "Änderungen pushen (git push)"},
-    6: {"command": aenderungen_pullen, "description": "Änderungen pullen (git pull)"},
-    7: {"command": repo_klonen, "description": "Repository klonen"},
-    8: {"command": branch_erstellen, "description": "Branch erstellen"},
-    9: {"command": branch_wechseln, "description": "Zu einem Branch wechseln"},
-    10: {"command": alle_branches_anzeigen, "description": "Alle Branches auflisten"},
-    11: {"command": merge_branch, "description": "Merge eines Branches"},
-    12: {"command": stash_aenderungen, "description": "Änderungen stashen"},
-    13: {"command": konflikte_anzeigen, "description": "Merge-Konflikte anzeigen"},
-    14: {"command": pull_requests_auflisten, "description": "Pull Requests auflisten"},
-    15: {"command": gitignore_verwalten, "description": ".gitignore verwalten"},
-    16: {"command": log_anzeigen, "description": "Git-Logs anzeigen"},
-    17: {"command": status_anzeigen, "description": "Git-Status anzeigen"},
-    18: {"command": github_repositorys_anzeigen, "description": "GitHub-Repositorys anzeigen"},
-    19: {"command": github_repository_loeschen, "description": "GitHub-Repositorys löschen"}
-    # Weitere Befehle können hier ergänzt werden.
-}
-
-
-def main():
-    """
-    Hauptfunktion des Skripts. Verarbeitet Benutzereingaben aus der Kommandozeile,
-    zeigt ein Menü der verfügbaren Git-Operationen an und führt die vom Benutzer
-    ausgewählte Operation aus. Verwendet das Mapping `BEFEHLE` zur Zuordnung von
-    Befehlen zu Menüoptionen.
-    """
-    if len(sys.argv) != 2:
-        print("Bitte geben Sie den Ordnernamen als Argument an.")
-        return
-
-    ordner_name = sys.argv[1]
-
-    while True:
-        auswahl = zeige_menue_und_waehle()
-        if auswahl == 'q':
-            print("Programm beendet.")
-            break
+        headers = (
+            {"Authorization": f"token {self.config.github_token}"}
+            if self.config.github_token
+            else {}
+        )
 
         try:
-            auswahl_num = int(auswahl)
+            response = requests.get(
+                f"https://api.github.com/users/{username}/repos",
+                headers=headers,
+                timeout=10,
+            )
+            response.raise_for_status()
+            return response.json()
+        except requests.RequestException as e:
+            logging.error("Fehler beim Abrufen der Repositories: %s", e)
+            return []
+
+    def _get_username_from_url(self) -> Optional[str]:
+        """Extrahiert den Benutzernamen aus der GitHub-URL."""
+        match = re.match(r"https://github\.com/([^/]+)/?", self.config.github_url)
+        return match.group(1) if match else None
+
+    def _zeige_verfuegbare_repos(self, repos: List[Dict[str, Any]]) -> None:
+        """Zeigt die verfügbaren Repositories an."""
+        for idx, repo in enumerate(repos, 1):
+            logging.info(
+                "%d. %s\n   URL: %s\n",
+                idx,
+                repo["name"],
+                repo["html_url"],
+            )
+
+    def _waehle_repository(self, repos: List[Dict[str, Any]]) -> Optional[int]:
+        """Lässt den Benutzer ein Repository auswählen."""
+        try:
+            auswahl = int(input("Nummer des zu klonenden Repositories (0 zum Abbrechen): "))
+            if 0 < auswahl <= len(repos):
+                return auswahl - 1
+            if auswahl == 0:
+                return None
+            logging.warning("Ungültige Auswahl.")
+            return None
         except ValueError:
-            print("Ungültige Auswahl. Bitte geben Sie eine Zahl ein.")
-            continue
+            logging.error("Bitte eine Zahl eingeben.")
+            return None
 
-        if auswahl_num in BEFEHLE:
-            print("\n==================================================\n")
-            befehl = BEFEHLE[auswahl_num]['command']
+    def branch_erstellen(self, ordner: Path) -> None:
+        """Erstellt einen neuen Branch."""
+        name = input("Name des neuen Branches: ")
+        self.ausfuehren_befehl(["git", "checkout", "-b", name], ordner)
 
-            # Überprüfen, ob die Funktion `ordner_name` benötigt
-            if auswahl_num in [18]:
-                sicherer_aufruf(befehl)  # Keine Argumente
+    def branch_wechseln(self, ordner: Path) -> None:
+        """Wechselt zu einem anderen Branch."""
+        name = input("Zu welchem Branch wechseln? ")
+        self.ausfuehren_befehl(["git", "checkout", name], ordner)
+
+    def alle_branches_anzeigen(self, ordner: Path) -> None:
+        """Zeigt alle Branches an."""
+        self.ausfuehren_befehl(["git", "fetch", "--all"], ordner)
+        self.ausfuehren_befehl(["git", "branch", "-a"], ordner)
+
+    def branch_mergen(self, ordner: Path) -> None:
+        """Merged einen Branch in den aktuellen Branch."""
+        branch = input("Welchen Branch mergen? ")
+        self.ausfuehren_befehl(["git", "merge", branch], ordner)
+
+    def aenderungen_stashen(self, ordner: Path) -> None:
+        """Stasht die aktuellen Änderungen."""
+        self.ausfuehren_befehl(["git", "stash"], ordner)
+        logging.info("Änderungen wurden gestasht.")
+
+    def konflikte_anzeigen(self, ordner: Path) -> None:
+        """Zeigt Dateien mit Merge-Konflikten an."""
+        self.ausfuehren_befehl(["git", "diff", "--name-only", "--diff-filter=U"], ordner)
+
+    def pull_requests_anzeigen(self, ordner: Path) -> None:
+        """Zeigt Pull Requests an."""
+        self.ausfuehren_befehl(["gh", "pr", "list"], ordner)
+
+    def gitignore_verwalten(self, ordner: Path) -> None:
+        """Verwaltet die .gitignore-Datei."""
+        auswahl = input("1. .gitignore anzeigen\n" "2. Regel hinzufügen\n" "Auswahl: ")
+
+        gitignore_path = ordner / ".gitignore"
+
+        if auswahl == "1":
+            if gitignore_path.exists():
+                logging.info("\n%s", gitignore_path.read_text(encoding="utf-8"))
             else:
-                sicherer_aufruf(befehl, ordner_name)
+                logging.warning(".gitignore existiert nicht.")
+        elif auswahl == "2":
+            regel = input("Neue Regel: ")
+            with gitignore_path.open("a", encoding="utf-8") as f:
+                f.write(f"\n{regel}")
+            logging.info("Regel hinzugefügt: %s", regel)
 
-            print("==================================================")
-            pause()
+    def log_anzeigen(self, ordner: Path) -> None:
+        """Zeigt Git-Logs an."""
+        self.ausfuehren_befehl(["git", "log", "--oneline"], ordner)
+
+    def status_anzeigen(self, ordner: Path) -> None:
+        """Zeigt Git-Status an."""
+        self._zeige_status_legende()
+        self.ausfuehren_befehl(["git", "status"], ordner)
+
+    def _zeige_status_legende(self) -> None:
+        """Zeigt Legende für Git-Status-Symbole."""
+        legende = [
+            "Status-Symbole:",
+            "M  - Geänderte Datei",
+            "A  - Hinzugefügte Datei",
+            "D  - Gelöschte Datei",
+            "?? - Ungetrackte Datei",
+            "UU - Merge-Konflikt",
+        ]
+        for zeile in legende:
+            logging.info(zeile)
+        logging.info("-" * 50)
+
+    def github_repos_anzeigen(self) -> None:
+        """Zeigt alle GitHub-Repositories des Benutzers an."""
+        repos = self._get_user_repositories()
+        if repos:
+            logging.info("Verfügbare Repositories:")
+            for idx, repo in enumerate(repos, 1):
+                logging.info(
+                    "%d. %s\n   URL: %s\n   Beschreibung: %s\n",
+                    idx,
+                    repo["name"],
+                    repo["html_url"],
+                    repo.get("description", "Keine Beschreibung"),
+                )
         else:
-            print("Ungültige Auswahl. Bitte erneut versuchen.")
+            logging.warning("Keine Repositories gefunden.")
+
+    def github_repo_loeschen(self, ordner: Path) -> None:
+        """Löscht ein GitHub-Repository."""
+        name = input("Name des zu löschenden Repositories: ")
+        if input(f"Repository '{name}' wirklich löschen? (j/n): ").lower() != "j":
+            logging.info("Löschung abgebrochen.")
+            return
+
+        self.ausfuehren_befehl(["gh", "repo", "delete", name, "--yes"], ordner)
+        logging.info("Repository '%s' wurde gelöscht.", name)
+
+
+class GitUI:
+    """Benutzeroberfläche für Git-Operationen."""
+
+    def __init__(self, git_helper: GitHelper):
+        """Initialisiert die Benutzeroberfläche."""
+        self.git_helper = git_helper
+        self.befehle: Dict[int, Dict[str, Any]] = {
+            1: {
+                "name": "Neues lokales Repository erstellen",
+                "func": self.git_helper.lokales_repo_erstellen,
+            },
+            2: {
+                "name": "Mit GitHub verbinden",
+                "func": self.git_helper.github_repo_verbinden,
+            },
+            3: {
+                "name": "Änderungen hinzufügen (git add)",
+                "func": self.git_helper.aenderungen_hinzufuegen,
+            },
+            4: {
+                "name": "Änderungen committen (git commit)",
+                "func": self.git_helper.aenderungen_commiten,
+            },
+            5: {
+                "name": "Änderungen pushen (git push)",
+                "func": self.git_helper.aenderungen_pushen,
+            },
+            6: {
+                "name": "Änderungen pullen (git pull)",
+                "func": self.git_helper.aenderungen_pullen,
+            },
+            7: {
+                "name": "Repository klonen",
+                "func": self.git_helper.repo_klonen,
+            },
+            8: {
+                "name": "Branch erstellen",
+                "func": self.git_helper.branch_erstellen,
+            },
+            9: {
+                "name": "Branch wechseln",
+                "func": self.git_helper.branch_wechseln,
+            },
+            10: {
+                "name": "Alle Branches anzeigen",
+                "func": self.git_helper.alle_branches_anzeigen,
+            },
+            11: {
+                "name": "Branch mergen",
+                "func": self.git_helper.branch_mergen,
+            },
+            12: {
+                "name": "Änderungen stashen",
+                "func": self.git_helper.aenderungen_stashen,
+            },
+            13: {
+                "name": "Merge-Konflikte anzeigen",
+                "func": self.git_helper.konflikte_anzeigen,
+            },
+            14: {
+                "name": "Pull Requests anzeigen",
+                "func": self.git_helper.pull_requests_anzeigen,
+            },
+            15: {
+                "name": ".gitignore verwalten",
+                "func": self.git_helper.gitignore_verwalten,
+            },
+            16: {
+                "name": "Git-Logs anzeigen",
+                "func": self.git_helper.log_anzeigen,
+            },
+            17: {
+                "name": "Git-Status anzeigen",
+                "func": self.git_helper.status_anzeigen,
+            },
+            18: {
+                "name": "GitHub-Repositories anzeigen",
+                "func": self.git_helper.github_repos_anzeigen,
+            },
+            19: {
+                "name": "GitHub-Repository löschen",
+                "func": self.git_helper.github_repo_loeschen,
+            },
+        }
+
+    def zeige_menue(self) -> str:
+        """Zeigt das Hauptmenü an und gibt die Benutzerauswahl zurück.
+
+        Returns:
+            str: Die Benutzerauswahl oder 'q' zum Beenden
+        """
+        logging.info("\nGit-Operationen:")
+        for nr, befehl in sorted(self.befehle.items()):
+            logging.info("%d. %s", nr, befehl["name"])
+        logging.info("q. Beenden")
+
+        while True:
+            auswahl = input("\nWählen Sie eine Option (oder 'q' zum Beenden): ").strip()
+            if auswahl == "q" or auswahl.isdigit():
+                return auswahl
+            logging.warning("Ungültige Eingabe. Bitte eine Zahl oder 'q' eingeben.")
+
+    def verarbeite_auswahl(self, auswahl: str, ordner: Path) -> bool:
+        """Verarbeitet die Benutzerauswahl.
+
+        Args:
+            auswahl: Gewählte Option
+            ordner: Zu bearbeitendes Verzeichnis
+
+        Returns:
+            bool: False wenn Beenden gewählt wurde, sonst True
+        """
+        if auswahl == "q":
+            return False
+
+        try:
+            nr = int(auswahl)
+            if nr in self.befehle:
+                logging.info("=" * 50)
+                self.befehle[nr]["func"](ordner)
+                logging.info("=" * 50)
+                input("\nDrücken Sie Enter zum Fortfahren...")
+            else:
+                logging.warning("Ungültige Auswahl.")
+        except ValueError:
+            logging.error("Bitte geben Sie eine gültige Zahl ein.")
+        except Exception as e:
+            logging.error("Fehler bei der Ausführung: %s", e)
+            traceback.print_exc()
+
+        return True
+
+
+def main() -> None:
+    """Hauptfunktion des Programms."""
+    if len(sys.argv) != 2:
+        logging.error("Bitte geben Sie den Ordnernamen als Argument an.")
+        sys.exit(1)
+
+    try:
+        config = GitConfig()
+        git_helper = GitHelper(config)
+        ui = GitUI(git_helper)
+        ordner = Path(sys.argv[1])
+
+        while True:
+            auswahl = ui.zeige_menue()  # Gibt jetzt garantiert einen String zurück
+            if not ui.verarbeite_auswahl(auswahl, ordner):
+                logging.info("Programm wird beendet.")
+                break
+
+    except KeyboardInterrupt:
+        logging.info("\nProgramm wurde durch Benutzer beendet.")
+        sys.exit(0)
+    except Exception as e:
+        logging.error("Unerwarteter Fehler: %s", e)
+        traceback.print_exc()
+        sys.exit(1)
 
 
 if __name__ == "__main__":

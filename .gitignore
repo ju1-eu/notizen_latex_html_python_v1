@@ -1,157 +1,70 @@
-.DS_Store
-.ipynb_checkpoints/
+# Projektspezifische Dateien
 NAVIGATION.html
-README.pdf
-TODO.pdf
+update_log.txt
+*.pdf
 html/*.html
 images/output/
 tex/*.tex
 
-Git-Info.pdf
-Python-Anaconda-Notebook.pdf
-Workflow.pdf
-neu.pdf
-vim-bedienung.pdf
+# Eingebettete Git-Repositories
+Entwicklung/Git/C-Entwicklung/hello-world/
+Entwicklung/Git/fork/MeinProjekt/
 
-# Ignorieren von C/C++-spezifischen Dateien
-# Ignoriere Release-Dateien
-*Release
-
-# Ignoriere Debug-Dateien
-*Debug
-
-# Ignoriere .dSYM Ordner
-*.dSYM/
-
-# Ignoriere den build Ordner
-build/
-
-# Prerequisites
-*.d
-
-# Object files
-*.o
-*.ko
-*.obj
-*.elf
-
-# Linker output
-*.ilk
-*.map
-*.exp
-
-# Precompiled Headers
-*.gch
-*.pch
-
-# Libraries
-*.lib
-*.a
-*.la
-*.lo
-
-# Shared objects (inc. Windows DLLs)
-*.dll
-*.so
-*.so.*
-*.dylib
-
-# Executables
-*.exe
-*.out
-*.app
-*.i*86
-*.x86_64
-*.hex
-
-# Debug files
-*.su
-*.idb
-*.pdb
-
-# Kernel Module Compile Results
-*.mod*
-*.cmd
-.tmp_versions/
-modules.order
-Module.symvers
-Mkfile.old
-dkms.conf
-
-
-# Ignorieren von Log-Dateien
-*.log
-
-# Ignorieren von Artefakten der Build-Prozesse
-/build/
-/dist/
-/out/
-
-# Ignorieren von Systemdateien
+# System und Editor
 .DS_Store
 Thumbs.db
-
-# Ignorieren von IDE-spezifischen Dateien
-/.idea/
-/.vscode/
-*.swp
+*.un~
 *~
+.*.un~
+.*.swp
+.*.swo
+*.bak
+.gitignore.bak
+.idea/
+.vscode/
 
-# Ignorieren von Node-Modulen in JavaScript-Projekten
-/node_modules/
+# CRLF/LF Konvertierung
+*.ps1 -text
 
-# Ignorieren von Umgebungsdateien
-.env
-.env.local
-
-# Ignorieren von LaTeX-spezifischen Dateien
-*.aux
-*.out
-*.toc
-*.log
-*.fls
-*.fdb_latexmk
-
-# Ignorieren von Python-spezifischen Dateien
+# Python
 __pycache__/
 *.py[cod]
 *.pyo
 *.pyd
+*$py.class
+*.so
 .Python
+venv/
 .venv/
 env/
-venv/
 ENV/
 env.bak/
 venv.bak/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+.env
+.env.local
+.coverage
+.coverage.*
+.pytest_cache/
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.tox/
+htmlcov/
+.hypothesis/
+pip-log.txt
+pip-delete-this-directory.txt
 
-# Ignorieren von HTML/CSS/JavaScript-spezifischen Dateien
-*.map
-*.css.map
-*.js.map
+# Jupyter
+.ipynb_checkpoints/
+profile_default/
+ipython_config.py
 
-
-# Ignorieren von Bash-spezifischen Dateien
-*.sh~
-
-# Allgemeine Dateien, die oft ignoriert werden
-*.bak
-*.tmp
-*.temp
-
-
-# Byte-compiled / optimized / DLL files
-__pycache__/
-*.py[cod]
-*$py.class
-
-# C extensions
-*.so
-
-# Distribution / packaging
-.Python
+# Build und Distribution
 build/
-develop-eggs/
 dist/
 downloads/
 eggs/
@@ -163,111 +76,90 @@ sdist/
 var/
 wheels/
 share/python-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-MANIFEST
-
-# PyInstaller
-#  Usually these files are written by a python script from a template
-#  before PyInstaller builds the exe, so as to inject date/other infos into it.
-*.manifest
-*.spec
-
-# Installer logs
-pip-log.txt
-pip-delete-this-directory.txt
-
-# Unit test / coverage reports
-htmlcov/
-.tox/
-.nox/
-.coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-*.py,cover
-.hypothesis/
-.pytest_cache/
-cover/
-
-# Translations
-*.mo
-*.pot
-
-# Django stuff:
-*.log
-local_settings.py
-db.sqlite3
-db.sqlite3-journal
-
-# Flask stuff:
-instance/
-.webassets-cache
-
-# Scrapy stuff:
-.scrapy
-
-# Sphinx documentation
-docs/_build/
-
-# PyBuilder
+develop-eggs/
 .pybuilder/
 target/
+instance/
+out/
 
-# Jupyter Notebook
-.ipynb_checkpoints
+# LaTeX
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.run.xml
+*.synctex.gz
+*.toc
 
-# IPython
-profile_default/
-ipython_config.py
+# Web-Entwicklung
+*.map
+*.css.map
+*.js.map
+node_modules/
+.webassets-cache
 
+# C/C++
+*.o
+*.ko
+*.obj
+*.elf
+*.lib
+*.a
+*.la
+*.lo
+*.dll
+*.so
+*.so.*
+*.dylib
+*.exe
+*.out
+*.app
+*.i*86
+*.x86_64
+*.hex
+*.dSYM/
+*.d
+*.gch
+*.pch
+*.ilk
+*.map
+*.exp
+*.su
+*.idb
+*.pdb
+*.mod*
+*.cmd
+.tmp_versions/
+modules.order
+Module.symvers
+Mkfile.old
+dkms.conf
+*Release/
+*Debug/
 
-.pdm.toml
-
-# PEP 582; used by e.g. github.com/David-OConnor/pyflow and github.com/pdm-project/pdm
-__pypackages__/
-
-# Celery stuff
-celerybeat-schedule
-celerybeat.pid
-
-# SageMath parsed files
+# Weitere Formate
+*.mo
+*.pot
 *.sage.py
-
-# Environments
-.env
-.venv
-env/
-venv/
-ENV/
-env.bak/
-venv.bak/
-
-# Spyder project settings
+*.manifest
+*.spec
+*.pyc
+.scrapy
+docs/_build/
+/site
 .spyderproject
 .spyproject
-
-# Rope project settings
 .ropeproject
-
-# mkdocs documentation
-/site
-
-# mypy
-.mypy_cache/
-.dmypy.json
-dmypy.json
-
-# Pyre type checker
-.pyre/
-
-# pytype static type analyzer
 .pytype/
-
-# Cython debug symbols
 cython_debug/
-
-
+.pdm.toml
+__pypackages__/
+celerybeat-schedule
+celerybeat.pid
+db.sqlite3
+db.sqlite3-journal
+local_settings.pyEntwicklung/Kanban-Board-Roadmap/mein_projekt_env/

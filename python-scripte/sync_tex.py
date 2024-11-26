@@ -1,24 +1,28 @@
-"""
-Dieses Skript ermöglicht die Synchronisation von LaTeX (.tex) Dateien zwischen dem aktuellen
-Verzeichnis und einem spezifizierten Quellverzeichnis.
-Der Benutzer hat die Möglichkeit, entweder alle `.tex`-Dateien oder eine spezifische Datei zu
-synchronisieren.
+"""Synchronisierung von LaTeX-Dateien.
+
+Dieses Skript ermöglicht die Synchronisierung von .tex-Dateien zwischen Verzeichnissen.
+
+Hauptfunktionalitäten:
+1. Synchronisierung aller .tex-Dateien oder einer spezifischen Datei
+2. Benutzerinteraktion zur Auswahl der Synchronisierungsmethode
+3. Sichere Ausführung von rsync-Befehlen
+
+Hauptkomponenten:
+- sicherer_aufruf: Führt einen Befehl sicher aus und behandelt Fehler
+- synchronisiere_tex_dateien: Synchronisiert .tex-Dateien basierend auf der Benutzerauswahl
+- auswahl_und_synchronisierung: Ermöglicht die Benutzerauswahl und führt die Synchronisation durch
 
 Verwendung:
-- Das Skript fragt den Benutzer interaktiv, ob alle Dateien oder nur eine bestimmte Datei
-    synchronisiert werden sollen.
-- Bei Auswahl einer spezifischen Datei wird der Benutzer aufgefordert, den Dateinamen einzugeben.
+    python sync_tex.py
 
-Funktionen:
-- `sicherer_aufruf(befehl)`: Führt einen gegebenen Shell-Befehl aus und fängt mögliche Fehler ab.
-    Dies umfasst die Behandlung von `subprocess.CalledProcessError` für fehlgeschlagene Befehle
-    und allgemeine Ausnahmen.
-- `synchronisiere_tex_dateien(spezifische_datei=None)`: Führt die Synchronisation durch. Wenn ein
-    Dateiname angegeben wird, synchronisiert es nur diese spezifische Datei. Ohne Angabe werden
-    alle `.tex`-Dateien im Quellverzeichnis synchronisiert.
-- `auswahl_und_synchronisierung()`: Interaktive Funktion, die die Benutzerauswahl
-    abfragt und die entsprechende Synchronisation initiiert.
-- `main()`: Einstiegspunkt des Skripts, der die Auswahl und Synchronisation startet.
+Das Skript führt den Benutzer interaktiv durch den Prozess der Dateiauswahl und Synchronisierung.
+
+Voraussetzungen:
+- rsync muss auf dem System installiert sein
+
+Version: 1.0
+Autor: Jan Unger
+Datum: 26.11.2024
 """
 
 import subprocess
@@ -49,13 +53,15 @@ def synchronisiere_tex_dateien(spezifische_datei=None):
 
 def auswahl_und_synchronisierung():
     """Ermöglicht die Benutzerauswahl und führt die Synchronisation durch."""
-    auswahl = input(
-        "Möchten Sie alle Dateien kopieren (A) oder nur eine bestimmte (B)? [A/B]: ").strip().upper()
+    auswahl = (
+        input("Möchten Sie alle Dateien kopieren (A) oder nur eine bestimmte (B)? [A/B]: ")
+        .strip()
+        .upper()
+    )
     if auswahl == "A":
         synchronisiere_tex_dateien()  # Alle Dateien synchronisieren
     elif auswahl == "B":
-        dateiname = input(
-            "Geben Sie den Namen der Datei ein (z.B. beispiel.tex): ")
+        dateiname = input("Geben Sie den Namen der Datei ein (z.B. beispiel.tex): ")
         # Spezifische Datei synchronisieren
         synchronisiere_tex_dateien(dateiname)
     else:

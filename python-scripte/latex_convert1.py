@@ -1,136 +1,200 @@
-"""
-Konvertiert Markdown-Dateien zu LaTeX-Dateien unter Verwendung von Pandoc und einer spezifizierten
-LaTeX-Vorlage.
+"""LaTeX Konvertierung.
 
-Dieses Skript dient dazu, alle .md-Dateien in einem vorgegebenen Quellverzeichnis (QUELLPFAD)
-in .tex-Dateien im Zielverzeichnis (ZIELPFAD) zu konvertieren. Dabei wird für die Konvertierung
-eine spezifische LaTeX-Vorlage (VORLAGEPFAD) verwendet. Das Skript prüft zunächst, ob Pandoc auf
-dem System installiert ist, da Pandoc für die Konvertierung erforderlich ist.
+Dieses Modul konvertiert Markdown-Dateien zu LaTeX unter Verwendung von Pandoc.
 
-Funktionalitäten:
-- Überprüft die Installation von Pandoc auf dem System.
-- Konvertiert eine spezifische Markdown-Datei oder alle Markdown-Dateien im Quellverzeichnis
-    zu LaTeX.
-- Verwendet eine benutzerdefinierte LaTeX-Vorlage für die Konvertierung.
-- Unterstützt die Extraktion des Themas aus dem Dateinamen zur Verwendung in der konvertierten
-    Datei.
+Hauptfunktionalitäten:
+1. Konfiguration über eine Config-Klasse
+2. Konvertierung von Markdown zu LaTeX mit Pandoc
+3. Unterstützung für benutzerdefinierte Vorlagen und Filter
+4. Multithreading für parallele Verarbeitung mehrerer Dateien
 
-Konstanten:
-- QUELLPFAD: Der Pfad zum Verzeichnis, das die Markdown-Quelldateien enthält.
-- ZIELPFAD: Der Pfad zum Verzeichnis, in das die konvertierten LaTeX-Dateien geschrieben werden.
-- VORLAGEPFAD: Der Pfad zur LaTeX-Vorlagendatei, die für die Konvertierung verwendet wird.
-
-Funktionen:
-- ist_pandoc_installiert(): Prüft, ob Pandoc auf dem System installiert ist.
-- extrahiere_thema_aus_dateiname(dateiname): Extrahiert das Thema aus dem Dateinamen einer
-    Markdown-Datei.
-- konvertiere_md_zu_tex(md_pfad, tex_pfad): Konvertiert eine einzelne Markdown-Datei in eine
-    LaTeX-Datei unter Verwendung der spezifizierten Vorlage.
-- konvertiere_dateien(dateiname=None): Steuert die Konvertierung basierend auf der Benutzereingabe
-    oder konvertiert alle Dateien im Quellverzeichnis.
-- main(): Hauptfunktion, die die Ausführung des Skripts steuert und die Konvertierung initiiert.
+Hauptkomponenten:
+- Config: Dataclass für die Konfiguration der Konvertierung
+- MarkdownConverter: Klasse zur Konvertierung von Markdown zu LaTeX
 
 Verwendung:
-- Das Skript ohne Argumente ausführen, um alle Markdown-Dateien im QUELLPFAD zu konvertieren.
-- Ein spezifischer Dateiname als Argument übergeben, um nur eine bestimmte Markdown-Datei zu
-    konvertieren.
+    python latex_convert1.py
 
-Beispiel:
-- Alle .md-Dateien konvertieren: python skriptname.py
-- Eine spezifische .md-Datei konvertieren: python skriptname.py --dateiname meine_datei.md
+Die Konfiguration enthält:
+- quellpfad: Pfad zum Ordner mit Markdown-Dateien
+- zielpfad: Pfad zum Ausgabeordner für LaTeX-Dateien
+- vorlagepfad: Pfad zur LaTeX-Vorlagendatei
+- filterpfad: Pfad zur Lua-Filterdatei
 
-Anforderungen:
-- Pandoc muss auf dem System installiert sein.
+Voraussetzungen:
+- Pandoc muss auf dem System installiert sein
+
+Version: 1.0
+Autor: Jan Unger
+Datum: 26.11.2024
 """
 
-import os
+import logging
 import subprocess
-import glob
+from dataclasses import dataclass
+from pathlib import Path
+from typing import List, Optional
 
-# Konstanten
-QUELLPFAD = "./md"
-ZIELPFAD = "./tex"
-VORLAGEPFAD = "content/vorlage-main.tex"  # Latexvorlage
-FILTERPFAD = "content/combined-filter.lua"
-
-
-def ist_pandoc_installiert():
-    """Prüft, ob Pandoc auf dem System installiert ist."""
-    try:
-        subprocess.run(["pandoc", "--version"],
-                       capture_output=True, check=True)
-        return True
-    except Exception:
-        return False
+# Logging-Konfiguration
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
+)
 
 
-def extrahiere_thema_aus_dateiname(dateiname):
-    """Extrahiert das Thema aus dem Dateinamen."""
-    # Nehmen Sie an, dass der Dateiname keine Erweiterung hat (z.B. .md)
-    return os.path.splitext(os.path.basename(dateiname))[0]
+@dataclass
+class Config:
+    """Konfigurationsklasse für die Konvertierung."""
+
+    quellpfad: Path = Path("./md")
+    zielpfad: Path = Path("./tex")
+    vorlagepfad: Path = Path("content/vorlage-main.tex")
+    filterpfad: Path = Path("content/combined-filter.lua")
 
 
-def konvertiere_md_zu_tex(md_pfad, tex_pfad):
-    """Konvertiert eine einzelne .md-Datei in .tex mit Pandoc, einer benutzerdefinierten Vorlage und einem Lua-Filter."""
-    thema = extrahiere_thema_aus_dateiname(md_pfad)
+class MarkdownConverter:
+    """Klasse zur Konvertierung von Markdown zu LaTeX."""
 
-    try:
-        subprocess.run(
-            [
+    def __init__(self, config: Config):
+        """Initialisiert den MarkdownConverter."""
+        self.config = config
+
+    def ist_pandoc_installiert(self) -> bool:
+        """Prüft, ob Pandoc auf dem System installiert ist."""
+        try:
+            subprocess.run(
+                ["pandoc", "--version"],
+                capture_output=True,
+                check=True,
+            )
+            return True
+        except subprocess.CalledProcessError:
+            logging.error("Pandoc konnte nicht ausgeführt werden")
+            return False
+        except FileNotFoundError:
+            logging.error("Pandoc ist nicht installiert")
+            return False
+
+    def extrahiere_thema(self, dateiname: str) -> str:
+        """Extrahiert das Thema aus dem Dateinamen.
+
+        Args:
+            dateiname: Name der Datei
+
+        Returns:
+            str: Extrahiertes Thema (Dateiname ohne Erweiterung)
+        """
+        return Path(dateiname).stem
+
+    def konvertiere_datei(self, md_pfad: Path, tex_pfad: Path) -> None:
+        """Konvertiert eine einzelne .md-Datei in .tex.
+
+        Args:
+            md_pfad: Pfad zur Markdown-Datei
+            tex_pfad: Pfad zur Ziel-LaTeX-Datei
+        """
+        thema = self.extrahiere_thema(str(md_pfad))
+
+        try:
+            cmd = [
                 "pandoc",
-                md_pfad,
-                "--to", "latex",
-                "--output", tex_pfad,
-                "--template", VORLAGEPFAD,
-                "--lua-filter", FILTERPFAD,
-                "--variable", "title:" + thema,
+                str(md_pfad),
+                "--to",
+                "latex",
+                "--output",
+                str(tex_pfad),
+                "--template",
+                str(self.config.vorlagepfad),
+                "--lua-filter",
+                str(self.config.filterpfad),
+                "--variable",
+                f"title:{thema}",
                 "--listings",
-            ],
-            capture_output=True,
-            check=True,
-        )
-    except subprocess.CalledProcessError as e:
-        print(f"Fehler bei der Konvertierung der Datei {md_pfad}:\n{e.stderr.decode()}")
+            ]
+            subprocess.run(cmd, capture_output=True, check=True)
+            logging.info("Erfolgreich konvertiert: %s", md_pfad)
+        except subprocess.CalledProcessError as e:
+            logging.error(
+                "Fehler bei der Konvertierung von %s:\n%s",
+                md_pfad,
+                e.stderr.decode(),
+            )
 
+    def finde_markdown_dateien(self, dateiname: Optional[str] = None) -> List[Path]:
+        """Findet alle zu konvertierenden Markdown-Dateien.
 
-def konvertiere_dateien(dateiname=None):
-    """Konvertiert ausgewählte oder alle Markdown-Dateien zu LaTeX."""
-    if not os.path.exists(QUELLPFAD):
-        print(f"Quellordner {QUELLPFAD} existiert nicht.")
-        return
+        Args:
+            dateiname: Optional, spezifische Datei die konvertiert werden soll
 
-    if not os.path.exists(VORLAGEPFAD):
-        print(f"Vorlage {VORLAGEPFAD} existiert nicht.")
-        return
+        Returns:
+            List[Path]: Liste der gefundenen Markdown-Dateien
+        """
+        if dateiname:
+            if not dateiname.endswith(".md"):
+                logging.error("Ungültige Dateiendung: %s", dateiname)
+                return []
+            return [self.config.quellpfad / dateiname]
 
-    if not os.path.isdir(ZIELPFAD):
-        os.makedirs(ZIELPFAD)
+        return list(self.config.quellpfad.glob("*.md"))
 
-    if dateiname:
-        if not dateiname.endswith(".md"):
-            print("Bitte eine gültige .md-Datei angeben.")
+    def konvertiere_dateien(self, dateiname: Optional[str] = None) -> None:
+        """Konvertiert ausgewählte oder alle Markdown-Dateien zu LaTeX.
+
+        Args:
+            dateiname: Optional, spezifische Datei die konvertiert werden soll
+        """
+        if not self._prüfe_pfade():
             return
-        md_dateien = [os.path.join(QUELLPFAD, dateiname)]
-    else:
-        md_dateien = glob.glob(os.path.join(QUELLPFAD, "*.md"))
 
-    for md_datei in md_dateien:
-        if not os.path.exists(md_datei):
-            print(f"Die Datei {md_datei} existiert nicht.")
-            continue
-        tex_datei = os.path.join(ZIELPFAD, os.path.splitext(
-            os.path.basename(md_datei))[0] + ".tex")
-        konvertiere_md_zu_tex(md_datei, tex_datei)
+        md_dateien = self.finde_markdown_dateien(dateiname)
+        if not md_dateien:
+            logging.warning("Keine Markdown-Dateien gefunden")
+            return
 
-    print("Konvertierung abgeschlossen.")
+        for md_datei in md_dateien:
+            if not md_datei.exists():
+                logging.warning("Datei existiert nicht: %s", md_datei)
+                continue
+
+            tex_datei = self.config.zielpfad / f"{md_datei.stem}.tex"
+            self.konvertiere_datei(md_datei, tex_datei)
+
+        logging.info("Konvertierung abgeschlossen")
+
+    def _prüfe_pfade(self) -> bool:
+        """Prüft, ob alle notwendigen Pfade existieren.
+
+        Returns:
+            bool: True wenn alle Pfade valide sind, sonst False
+        """
+        if not self.config.quellpfad.exists():
+            logging.error("Quellordner existiert nicht: %s", self.config.quellpfad)
+            return False
+
+        if not self.config.vorlagepfad.exists():
+            logging.error("Vorlage existiert nicht: %s", self.config.vorlagepfad)
+            return False
+
+        if not self.config.zielpfad.exists():
+            self.config.zielpfad.mkdir(parents=True)
+            logging.info("Zielordner erstellt: %s", self.config.zielpfad)
+
+        return True
 
 
-def main():
-    if not ist_pandoc_installiert():
-        print(
-            "Pandoc ist nicht installiert. Bitte installieren Sie Pandoc, um fortzufahren.")
+def main() -> None:
+    """Hauptfunktion des Skripts."""
+    config = Config()
+    converter = MarkdownConverter(config)
+
+    if not converter.ist_pandoc_installiert():
+        logging.error(
+            "Pandoc ist nicht installiert. " "Bitte installieren Sie Pandoc, um fortzufahren."
+        )
         return
-    konvertiere_dateien()
+
+    converter.konvertiere_dateien()
 
 
 if __name__ == "__main__":

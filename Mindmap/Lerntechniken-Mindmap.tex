@@ -1,0 +1,81 @@
+\documentclass[tikz, border=10pt]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc} % Verwendung von Vektorschriften
+\usepackage[ngerman]{babel} % Deutsche Rechtschreibung und Silbentrennung
+\usepackage{tikz}
+\usepackage{amsmath}
+\usetikzlibrary{mindmap, shapes.geometric} % Import Bibliothek
+
+% Farbdefinitionen
+\definecolor{MindMapBlue}{RGB}{0, 105, 180}
+\definecolor{MindMapGreen}{RGB}{76, 153, 0}
+\definecolor{MindMapRed}{RGB}{237, 28, 36}
+\definecolor{MindMapYellow}{RGB}{205, 190, 0} % Dunkleres Gelb
+\definecolor{MindMapOrange}{RGB}{255, 127, 39}
+\definecolor{MindMapPurple}{RGB}{150, 111, 214}
+\definecolor{MindMapGray}{RGB}{195, 195, 195}
+\definecolor{MindMapWhite}{RGB}{255, 255, 255}
+\definecolor{MindMapBlack}{RGB}{0, 0, 0}
+\definecolor{MindMapCyan}{RGB}{0, 174, 239} % Zusätzliches Cyan
+\definecolor{MindMapMagenta}{RGB}{255, 0, 144} % Zusätzliches Magenta
+\definecolor{MindMapLime}{RGB}{191, 255, 0} % Zusätzliches Lime
+\definecolor{MindMapTeal}{RGB}{0, 128, 128} % Zusätzliches Teal
+\definecolor{MindMapOlive}{RGB}{128, 128, 0} % Zusätzliches Olive
+\definecolor{MindMapBrown}{RGB}{165, 42, 42} % Zusätzliches Brown
+
+\begin{document}
+\begin{tikzpicture}[mindmap, grow cyclic,
+    every node/.style={concept, fill=none, text width=2.5cm, font=\small, align=center, line width=0.5pt},
+    level 1/.append style={sibling angle=360/11, level distance=6cm, every child/.style={concept, text=white}},
+    level 2/.append style={level distance=5cm, sibling angle=30, every child/.style={concept, text=black}},
+    level 3/.style={level distance=5cm, sibling angle=30}, % Unterunterknoten
+    edge from parent/.style={concept color=MindMapBlack, line width=0.5pt},
+    text only/.style={draw=none, rectangle, text=MindMapBlack}]
+% Hauptknoten
+\node[text width=5cm, font=\large\bfseries]{Lern- und Produktivitätstechniken}
+    child [concept color=MindMapGreen] { node[concept] {Fachbuch bearbeiten}
+        child { node {Themenauswahl} }
+        child { node {Zusammenfassung} }
+        child { node {Mindmap erstellen} }
+        child { node {Lesen und Notieren} }
+    }
+    child [concept color=MindMapRed] { node[concept] {SMART-Prinzip}
+        child { node {Spezifisch} }
+        child { node {Messbar} }
+        child { node {Erreichbar} }
+        child { node {Relevant} }
+        child { node {Zeitgebunden} }
+    }
+    child [concept color=MindMapOrange] { node[concept] {Motivfindung}
+        child { node {Ziele identifizieren} }
+        child { node {Motivation verstärken} }
+    }
+    child [concept color=MindMapYellow] { node[concept] {Kanban-Board}
+        child { node {Aufgaben organisieren} }
+        child { node {Fortschritt visualisieren} }
+    }
+    child [concept color=MindMapPurple] { node[concept] {Pomodoro-Technik}
+        child { node {25 Min. arbeiten} }
+        child { node {5 Min. Pause} }
+    }
+    child [concept color=MindMapGray] { node[concept] {Atemtechnik}
+        child { node {Tiefe Bauchatmung} }
+    }
+    child [concept color=MindMapTeal] { node[concept] {Feynman-Technik}
+        child { node {Konzepte erklären} }
+    }
+    child [concept color=MindMapBrown] { node[concept] {Mindmap}
+        child { node {Informationen organisieren} }
+    }
+    child [concept color=MindMapLime] { node[concept] {Notizen archivieren}
+        child { node {Systematisch speichern} }
+    }
+    child [concept color=MindMapMagenta] { node[concept] {Mindset}
+        child { node {Wachstum und Entwicklung} }
+    }
+    child [concept color=MindMapCyan] { node[concept] {Glaubensätze}
+        child { node {Selbstvertrauen stärken} }
+    };
+\end{tikzpicture}
+
+\end{document}

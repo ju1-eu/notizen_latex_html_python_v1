@@ -1,0 +1,57 @@
+### Inspektionsablauf zur SP
+
+![Inspektionsablauf SP](images/Inspektionsablauf-SP.png "Inspektionsablauf zur SP"){width=80%}
+
+```mermaid
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#f0f0f0', 'textColor': '#333', 'lineColor': '#666'}}}%%
+graph TD
+    A[Inspektionsablauf zur SP]
+    A --> C[AÜK Plus und MAHA]
+    C --> F[MAHA: Prüfung neu anlegen]
+    F --> G[Bremswirkungsprüfung durchführen]
+    G --> H[MAHA: Messung beenden und speichern]
+    H --> I[AÜK Plus: SP neu, Daten erfassen, Vorgabenprüfung]
+    I --> J[Sicht-/Funktions-/Wirkungsprüfung durchführen]
+    J --> K{Bewertung: Mängel festgestellt?}
+    K -->|Ja| L[Mängelfeststellung]
+    K -->|Ja| O[Verkehrsgefährdung]
+    O --> T[Prüfmarke entfernen, Zulassungsbehörde benachrichtigen]
+    K -->|Nein| M[ohne Mängel]
+    M --> Q[SP-Prüfmarke]
+    L --> N{Mängel behoben?}
+    N -->|Ja| Q
+    N -->|Nein| R[keine Prüfmarke, Nachprüfung der Mängelfeststellung]
+    Q --> S[Dokumentation, nächste SP festlegen]
+    R --> S
+    S --> U[SP-Prüfprotokoll unterschreiben, siegeln und prägen]
+
+    classDef default fill:#f9f9f9,stroke:#333,stroke-width:1px;
+    classDef decision fill:#e6f3ff,stroke:#333,stroke-width:1px;
+    class K,N decision;
+```
+
+### SP - Ablaufdiagramm
+
+![SP Ablaufdiagramm](images/SP-Ablaufdiagramm.png "Ablaufdiagramm für SP"){width=80%}
+
+```mermaid
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#f0f0f0', 'textColor': '#333', 'lineColor': '#666'}}}%%
+graph TD
+    A[SP-Frist wurde ohne Genehmigung überschritten]
+    A -->|Ja| B[HU + SP durchführen]
+    A -->|Nein| C[SP durchführen, Mängel festgestellt?]
+    C -->|Ja| D
+    C -->|Nein| K[Prüfmarke anbringen]
+    D[Mängel mit unmittelbarer Verkehrsgefährdung]
+    D -->|Ja| E[Mängel sofort beheben oder Prüfmarke entfernen und Zulassungsstelle informieren]
+    D -->|Nein| F[Mängel sofort behoben?]
+    F -->|Ja| J[Prüfmarke anbringen]
+    F -->|Nein| G
+    G[Nachprüfung innerhalb eines Monats mit neuem Protokoll]
+    G -->|Ja| H[Wenn ohne Mängel, Prüfmarke anbringen]
+    G -->|Nein| I[Neue SP + HU durchführen]
+
+    classDef default fill:#f9f9f9,stroke:#333,stroke-width:1px;
+    classDef decision fill:#e6f3ff,stroke:#333,stroke-width:1px;
+    class A,C,D,F,G decision;
+```

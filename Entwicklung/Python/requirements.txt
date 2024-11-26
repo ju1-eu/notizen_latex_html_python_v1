@@ -11,20 +11,22 @@ attrs==23.2.0
 Babel==2.14.0
 beautifulsoup4==4.12.3
 bleach==6.1.0
+Bottleneck @ file:///private/var/folders/c_/qfmhj66j0tn016nkx_th4hxm0000gp/T/abs_19gnn4b1vz/croot/bottleneck_1709069916591/work
 certifi==2024.2.2
 cffi==1.16.0
 charset-normalizer==3.3.2
 comm==0.2.2
-contourpy==1.2.0
-cycler==0.12.1
+contourpy @ file:///Users/builder/cbouss/perseverance-python-buildout/croot/contourpy_1707340536404/work
+cycler @ file:///tmp/build/80754af9/cycler_1637851556182/work
 debugpy==1.8.1
 decorator==5.1.1
 defusedxml==0.7.1
+et-xmlfile==1.1.0
 executing==2.0.1
 fastjsonschema==2.19.1
 filelock==3.13.3
 flatbuffers==24.3.25
-fonttools==4.50.0
+fonttools @ file:///private/var/folders/sy/f16zz6x50xz3113nwtb9bvq00000gp/T/abs_801fru8lup/croot/fonttools_1713551493489/work
 fqdn==1.5.1
 fsspec==2024.3.1
 gast==0.5.4
@@ -60,10 +62,13 @@ libclang==18.1.1
 Markdown==3.6
 markdown-it-py==3.0.0
 MarkupSafe==2.1.5
-matplotlib==3.8.3
+matplotlib @ file:///private/var/folders/sy/f16zz6x50xz3113nwtb9bvq00000gp/T/abs_56lkmgsho5/croot/matplotlib-suite_1713336381321/work
 matplotlib-inline==0.1.6
 mdurl==0.1.2
 mistune==3.0.2
+mkl-fft @ file:///Users/builder/cbouss/perseverance-python-buildout/croot/mkl_fft_1699240945874/work
+mkl-random @ file:///Users/builder/cbouss/perseverance-python-buildout/croot/mkl_random_1699239515205/work
+mkl-service==2.4.0
 ml-dtypes==0.3.2
 mpmath==1.3.0
 namex==0.0.7
@@ -74,16 +79,18 @@ nest-asyncio==1.6.0
 networkx==3.2.1
 notebook==7.1.2
 notebook_shim==0.2.4
-numpy==1.26.4
+numexpr @ file:///Users/builder/cbouss/perseverance-python-buildout/croot/numexpr_1699258484110/work
+numpy @ file:///private/var/folders/c_/qfmhj66j0tn016nkx_th4hxm0000gp/T/abs_b7iptlxgej/croot/numpy_and_numpy_base_1708638622773/work/dist/numpy-1.26.4-cp312-cp312-macosx_10_9_x86_64.whl#sha256=94ff619271f410d5b23b2f118daf4420d22b48b21c941819693d61b19667808d
+openpyxl==3.1.2
 opt-einsum==3.3.0
 optree==0.11.0
 overrides==7.7.0
 packaging==24.0
-pandas==2.2.1
+pandas @ file:///private/var/folders/sy/f16zz6x50xz3113nwtb9bvq00000gp/T/abs_aa5q2dmbhr/croot/pandas_1709590498901/work/dist/pandas-2.2.1-cp312-cp312-macosx_10_9_x86_64.whl#sha256=cafb9cfbd27c4a6aa5182aa08e678bb70c2b50020b953bd17c422a5c24631397
 pandocfilters==1.5.1
 parso==0.8.3
 pexpect==4.9.0
-pillow==10.2.0
+pillow @ file:///private/var/folders/sy/f16zz6x50xz3113nwtb9bvq00000gp/T/abs_53zannwsvt/croot/pillow_1714398853091/work
 platformdirs==4.2.0
 plotly==5.20.0
 prometheus_client==0.20.0
@@ -95,10 +102,10 @@ pure-eval==0.2.2
 pycparser==2.22
 Pygments==2.17.2
 pyparsing==3.1.2
-python-dateutil==2.9.0.post0
+python-dateutil @ file:///tmp/build/80754af9/python-dateutil_1626374649649/work
 python-dotenv==1.0.1
 python-json-logger==2.0.7
-pytz==2024.1
+pytz @ file:///private/var/folders/sy/f16zz6x50xz3113nwtb9bvq00000gp/T/abs_244ln7biq9/croot/pytz_1713974320727/work
 PyYAML==6.0.1
 pyzmq==25.1.2
 referencing==0.34.0
@@ -112,7 +119,7 @@ scipy==1.12.0
 seaborn==0.13.2
 Send2Trash==1.8.2
 setuptools==69.2.0
-six==1.16.0
+six @ file:///tmp/build/80754af9/six_1644875935023/work
 sniffio==1.3.1
 soupsieve==2.5
 stack-data==0.6.3
@@ -126,11 +133,12 @@ terminado==0.18.1
 threadpoolctl==3.4.0
 tinycss2==1.2.1
 torch==2.2.2
-tornado==6.4
+tornado @ file:///Users/builder/cbouss/perseverance-python-buildout/croot/tornado_1699250848162/work
 traitlets==5.14.2
 types-python-dateutil==2.9.0.20240316
 typing_extensions==4.10.0
 tzdata==2024.1
+unicodedata2 @ file:///private/var/folders/sy/f16zz6x50xz3113nwtb9bvq00000gp/T/abs_1anajuo38r/croot/unicodedata2_1713212953928/work
 uri-template==1.3.0
 urllib3==2.2.1
 wcwidth==0.2.13
@@ -140,3 +148,4 @@ websocket-client==1.7.0
 Werkzeug==3.0.1
 wheel==0.43.0
 wrapt==1.16.0
+XlsxWriter @ file:///Users/builder/cbouss/perseverance-python-buildout/croot/xlsxwriter_1699263436725/work

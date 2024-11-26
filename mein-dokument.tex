@@ -1,19 +1,19 @@
-% ju 05-Mar-24 mein-dokument.tex
+% ju 26-Nov-24 mein-dokument.tex
 \documentclass{vorlage-design-main}
-\usepackage[utf8]{inputenc}
-\usepackage{longtable}
-\usepackage{blindtext,alltt}
+
+% Checkbox Definition
+\newcommand{\checkbox}{\square}
+
 
 %% Ganze Überschrift
 \title{Anwendung von Markdown-Techniken für Dokumentationen}
-
 %% Kürzerer Titel zur Verwendung im Seitenkopf
 \runningtitle{Dokumentation mit Markdown}
 \author{Jan Unger}
-% \author{2.}
 \date{\today}
 
-%% Die .bib-Datei mit vollständigen Referenzen zur Verwendung mit biblatex. articleclass lädt das Paket biblatex-chicago mit Anpassungen
+%% Die .bib-Datei mit vollständigen Referenzen zur Verwendung mit biblatex. 
+%% articleclass lädt das Paket biblatex-chicago mit Anpassungen
 \addbibresource{literatur.bib}
 
 \begin{document}
@@ -21,16 +21,33 @@
 \maketitle
 
 \begin{abstract}
-In der heutigen schnelllebigen Zeit ist die Fähigkeit, komplexe
-Informationen klar und effizient zu kommunizieren, von entscheidender
-Bedeutung. Markdown, eine leichtgewichtige Markup-Sprache, hat sich als
-ein wertvolles Werkzeug für die Erstellung technischer Dokumentationen
-und die Unterstützung von Entwicklungsprojekten etabliert.
+\includegraphics[width=0.6\textwidth]{images/Mindmap-Markdown.pdf}
 
-Ein weiterer Vorteil von Markdown ist die nahtlose Konvertierung in
-andere Formate wie HTML und PDF durch Werkzeuge wie Pandoc, was die
-Verbreitung von Dokumenten über verschiedene Plattformen und Medien
-hinweg vereinfacht.
+Markdown ist eine leichtgewichtige Auszeichnungssprache, die entwickelt
+wurde, um das Schreiben von Webinhalten zu vereinfachen. Sie ermöglicht
+es Autoren, mit einer einfachen Textformatierungssyntax Dokumente zu
+erstellen, die dann in HTML umgewandelt werden können. Markdown wurde
+2004 von John Gruber in Zusammenarbeit mit Aaron Swartz entworfen, mit
+dem Ziel, Lesbarkeit und Einfachheit in den Vordergrund zu stellen.
+
+Git ist ein weit verbreitetes Versionskontrollsystem, das von
+Entwicklern verwendet wird, um den Überblick über Änderungen an ihren
+Codeprojekten zu behalten. Es unterstützt die Zusammenarbeit, indem es
+mehreren Benutzern ermöglicht, an denselben Projekten zu arbeiten, ohne
+sich gegenseitig zu behindern.
+
+Eine Mindmap ist ein visuelles Diagramm, das dazu dient, Informationen
+hierarchisch und in einem vernetzten Format darzustellen, wobei ein
+zentrales Konzept oder Thema in der Mitte platziert und verwandte Themen
+oder Ideen drum herum angeordnet werden.
+
+Python ist eine weit verbreitete, hochgradig vielseitige
+Programmiersprache, die für ihre Einfachheit und Lesbarkeit bekannt ist.
+Sie unterstützt verschiedene Programmierparadigmen wie objektorientiert,
+imperativ und in gewissem Maße auch funktional.
+
+\textbf{Keywords:} Markdown, Dokumentation, Pandoc, Konvertierung,
+Fußnoten, Tabellen, Code, Hyperlinks, Bilder, Literatur
 \end{abstract}
 
 \section{Dokumente in Markdown
@@ -50,6 +67,12 @@ dokumentation.py
 \end{lstlisting}
 
 Git
+
+\begin{figure}
+\centering
+\includegraphics[keepaspectratio]{images/Mindmap-Git.pdf}
+\caption{Was ist Git?}
+\end{figure}
 
 \begin{lstlisting}[language=bash]
 # Git Versionierung
@@ -76,6 +99,25 @@ git ls
 
 git clone https://github.com/ju1-eu/notizen_latex_html_python_v1.git
 git clone /Users/jan/notizen_latex_html_python_v1.git notizen_klon
+\end{lstlisting}
+
+Latex
+
+\begin{lstlisting}[language=bash]
+wget https://mirror.ctan.org/systems/texlive/tlnet/update-tlmgr-latest.sh
+sudo sh update-tlmgr-latest.sh -- --accept
+
+sudo chown -R $(whoami) /usr/local/texlive/
+
+# Pakete installieren
+tlmgr install pgf
+
+# alle installierten Pakete zu aktualisieren
+tlmgr update --all
+
+# Überprüfung der Installation
+tlmgr --version
+tlmgr list --installed
 \end{lstlisting}
 
 Beispiel Quellenangabe
@@ -165,18 +207,20 @@ Website \href{https://www.google.com}{Google} und GitHub
 
 \begin{figure}
 \centering
-\includegraphics[width=0.8\textwidth]{images/Logo/Logo2.pdf}
-%\floatnotes{}
-%\label{fig:}
+\includegraphics[keepaspectratio]{images/Logo/Logo2.pdf}
 \caption{Logo 2}
 \end{figure}
 
 \begin{figure}
 \centering
-\includegraphics[width=0.8\textwidth]{images/Git-Python-Entwicklung.pdf}
-%\floatnotes{}
-%\label{fig:}
-\caption{Git-Python-Entwicklung}
+\includegraphics[keepaspectratio]{images/Mindmap.pdf}
+\caption{Was ist eine Mindmap?}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[keepaspectratio]{images/Mindmap-Python.pdf}
+\caption{Was ist Python?}
 \end{figure}
 
 %% Anhang
