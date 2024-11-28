@@ -2,4 +2,3 @@
 
 \section{ABC-Vorlage}\label{sec:ABC-Vorlage}\index{ABC-Vorlage}
 \includepdf[pages=-]{Tabellen/PDF/ABC-Vorlage.pdf}
-

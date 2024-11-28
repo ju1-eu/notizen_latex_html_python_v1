@@ -50,15 +50,10 @@ SUCHMUSTER = r"\{\[\}@([^:]+:[^:]+:[^\]]+)\{\]\}"
 ERSATZMUSTER = r"\\textcite{\1}"
 
 
-def suche_und_ersetze(tex_pfad, suchmuster, ersetzen_durch):
-    """
-    Sucht nach einem Muster in einer .tex-Datei und ersetzt es durch den angegebenen Text.
-    """
+def suche_und_ersetze(tex_pfad: str, suchmuster: str, ersetzen_durch: str) -> None:
     try:
         with open(tex_pfad, "r", encoding="utf-8") as datei:
             inhalt = datei.read()
-
-            # Suche nach dem Muster und ersetze es
             inhalt = re.sub(suchmuster, ersetzen_durch, inhalt)
 
         backup_pfad = tex_pfad + ".bak"
@@ -70,14 +65,10 @@ def suche_und_ersetze(tex_pfad, suchmuster, ersetzen_durch):
         print(f"Fehler beim Bearbeiten der Datei {tex_pfad}: {e}")
 
 
-def entferne_befehl(tex_pfad, befehl):
-    """
-    Entfernt einen bestimmten LaTeX-Befehl aus einer .tex-Datei und erstellt eine .bak-Backup-Datei.
-    """
+def entferne_befehl(tex_pfad: str, befehl: str) -> None:
     try:
         with open(tex_pfad, "r", encoding="utf-8") as datei:
             inhalt = datei.read()
-            # debug
             if befehl in inhalt:
                 print(f"Befehl {befehl} gefunden in {tex_pfad}")
             else:
@@ -88,15 +79,11 @@ def entferne_befehl(tex_pfad, befehl):
             backup_datei.write(inhalt)
         with open(tex_pfad, "w", encoding="utf-8") as datei:
             datei.write(inhalt.replace(befehl, ""))
-
     except IOError as e:
         print(f"Fehler beim Bearbeiten der Datei {tex_pfad}: {e}")
 
 
-def loesche_backup_dateien():
-    """
-    Löscht alle .bak-Dateien im angegebenen Verzeichnis.
-    """
+def loesche_backup_dateien() -> None:
     for backup_datei in glob.iglob(os.path.join(VERZEICHNIS_PFAD, "*.bak")):
         try:
             os.remove(backup_datei)
@@ -104,31 +91,23 @@ def loesche_backup_dateien():
             print(f"Fehler beim Löschen der Backup-Datei {backup_datei}: {e}")
 
 
-def bearbeite_dateien(spezifische_datei=None):
-    """
-    Bearbeitet .tex-Dateien im angegebenen Verzeichnis oder eine spezifische Datei.
-    """
+def bearbeite_dateien(spezifische_datei: str | None = None) -> None:
     dateien = (
         [os.path.join(VERZEICHNIS_PFAD, spezifische_datei + ".tex")]
         if spezifische_datei
         else list(glob.iglob(os.path.join(VERZEICHNIS_PFAD, "*.tex")))
     )
-
     for tex_datei in dateien:
         if os.path.isfile(tex_datei):
             suche_und_ersetze(tex_datei, SUCHMUSTER, ERSATZMUSTER)
             print(f"Datei {tex_datei} bearbeitet.")
 
 
-def main():
-    """
-    Hauptfunktion, die andere Funktionen in der richtigen Reihenfolge aufruft.
-    """
+def main() -> None:
     parser = argparse.ArgumentParser(description="Bearbeitet LaTeX-Dateien.")
     parser.add_argument("--datei", help="Name der .tex-Datei, die bearbeitet werden soll.")
     args = parser.parse_args()
 
-    # Sicherheitsüberprüfung: Dateiname keine unsicheren Zeichen oder Pfade
     if args.datei and (not args.datei.isalnum() or ".." in args.datei or "/" in args.datei):
         print("Ungültiger Dateiname. Bitte geben Sie einen Dateinamen ohne Pfadangaben an.")
         return

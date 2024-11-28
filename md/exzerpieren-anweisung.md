@@ -8,7 +8,7 @@
    - Systematische Erfassung der Kernthesen und Hauptargumente des gesamten Textes
    - Überblicksdarstellung der wesentlichen Inhalte
 
-2. **Spezifische Analyse** 
+2. **Spezifische Analyse**
    - Gezielte Filterung relevanter Inhalte für konkrete Forschungsfragen
    - Fokussierte Auswertung spezifischer Textaspekte
 
@@ -68,17 +68,17 @@
 ## Beispiele und Textarbeit
 
 ### Kernaussagen identifizieren
-**Originaltext:** 
+**Originaltext:**
 *„Die globale Erwärmung ist vor allem auf den erhöhten CO2-Ausstoß durch fossile Brennstoffe zurückzuführen. Dies hat schwerwiegende Folgen für Ökosysteme und die menschliche Gesellschaft."*
 
-**Kernaussage:** 
+**Kernaussage:**
 *„Hauptursache der globalen Erwärmung: erhöhter CO2-Ausstoß durch fossile Brennstoffe; Konsequenzen: Beeinträchtigung von Ökosystemen und Gesellschaft."*
 
 ### Eigene Anmerkungen integrieren
-**Originaltext:** 
+**Originaltext:**
 *„Die Verlagerung auf erneuerbare Energien könnte diese Entwicklung verlangsamen."*
 
-**Kommentierte Fassung:** 
+**Kommentierte Fassung:**
 *„Die Autoren betonen das Potenzial erneuerbarer Energien, berücksichtigen jedoch nicht die sozioökonomischen Implementierungshürden wie Investitionskosten und Infrastrukturanpassungen."*
 
 ## Qualitätssicherung

@@ -135,7 +135,7 @@ check_requirements() {
     if ! source venv/bin/activate 2>/dev/null; then
         print_error "Fehler beim Aktivieren der virtuellen Umgebung!"
         print_status "Versuche alternative Aktivierungsmethode..."
-        
+
         if ! . venv/bin/activate 2>/dev/null; then
             print_error "Aktivierung fehlgeschlagen!"
             print_status "Mögliche Probleme:"
@@ -216,7 +216,7 @@ check_requirements() {
 run_tool() {
     local tool=$1
     local files=("${@:2}")
-    
+
     print_header "Führe $tool aus"
     if "$tool" "${files[@]}"; then
         print_success "$tool erfolgreich ausgeführt"

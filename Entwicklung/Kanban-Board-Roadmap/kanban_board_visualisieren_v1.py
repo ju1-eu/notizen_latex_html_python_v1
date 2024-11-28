@@ -1,9 +1,10 @@
-import pandas as pd
-import matplotlib.pyplot as plt
-import matplotlib.dates as mdates
-from datetime import datetime
-from matplotlib.backends.backend_pdf import PdfPages
 import locale
+from datetime import datetime
+
+import matplotlib.dates as mdates
+import matplotlib.pyplot as plt
+import pandas as pd
+from matplotlib.backends.backend_pdf import PdfPages
 
 # Daten für das Beispiel
 # Kategorie 1 = Zu erledigen, 2 = In Bearbeitung, 3 = Erledigt

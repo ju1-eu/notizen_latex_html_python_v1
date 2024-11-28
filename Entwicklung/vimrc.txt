@@ -71,4 +71,3 @@ let g:ycm_filetype_specific_completion_to_disable = { 'gitcommit': 1 }
 
 " fzf Konfiguration
 set rtp+=~/.fzf
-

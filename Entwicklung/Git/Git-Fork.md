@@ -24,7 +24,7 @@ abstract: |
     Dieser Prozess fördert die Zusammenarbeit, das Lernen und die Community-Interaktion. Durch das Forken und Beitragen zu Projekten können Entwickler ihre Fähigkeiten verbessern, Feedback erhalten und zur Verbesserung von Software beitragen. Die ausführliche Dokumentation dieses Workflows in einem README erleichtert neuen Beitragenden den Einstieg und unterstützt eine effiziente und effektive Kollaboration.
 
     \section*{Schlüsselwörter}
-    
+
     \begin{description}
         \item[Git Fork] Eine Kopie eines bestehenden Projekts (Repository) auf deine eigene Benutzerkonto. So kannst du unabhängig vom Originalprojekt Änderungen vornehmen.
         \item[Pull Request (PR)] Eine Anfrage, die du an den Verwalter des Originalrepositorys schickst, um deine gemachten Änderungen in das Hauptprojekt einzubinden. Es ist eine Möglichkeit, deine Verbesserungen oder Korrekturen vorzuschlagen.

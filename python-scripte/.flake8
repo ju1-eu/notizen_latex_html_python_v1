@@ -3,7 +3,7 @@
 max-line-length = 100
 
 # Dateien und Verzeichnisse, die ignoriert werden sollen
-exclude = 
+exclude =
     venv,
     .git,
     __pycache__,

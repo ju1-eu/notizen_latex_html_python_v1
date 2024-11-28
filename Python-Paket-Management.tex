@@ -1,19 +1,15 @@
-% ju 26-Nov-24 Python-Paket-Management.tex
+% ju 28-Nov-24 Python-Paket-Management.tex
 \documentclass{vorlage-design-main}
-
-% Checkbox Definition
-\newcommand{\checkbox}{\square}
-
+% Verwenden von fontspec und unicode-math für XeLaTeX oder LuaLaTeX
 
 %% Ganze Überschrift
 \title{}
-%% Kürzerer Titel zur Verwendung im Seitenkopf
+%% Kürzerer Titel
 \runningtitle{}
 \author{Jan Unger}
 \date{\today}
 
-%% Die .bib-Datei mit vollständigen Referenzen zur Verwendung mit biblatex. 
-%% articleclass lädt das Paket biblatex-chicago mit Anpassungen
+%% Referenzen
 \addbibresource{literatur.bib}
 
 \begin{document}
@@ -52,7 +48,7 @@ source venv/bin/activate
   \begin{tabular}{@{}ll@{}}
 \toprule
 \textbf{Paket}
- & 
+ &
 \textbf{Funktionalität}
  \\
 \midrule[\heavyrulewidth]
@@ -111,7 +107,7 @@ pip install --upgrade pip
 # Benötigte Pakete installieren
 pip install PyPDF2 pytube whisper youtube-transcript-api PyMuPDF Pillow rich
 # HTML & PDF
-pip install Jinja2 MarkupSafe PyYAML tqdm 
+pip install Jinja2 MarkupSafe PyYAML tqdm
 # Tools installieren
 pip install black isort flake8 mypy pipdeptree
 \end{lstlisting}
@@ -204,6 +200,74 @@ profile = "black"
 line_length = 100
 \end{lstlisting}
 
+\subsection{pre-commit-Tool}\label{pre-commit-tool}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \textbf{pre-commit installieren} Installiere
+  \verb|pre-commit| in der virtuellen Umgebung:
+
+\begin{lstlisting}[language=bash]
+pip install pre-commit
+\end{lstlisting}
+\item
+  \textbf{Prüfen, ob die Installation erfolgreich war} Verifiziere die
+  Installation mit:
+
+\begin{lstlisting}[language=bash]
+pre-commit --version
+\end{lstlisting}
+\item
+  \textbf{Pre-Commit-Hooks erneut installieren} Nachdem das Tool
+  verfügbar ist, führe den Installationsbefehl erneut aus:
+
+\begin{lstlisting}[language=bash]
+pre-commit install
+\end{lstlisting}
+\item
+  \textbf{Pre-Commit-Hooks testen} Überprüfe, ob die Hooks korrekt
+  funktionieren:
+
+\begin{lstlisting}[language=bash]
+pre-commit run --all-files
+\end{lstlisting}
+\end{enumerate}
+
+\verb|.pre-commit-config.yaml|
+
+\begin{lstlisting}
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-added-large-files
+        args: ['--maxkb=500']
+      - id: check-merge-conflict
+      - id: mixed-line-ending
+        args: ['--fix=lf']
+
+  - repo: https://github.com/psf/black
+    rev: 24.1.1
+    hooks:
+      - id: black
+        language_version: python3.12
+
+  - repo: https://github.com/PyCQA/isort
+    rev: 5.13.2
+    hooks:
+      - id: isort
+
+  - repo: https://github.com/PyCQA/flake8
+    rev: 7.0.0
+    hooks:
+      - id: flake8
+        additional_dependencies: [flake8-docstrings]
+\end{lstlisting}
+
 \subsection{Projektspezifische
 requirements.txt}\label{projektspezifische-requirements.txt}
 
@@ -260,7 +324,7 @@ tree -L 2 --dirsfirst
   \textbf{Virtuelle Umgebung}:
 
   \begin{itemize}
-  
+
   \item
     Immer in einer virtuellen Umgebung arbeiten
   \item
@@ -272,7 +336,7 @@ tree -L 2 --dirsfirst
   \textbf{Requirements}:
 
   \begin{itemize}
-  
+
   \item
     Requirements.txt regelmäßig aktualisieren
   \item
@@ -284,7 +348,7 @@ tree -L 2 --dirsfirst
   \textbf{Sicherheit}:
 
   \begin{itemize}
-  
+
   \item
     Regelmäßig nach Sicherheitsupdates suchen
   \item
@@ -293,6 +357,8 @@ tree -L 2 --dirsfirst
     Bei Produktivnutzung fixe Versionen verwenden
   \end{itemize}
 \end{enumerate}
+
+\newpage
 
 \subsection{Automatisierungsskript I}\label{automatisierungsskript-i}
 
@@ -331,6 +397,8 @@ chmod +x update_python_packages.sh
 #source venv/bin/activate
 ./update_python_packages.sh
 \end{lstlisting}
+
+\newpage
 
 \subsection{Automatisierungsskript I}\label{automatisierungsskript-i-1}
 

@@ -1,19 +1,15 @@
-% ju 26-Nov-24 KI-Prompts.tex
+% ju 28-Nov-24 KI-Prompts.tex
 \documentclass{vorlage-design-main}
-
-% Checkbox Definition
-\newcommand{\checkbox}{\square}
-
+% Verwenden von fontspec und unicode-math für XeLaTeX oder LuaLaTeX
 
 %% Ganze Überschrift
-\title{}
-%% Kürzerer Titel zur Verwendung im Seitenkopf
-\runningtitle{}
+\title{Methodik zur Textanalyse und Wissensverarbeitung}
+%% Kürzerer Titel
+\runningtitle{Textanalyse und Wissensverarbeitung}
 \author{Jan Unger}
 \date{\today}
 
-%% Die .bib-Datei mit vollständigen Referenzen zur Verwendung mit biblatex. 
-%% articleclass lädt das Paket biblatex-chicago mit Anpassungen
+%% Referenzen
 \addbibresource{literatur.bib}
 
 \begin{document}
@@ -21,21 +17,35 @@
 \maketitle
 
 \begin{abstract}
+Die vorliegende Methodensammlung präsentiert einen strukturierten Ansatz
+zur Analyse und Verarbeitung von Fachtexten. Der Prozess gliedert sich
+in mehrere Kernbereiche: Die initiale Textanalyse nutzt Markdown und
+\LaTeX{} für eine präzise Aufbereitung. Verschiedene
+Visualisierungstechniken (ASCII, Mermaid, SVG) unterstützen das
+Verständnis komplexer Zusammenhänge. Eine mehrstufige Qualitätssicherung
+gewährleistet die technische und inhaltliche Korrektheit. Innovative
+Lernmethoden wie Concept Mapping und Spaced Repetition fördern die
+nachhaltige Wissensaneignung. Die Vertiefungsphase umfasst die
+Erstellung von Fragenkatalogen und Glossaren sowie eine kritische
+Reflexion. Diese Methodik ermöglicht eine effiziente und nachhaltige
+Wissensverarbeitung.
 
-
-
+\textbf{Keywords:} Fachtextanalyse, Visualisierungstechniken,
+Lernmethoden, Wissensvertiefung
 \end{abstract}
 
-\section{KI - Prompts}\label{ki---prompts}
+\section{Methodik zur Textanalyse und
+Wissensverarbeitung}\label{methodik-zur-textanalyse-und-wissensverarbeitung}
 
-bearbeitet am 2024-11-24
+bearbeitet am 2024-11-28
 
-Quelle: \url{https://www.krafthand.de/} und
-\url{https://www.krafthand.de/service/ausgaben/}
-
-PDF entsperren: \url{https://www.ilovepdf.com/de/entsperren_pdf}
-
-valeo-techacademy: \url{https://www.valeo-techacademy.com/de/learn}
+KI-Tools\footnote{KI-Assistenten: \href{https://claude.ai/new}{Claude}
+  und \href{https://www.perplexity.ai/}{Perplexity}},
+Krafthand\footnote{Krafthand: \href{https://www.krafthand.de/}{Homepage}
+  und \href{https://www.krafthand.de/service/ausgaben/}{Ausgaben}},
+PDF-Tool\footnote{\href{https://www.ilovepdf.com/de/entsperren_pdf}{iLovePDF}
+  - PDF Entsperren} und Valeo\footnote{\href{https://www.valeo-techacademy.com/de/learn}{Valeo
+  Tech Academy} - E-Learning für Kfz-Technik}.
 
 \subsection{ToDo-Liste}\label{todo-liste}
 
@@ -45,7 +55,7 @@ valeo-techacademy: \url{https://www.valeo-techacademy.com/de/learn}
   Krafthandausgabe 22
 
   \begin{itemize}
-  
+
   \item[$\boxtimes$]
     HUK-E-Barometer zur E-Mobilität in Deutschland
   \item[$\boxtimes$]
@@ -61,7 +71,7 @@ valeo-techacademy: \url{https://www.valeo-techacademy.com/de/learn}
   Krafthandausgabe 21
 
   \begin{itemize}
-  
+
   \item[$\square$]
     ADAC-Winterreifentest 2024: Sieger und Verlierer unter den
     Winterreifen
@@ -83,7 +93,7 @@ valeo-techacademy: \url{https://www.valeo-techacademy.com/de/learn}
   Krafthandausgabe 20
 
   \begin{itemize}
-  
+
   \item[$\boxtimes$]
     LED-Nachrüstung von Halogenlampen
   \item[$\square$]
@@ -94,7 +104,7 @@ valeo-techacademy: \url{https://www.valeo-techacademy.com/de/learn}
   Krafthandausgabe 18-19
 
   \begin{itemize}
-  
+
   \item[$\square$]
     Batterietechnologie: Zellarten bei Cell-to-Pack
   \item[$\square$]
@@ -107,7 +117,7 @@ valeo-techacademy: \url{https://www.valeo-techacademy.com/de/learn}
   Krafthandausgabe 17
 
   \begin{itemize}
-  
+
   \item[$\square$]
     Statische Batterieprüfung: E-Autobatterie in 15 Minuten testen
   \item[$\square$]
@@ -121,6 +131,8 @@ valeo-techacademy: \url{https://www.valeo-techacademy.com/de/learn}
   \end{itemize}
 \end{itemize}
 
+\newpage
+
 \subsection{Exzerpieren: Textanalyse und
 -zusammenfassung}\label{exzerpieren-textanalyse-und--zusammenfassung}
 
@@ -130,29 +142,98 @@ Thema:
 Eingabe: (.pdf) im Anhang
 Ausgabe: in Markdown und deutsch und Latex-Mathe
 
+Erkläre [ ]
+
+# Mindmap
 Erstelle eine Mindmap in ASCII-Textform
 Erstelle eine Mindmap als Mermaid-Diagramm
 Erstelle eine Mindmap mit hellem Hintergrund, wie das Referenzbild
 Erstelle eine SVG-Darstellung der Mindmap, verwende ein hierarchisches Layout mit verschiedenen Farben und Formen
 Erstelle ein Flussdiagramm mit hellem Hintergrund, wie das Referenzbild
 
-Erkläre [ ] und eine Mindmap in ASCII-Textform
-
+# Rechtschreibung
 Prüfe Grammatik, Rechtschreibung, Klarheit, Prägnanz, Redundanz
 Eingabe: [ ]
 
+# Latex
 Erstelle Latex ohne Präambel
 
-Prüfe den Code (Zeilenlänge max. 100)
-
+# Code
+Prüfe den Code
 Erstelle docstring, deutsche Kommentare
-
 Ertselle ein Code-Beschreibung
 Erkläre den Code
-
-verbessere den Code mit Fokus auf Wartbarkeit, Redundanzverminderung, bessere Konsolenausgabe und Benutzerfreundlichkeit
+Verbessere den Code mit Fokus auf:
+  - Wartbarkeit, Redundanzverminderung, bessere Konsolenausgabe und Benutzerfreundlichkeit
 \end{lstlisting}
 
+\newpage
+
+\subsection{Erarbeitung und Vertiefung von
+Fachtexten}\label{erarbeitung-und-vertiefung-von-fachtexten}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Erstellung einer Textanalyse
+\item
+  Erstellung eines Exzerpts
+\item
+  Erkläre
+\item
+  Erstellung eines Fragenkatalogs für Anki
+\item
+  Erstellung einer Bildanalyse
+\item
+  Erstellung zweier Mindmaps (strukturierte Liste)
+
+  \begin{itemize}
+
+  \item
+    Eine für Zahlen, Daten und Fakten
+  \item
+    Eine für Fach- und Schlüsselwörter mit detaillierten Erklärungen
+  \end{itemize}
+\item
+  Kritische Reflexion
+\item
+  Ergänzung um Fachbegriff-Glossar
+
+  \begin{itemize}
+
+  \item
+    Strukturierte Lernziele
+  \item
+    Umfassendes Fachbegriff-Glossar
+  \item
+    Kapitelzusammenfassungen
+  \end{itemize}
+\item
+  Erstelle mir die drei bis fünf wichtigsten Konzepte mit Erklärung
+\item
+  Lernmethoden
+
+  \begin{itemize}
+
+  \item
+    CONCEPT MAPPING UND VERNETZTES DENKEN
+  \item
+    HISTORISCHE ENTWICKLUNG
+  \item
+    EXPERIMENTELLES LERNEN
+  \item
+    SYSTEMATISCHE WIEDERHOLUNG
+
+    \begin{itemize}
+
+    \item
+      Prinzip >>spaced repetition<< Konzepte in größeren Zeitabständen
+      wiederholen
+    \end{itemize}
+  \item
+    Peer Learning: Konzepte erklären
+  \end{itemize}
+\end{enumerate}
 
 %% Anhang
 %\clearpage

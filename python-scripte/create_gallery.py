@@ -72,6 +72,14 @@ class GalleryGenerator:
         output_dir: str = "gallery",
         config: Optional[GalleryConfig] = None,
     ):
+        """Initialisiere eine neue Gallery-Instanz.
+
+        Args:
+            image_dir: Pfad zum Verzeichnis mit den Originalbildern
+            project_name: Name der zu erstellenden Galerie
+            output_dir: Ausgabeverzeichnis für die HTML-Galerie
+            config: Optionale Konfigurationsoptionen
+        """
         self.image_dir = Path(image_dir)
         self.project_name = project_name
         self.output_dir = Path(output_dir)
@@ -306,31 +314,48 @@ class GalleryGenerator:
 
     def _generate_html(self, images: List[Dict]) -> str:
         """Generiert den HTML-Code für die Galerie"""
+        lightbox_css = (
+            '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/'
+            'lightbox2/2.11.3/css/lightbox.min.css">'
+        )
+        # Vorherige Template-Variablen
+        subtitle_html = (
+            f'<div class="subtitle">{self.config.subtitle}</div>' if self.config.subtitle else ""
+        )
+        controls_html = (
+            self._generate_controls()
+            if self.config.enable_sorting or self.config.enable_filtering
+            else ""
+        )
+        lightbox_script = (
+            '<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/'
+            'js/lightbox-plus-jquery.min.js"></script>'
+        )
         html = f"""<!DOCTYPE html>
-        <html lang="de">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <meta name="description" content="{self.config.title}">
-            <title>{self.config.title}</title>
-            <link rel="stylesheet" href="gallery_styles.css">
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css">
-            {self._get_optional_head_content()}
-        </head>
-        <body>
-            <div class="gallery-header">
-                <h1>{self.config.title}</h1>
-                {f'<div class="subtitle">{self.config.subtitle}</div>' if self.config.subtitle else ''}
-            </div>
-            {self._generate_controls() if self.config.enable_sorting or self.config.enable_filtering else ''}
-            <div class="gallery" id="gallery">
-                {self._generate_gallery_items(images)}
-            </div>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox-plus-jquery.min.js"></script>
-            {self._get_optional_scripts()}
-        </body>
-        </html>
-        """
+            <html lang="de">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <meta name="description" content="{self.config.title}">
+                <title>{self.config.title}</title>
+                <link rel="stylesheet" href="gallery_styles.css">
+                {lightbox_css}
+                {self._get_optional_head_content()}
+            </head>
+            <body>
+                <div class="gallery-header">
+                    <h1>{self.config.title}</h1>
+                    {subtitle_html}
+                </div>
+                {controls_html}
+                <div class="gallery" id="gallery">
+                    {self._generate_gallery_items(images)}
+                </div>
+                {lightbox_script}
+                {self._get_optional_scripts()}
+            </body>
+            </html>
+            """
         return html
 
     def _get_optional_head_content(self) -> str:
@@ -440,10 +465,8 @@ class GalleryGenerator:
         return "\n".join(scripts)
 
 
-def main():
-    """
-    Hauptfunktion zum Erstellen der Galerie
-    """
+def main() -> None:
+    """Hauptfunktion zum Erstellen der Galerie"""
     try:
         # Konfiguration
         config = GalleryConfig(
@@ -472,12 +495,12 @@ def main():
 
         print(
             """
-        ✓ Galerie wurde erfolgreich erstellt!
-        Nächste Schritte:
-        1. Öffne die HTML-Datei im Browser
-        2. Überprüfe die generierten Thumbnails
-        3. Teste die Sortier- und Filterfunktionen
-        """
+       ✓ Galerie wurde erfolgreich erstellt!
+       Nächste Schritte:
+       1. Öffne die HTML-Datei im Browser
+       2. Überprüfe die generierten Thumbnails
+       3. Teste die Sortier- und Filterfunktionen
+       """
         )
 
     except FileNotFoundError as e:

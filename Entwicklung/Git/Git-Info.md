@@ -63,9 +63,9 @@ Kognitives Prüfmuster: Wenn ich eine Frage zu Git stelle, teilen Sie sie in dre
 
 Rolle: Nehmen Sie die Rolle eines erfahrenen Programmierexperten an. Führen Sie anhand dieser Person ein Codeüberprüfung durch.
 
-Zusammenfassung: Thema: C - Programmierung 
+Zusammenfassung: Thema: C - Programmierung
 Schreibstil: Expositorisch ohne Form du/sie, verwende Markdown
-Erstelle eine ansprechende Zusammenfassung zum nachfolgenden Text in Aufzählungsform und gleichzeitig gebe die wichtigsten Informationen genau wieder. Bereite die Antwort gehirngerecht auf mit Didaktische Reduktion. 
+Erstelle eine ansprechende Zusammenfassung zum nachfolgenden Text in Aufzählungsform und gleichzeitig gebe die wichtigsten Informationen genau wieder. Bereite die Antwort gehirngerecht auf mit Didaktische Reduktion.
 Textinhalt: " "
 
 Fragen: Erstelle 5x Fragen zum Lerninhalt (beachte den Focus: tieferes Verständnis und kritisches Denken zu fördern) mit Lösung. Lerninhalt: " "
@@ -98,12 +98,12 @@ Projekt: Erstelle ein Projekt zum Anwenden des gelernten mit Lösung.
 ```bash
 # Terminal:
 # https://github.com/settings/tokens
-# Zugangstoken: 
+# Zugangstoken:
 
 # 1
 gh auth refresh -h github.com -s delete_repo
 ? Authenticate Git with your GitHub credentials? Yes
-! First copy your one-time code: 
+! First copy your one-time code:
 Press Enter to open github.com in your browser...
 ✓ Authentication complete.
 
@@ -151,14 +151,14 @@ gh repo list
   ```
 
 - **Repositorys des angemeldeten Benutzers auflisten**:
-  
+
   ```bash
   gh repo list <username>
   gh repo list ju1-eu
   ```
 
 - **Repository klonen**:
-  
+
   ```bash
   gh repo clone <repository>
   # Beispiel:
@@ -170,7 +170,7 @@ gh repo list
   ```
 
 - **Neues Repository erstellen**:
-  
+
   ```bash
   gh repo create <name> [--public|--private|--internal]
   gh repo create mein-neues-repo --public

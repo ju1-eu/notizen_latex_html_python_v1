@@ -3,9 +3,9 @@ thema: "Management von Git-Prozessen"
 runningtitle: "PullRequests - Issues - Release"
 keywords: ""
 abstract: |
-	Der Prozess der Softwareentwicklung mit Git umfasst verschiedene Schritte, die von der Initialisierung eines Projekts bis hin zur Veröffentlichung eines Releases reichen. Zunächst wird ein neues Repository für das Projekt angelegt und mit einer `README.md` auf GitHub hochgeladen. Für jede neue Funktion oder jeden Bugfix werden dedizierte Feature-Branches erstellt, die nach Fertigstellung in den Hauptbranch gemergt werden. Dies geschieht über Pull Requests, die eine zentrale Rolle im Überprüfungsprozess spielen und vor der Genehmigung selbst überprüft werden können. 
+	Der Prozess der Softwareentwicklung mit Git umfasst verschiedene Schritte, die von der Initialisierung eines Projekts bis hin zur Veröffentlichung eines Releases reichen. Zunächst wird ein neues Repository für das Projekt angelegt und mit einer `README.md` auf GitHub hochgeladen. Für jede neue Funktion oder jeden Bugfix werden dedizierte Feature-Branches erstellt, die nach Fertigstellung in den Hauptbranch gemergt werden. Dies geschieht über Pull Requests, die eine zentrale Rolle im Überprüfungsprozess spielen und vor der Genehmigung selbst überprüft werden können.
 
-	Während der Entwicklung auftretende Bugs werden als Issues festgehalten und nach ihrer Lösung geschlossen. Das Endziel ist die Veröffentlichung eines Releases, welches nach abschließenden Tests aus dem Entwurfsmodus genommen und offiziell veröffentlicht wird. Git bietet zudem Labels zur Kategorisierung von Pull Requests und Issues, um den Überblick über den Projektstatus zu behalten und die Priorisierung zu erleichtern. 
+	Während der Entwicklung auftretende Bugs werden als Issues festgehalten und nach ihrer Lösung geschlossen. Das Endziel ist die Veröffentlichung eines Releases, welches nach abschließenden Tests aus dem Entwurfsmodus genommen und offiziell veröffentlicht wird. Git bietet zudem Labels zur Kategorisierung von Pull Requests und Issues, um den Überblick über den Projektstatus zu behalten und die Priorisierung zu erleichtern.
 
 	Die Befehlszeilenschnittstelle GitHub CLI (`gh`) erleichtert die Interaktion mit GitHub, indem sie das Erstellen und Verwalten von Pull Requests, Issues und Releases direkt vom Terminal aus ermöglicht. Der gesamte Workflow unterstreicht die Bedeutung von Selbstüberprüfung, Kommunikation und transparentem Projektmanagement. Die Fähigkeit, Änderungen effektiv zu integrieren und Feedback umzusetzen, bildet das Rückgrat eines erfolgreichen Entwicklungsprozesses.
 
@@ -66,9 +66,9 @@ Rolle - Programmierexperten: Nehmen Sie die Rolle eines erfahrenen Programmierex
 
 Rolle - Cybersicherheitsexperten: Nehmen Sie die Rolle eines erfahrenen Cybersicherheitsexperten an. Führen Sie anhand dieser Person ein Überprüfung durch.
 
-Zusammenfassung: Thema: C - Programmierung 
+Zusammenfassung: Thema: C - Programmierung
 Schreibstil: Expositorisch ohne Form du/sie, verwende Markdown
-Erstelle eine ansprechende Zusammenfassung zum nachfolgenden Text in Aufzählungsform und gleichzeitig gebe die wichtigsten Informationen genau wieder. Bereite die Antwort gehirngerecht auf mit Didaktische Reduktion. 
+Erstelle eine ansprechende Zusammenfassung zum nachfolgenden Text in Aufzählungsform und gleichzeitig gebe die wichtigsten Informationen genau wieder. Bereite die Antwort gehirngerecht auf mit Didaktische Reduktion.
 Textinhalt: " "
 
 Fragen: Erstelle 5x Fragen zum Lerninhalt (beachte den Focus: tieferes Verständnis und kritisches Denken zu fördern) mit Lösung. Lerninhalt: " "
@@ -134,7 +134,7 @@ gh pr close
 
 - **Erstellen eines Pull Requests**:
   - Erstelle einen neuen Pull Request, um deine Änderungen vorzuschlagen.
-  
+
     ```bash
     gh pr create --base main --head feature/neue-funktion --title "Neue Funktion hinzufügen" --body "Fügt die    Funktionalität X hinzu, um das Problem Y zu lösen." --reviewer @teammitglied1,@teammitglied2 --label    "enhancement"
     ```
@@ -146,7 +146,7 @@ gh pr close
     ```
 
   - **Pull Request auschecken**:
-  
+
     ```sh
     gh pr checkout <pr-number>
     gh pr checkout 123

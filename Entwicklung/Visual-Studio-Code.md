@@ -114,14 +114,14 @@ find . -iname *.h -o -iname *.ino | xargs clang-format -i
 
 
 pip install --upgrade pip
-pip install ipykernel    
+pip install ipykernel
 
 # Script VS-Code anpassen
 python install_vscode_extensions.py
 
 # Liste der Erweiterungs-IDs mit Beschreibungen
 # ERGÄNZEN ....................................
-# PlatformIO IDE 
+# PlatformIO IDE
 # PyMakr
 extensions = {
    "ban.spellright": "Spell Right ist eine Rechtschreibprüfungserweiterung.",

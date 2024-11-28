@@ -19,7 +19,7 @@ Letzte Bearbeitung am: 26.11.2024
   - [ ] Probefahrt (mind. 8 km/h)
 - [ ] Schnittstellenprüfung: HU/SP-Adapter
   - Erstzulassung ab 1.1.2014 (Lkw und KOM) und 1.1.2015 (Anhänger)
-- [ ] Systemdatenprüfung: 
+- [ ] Systemdatenprüfung:
   - Erstzulassung 1.4.2006 bis 31.12.2013
 - [ ] MAHA: Prüfung neu anlegen, Stammdaten/Komplettdatensatz laden und Daten erfassen
   - [ ] Weiter / Messung starten
@@ -456,7 +456,7 @@ Letzte Bearbeitung am: 10.11.2024
    - **Mängel**: Nummer und Mangelbewertung (HU-Richtlinie)
    - TEMI Plus: <https://www.temiplus.de/default.aspx>
      - Mail: <m.aprath@stadtwerke-solingen.de>
-     - Key: `Werkstatt2017`  
+     - Key: `Werkstatt2017`
    - **Beispiele**
      - 9.6 c Trennscheibe nach Tür 1+3 bef. (GM)
      - 9.4.1 div. Sitzstopfen ern. (GM)
@@ -483,7 +483,7 @@ Letzte Bearbeitung am: 10.11.2024
 #### Daten
 
 - **Gesamtgewicht**: 191,89 kN (19,53 t, Hess)
-- **Berechnungsdruck**: 
+- **Berechnungsdruck**:
   - 8,5 bar (Hess)
   - 6,5 bar (Berkhof)
   - 7,0 bar (VH)

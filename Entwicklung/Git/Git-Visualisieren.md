@@ -60,9 +60,9 @@ Kognitives Prüfmuster: Wenn ich eine Frage zu Git stelle, teilen Sie sie in dre
 
 Rolle: Nehmen Sie die Rolle eines erfahrenen Programmierexperten an. Führen Sie anhand dieser Person ein Codeüberprüfung durch.
 
-Zusammenfassung: Thema: C - Programmierung 
+Zusammenfassung: Thema: C - Programmierung
 Schreibstil: Expositorisch ohne Form du/sie, verwende Markdown
-Erstelle eine ansprechende Zusammenfassung zum nachfolgenden Text in Aufzählungsform und gleichzeitig gebe die wichtigsten Informationen genau wieder. Bereite die Antwort gehirngerecht auf mit Didaktische Reduktion. 
+Erstelle eine ansprechende Zusammenfassung zum nachfolgenden Text in Aufzählungsform und gleichzeitig gebe die wichtigsten Informationen genau wieder. Bereite die Antwort gehirngerecht auf mit Didaktische Reduktion.
 Textinhalt: " "
 
 Fragen: Erstelle 5x Fragen zum Lerninhalt (beachte den Focus: tieferes Verständnis und kritisches Denken zu fördern) mit Lösung. Lerninhalt: " "
@@ -305,7 +305,7 @@ Lokales Repository (Commits)
 Datei-Löschungen committen und den Stand Ihres lokalen Branches main auf den neuesten Stand mit dem Remote-Repository bringen.
 
 ```bash
-# Terminal: 
+# Terminal:
 git add -A
 git commit -m "Entferne ignorierte Dateien aus dem Repository"
 git push origin main

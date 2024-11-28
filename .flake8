@@ -3,7 +3,7 @@
 max-line-length = 100
 
 # Dateien und Verzeichnisse, die ignoriert werden sollen
-exclude = 
+exclude =
     venv,
     .git,
     __pycache__,
@@ -38,4 +38,3 @@ filename = *.py
 
 # Fehler im Format: {Dateipfad}:{Zeile}:{Spalte}: {Fehler-Code} {Nachricht}
 format = %(path)s:%(row)d:%(col)d: %(code)s %(text)s
-

@@ -145,33 +145,34 @@ out/
 ```
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.5.0
+    rev: v5.0.0
     hooks:
       - id: trailing-whitespace
       - id: end-of-file-fixer
       - id: check-yaml
       - id: check-added-large-files
-        args: ['--maxkb=500']
       - id: check-merge-conflict
       - id: mixed-line-ending
-        args: ['--fix=lf']
+        args: [--fix=lf]
 
   - repo: https://github.com/psf/black
-    rev: 24.1.1
+    rev: 24.10.0
     hooks:
       - id: black
-        language_version: python3.12
+        language_version: python3.13
 
-  - repo: https://github.com/PyCQA/isort
+  - repo: https://github.com/pycqa/isort
     rev: 5.13.2
     hooks:
       - id: isort
 
-  - repo: https://github.com/PyCQA/flake8
-    rev: 7.0.0
+  - repo: https://github.com/pycqa/flake8
+    rev: 7.1.1
     hooks:
       - id: flake8
-        additional_dependencies: [flake8-docstrings]
+        additional_dependencies:
+          - flake8-docstrings
+        args: [--max-line-length=100]
 ```
 
 # setup.cfg
@@ -179,8 +180,15 @@ repos:
 ```
 [flake8]
 max-line-length = 100
-extend-ignore = E203, W503
-exclude = .git,__pycache__,build,dist,*.egg-info
+extend-ignore = D103,D209,D210,D400,D401,F401
+exclude =
+    .git,
+    __pycache__,
+    build,
+    dist,
+    .eggs,
+    *.egg,
+    Entwicklung/*
 ```
 
 # .flake8
@@ -450,6 +458,40 @@ git submodule add <url> Entwicklung/Git/C-Entwicklung/hello-world
 git submodule add <url> Entwicklung/Git/fork/MeinProjekt
 ```
 
+# pre-commit-Tool
+
+1. **`pre-commit` installieren**
+   Installiere `pre-commit` in der virtuellen Umgebung:
+
+   ```bash
+   pip install pre-commit
+   ```
+
+2. **Prüfen, ob die Installation erfolgreich war**
+   Verifiziere die Installation mit:
+
+   ```bash
+   pre-commit --version
+   ```
+
+3. **Pre-Commit-Hooks erneut installieren**
+   Nachdem das Tool verfügbar ist, führe den Installationsbefehl erneut aus:
+
+   ```bash
+   pre-commit clean
+   pre-commit install
+   pre-commit autoupdate
+   ```
+
+4. **Pre-Commit-Hooks testen**
+   Überprüfe, ob die Hooks korrekt funktionieren:
+
+   ```bash
+   pre-commit run --all-files
+   ```
+
+.pre-commit-config.yaml
+
 # Whitespace- und End-of-file-Checks überspringen
 
 Lassen Sie uns alle pre-commit Hooks für diesen initialen Commit überspringen:
@@ -528,3 +570,79 @@ Die Auswahl ist einfach:
 2. Geben Sie dem Token einen aussagekräftigen Namen (z.B. "Git Push Access")
 3. Setzen Sie ein angemessenes Ablaufdatum (z.B. 90 Tage)
 4. Klicken Sie auf "Generate token"
+
+# Git-Historie aufräumen
+
+Die letzten Commits, die sich mit der Konfiguration und Token-Entfernung beschäftigen.
+
+```bash
+# Interaktives Rebase starten, um die letzten 5 Commits zu kombinieren
+git rebase -i HEAD~5
+```
+
+Im Editor würden wir dann:
+```
+pick 7817741 Update .gitignore und .gitattributes
+squash 92be1f6 Update Konfigurationsdateien
+squash 4599b09 Cleanup: Entferne nicht benötigte Bilddateien
+squash f4526f7 python konfig update
+squash 37ccb0d Remove exposed token for security
+```
+
+Dies würde alle diese Commits in einen einzigen, sauberen Commit zusammenfassen mit einer aussagekräftigen Commit-Nachricht wie:
+
+```
+Update Projektkonfiguration und Bereinigung
+
+- Aktualisiere .gitignore und .gitattributes
+- Füge Python Code-Qualitätsprüfung hinzu
+- Bereinige nicht benötigte Dateien
+- Aktualisiere Python-Konfiguration
+```
+
+Nach dem Rebase müssten wir force-pushen:
+```bash
+git push --force-with-lease
+```
+
+#  Git-Historie bereinigen
+
+Der Token ist immer noch in der Git-Historie vorhanden.
+
+1. **Commit aus der Historie entfernen:**
+```bash
+# Interaktives Rebase starten, um den problematischen Commit zu bearbeiten
+git rebase -i HEAD~5
+```
+
+2. **Im Editor:**
+- Suchen Sie den Commit mit der Token-Exposition
+- Ändern Sie `pick` zu `edit` bei diesem Commit
+- Speichern und schließen Sie den Editor
+
+```
+pick 92be1f6 Update Konfigurationsdateien
+pick 4599b09 Cleanup: Entferne nicht benötigte Bilddateien
+edit b04f322 python konfig update
+drop 70f0509 Remove exposed token for security
+drop 122f29e Remove exposed token for security
+```
+
+1. **Token aus der Datei entfernen:**
+```bash
+# Datei bearbeiten
+vim python-scripte/python-config.md
+# Token entfernen
+
+# Änderungen zum Commit hinzufügen
+git add python-scripte/python-config.md
+git commit --amend
+
+# Rebase fortsetzen
+git rebase --continue
+```
+
+4. **Force Push (da wir die Historie geändert haben):**
+```bash
+git push --force-with-lease
+```

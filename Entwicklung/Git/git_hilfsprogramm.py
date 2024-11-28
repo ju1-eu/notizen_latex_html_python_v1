@@ -30,10 +30,9 @@ import re
 import subprocess
 import sys
 import traceback
-from dotenv import load_dotenv
 
 import requests
-
+from dotenv import load_dotenv
 
 GITHUB_URL = "https://github.com/ju1-eu/"
 README_FILE = "README.md"

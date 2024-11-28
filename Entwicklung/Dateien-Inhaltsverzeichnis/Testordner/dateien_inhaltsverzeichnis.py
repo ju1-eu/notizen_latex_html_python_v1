@@ -19,8 +19,8 @@ Anforderungen:
 """
 
 import os
-import subprocess
 import shutil
+import subprocess
 
 # Globale Variablen
 VERZEICHNIS = "./02_Basics"

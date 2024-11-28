@@ -25,10 +25,10 @@
 | 9       | Erstelle eine umfassende **Dokumentation** zum Script                                  |
 
 
-- Welcher KI-Assistent und welchen Wissensstand hast du. Über welche Fähigkeiten verfügst du. 
+- Welcher KI-Assistent und welchen Wissensstand hast du. Über welche Fähigkeiten verfügst du.
   - Erstelle mir jeweils eine Anweisung
 - **Analysiere** den folgenden Text auf sprachliche Besonderheiten.
-- Erkläre den **Unterschied zwischen** 
+- Erkläre den **Unterschied zwischen**
 - Fasse die **Hauptargumente** in der Debatte um künstliche Intelligenz zusammen.
 - Entwerfe ein **Algorithmus** zur Berechnung von Primzahlen
 - Erstelle ein **Struktogramm** (Nassi-Shneiderman-Diagramm)
@@ -166,24 +166,24 @@ Allgemeine Anweisungen
 
 - Nutze den monatlichen Überschuss wie folgt:
   - 50% für den Aufbau eines Notfallfonds
-  - 50% für zusätzliche Tilgungen des Annuitätendarlehens  
+  - 50% für zusätzliche Tilgungen des Annuitätendarlehens
 
 **Monatliches Ausgaben-Tracking**:
 
-- Erstelle eine detaillierte Übersicht meiner monatlichen Ausgaben. Vergleiche diese mit dem Durchschnitt der letzten drei Monate:  
+- Erstelle eine detaillierte Übersicht meiner monatlichen Ausgaben. Vergleiche diese mit dem Durchschnitt der letzten drei Monate:
 - Führe ein detailliertes Tagebuch für meine Bargeldausgaben.
 - Überprüfe regelmäßig meine Abonnements und Online-Dienste auf Notwendigkeit und mögliche günstigere Alternativen.
 - Versuche, die Kategorie "Sonstiges" weiter aufzuschlüsseln, um ein klareres Bild von diesen Ausgaben zu erhalten.
-- Setze realistische Sparziele für die größten Ausgabenkategorien, z.B. eine 5%ige Reduzierung der Lebensmittelausgaben im nächsten Monat.  
+- Setze realistische Sparziele für die größten Ausgabenkategorien, z.B. eine 5%ige Reduzierung der Lebensmittelausgaben im nächsten Monat.
 
 **Ausgabenoptimierung**:
 
-- Identifiziere die Top 3 variablen Ausgaben und setze realistische Reduktionsziele  
+- Identifiziere die Top 3 variablen Ausgaben und setze realistische Reduktionsziele
 
 **Regelmäßige Finanzüberprüfung**: (Führe vierteljährliche Finanz-Check-ups durch)
 
 - Vergleiche Ist- mit Soll-Zustand
-- Passe Ziele und Strategien entsprechend an  
+- Passe Ziele und Strategien entsprechend an
 
 ## Tabelle: Tagebuch, um tägliche Bargeldausgaben zu tracken
 

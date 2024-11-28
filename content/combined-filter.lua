@@ -5,6 +5,3 @@ function Cite(element)
         return pandoc.RawInline('latex', '\\textcite{' .. citation.id .. '}')
     end
 end
-
-
-  

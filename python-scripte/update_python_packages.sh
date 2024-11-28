@@ -104,7 +104,7 @@ update_requirements() {
     if [ ! -f "$file_name" ]; then
         print_warning "${file_name} nicht gefunden, überspringe..."
         return
-    }
+    fi
 
     # Backup erstellen
     cp "$file_name" "$backup_file"
@@ -116,11 +116,11 @@ update_requirements() {
         if [[ $line =~ ^#.*$ ]] || [ -z "$line" ] || [[ $line =~ ^-r.* ]]; then
             continue
         fi
-        
+
         # Extrahiere Paketnamen (ohne Version)
         package=$(echo "$line" | cut -d'=' -f1)
         print_status "Aktualisiere: $package"
-        
+
         if pip install -U "$package"; then
             print_success "$package erfolgreich aktualisiert"
         else
@@ -160,20 +160,20 @@ main() {
     if ! command -v python3 &> /dev/null; then
         print_error "Python3 nicht gefunden!"
         exit 1
-    }
+    fi
 
     # Prüfe virtuelle Umgebung
     if [ ! -d "venv" ]; then
         print_error "Virtuelle Umgebung (venv/) nicht gefunden!"
         print_status "Erstellen Sie eine neue virtuelle Umgebung mit: python3 -m venv venv"
         exit 1
-    }
+    fi
 
     # Prüfe requirements Dateien
     if [ ! -f "requirements.txt" ] && [ ! -f "requirements-dev.txt" ]; then
         print_error "Keine requirements.txt oder requirements-dev.txt gefunden!"
         exit 1
-    }
+    fi
 
     # Aktiviere virtuelle Umgebung
     print_status "Aktiviere virtuelle Umgebung..."

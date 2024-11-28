@@ -135,28 +135,28 @@ nmcli con down "Kabelgebundene Verbindung 1" && nmcli con up "Kabelgebundene Ver
 Um den DNS-Server auch für Ihre WLAN-Verbindung, die als `"n2g"` bezeichnet wird, auf 8.8.8.8 zu setzen, folgen wir einem ähnlichen Prozess wie zuvor. Dies wird sicherstellen, dass Ihre WLAN-Verbindung ebenfalls von der schnellen und zuverlässigen Namensauflösung durch Google's DNS profitiert. Denken Sie daran, wie ein Navigator, der plötzlich eine klarere und präzisere Karte erhält; so verbessert ein schneller DNS-Server die Navigation im Internet.
 
 1. **DNS-Server für die WLAN-Verbindung setzen:**
-   
+
    Beginnen wir damit, Google's DNS-Adresse der Verbindung `n2g` zuzuweisen. Dieser Schritt ist vergleichbar mit dem Einstellen eines neuen Ziels in Ihrem GPS:
    ```bash
    nmcli con mod "n2g" ipv4.dns "8.8.8.8"
    ```
 
 2. **Automatische DNS-Einstellungen ignorieren:**
-   
+
    Als Nächstes sagen wir Ihrem System, dass es nicht mehr die automatisch zugewiesenen DNS-Server verwenden soll, ähnlich wie wenn Sie entscheiden, nicht den vorgeschlagenen Routen eines GPS zu folgen, weil Sie einen besseren Weg kennen:
    ```bash
    nmcli con mod "n2g" ipv4.ignore-auto-dns yes
    ```
 
 3. **IP-Einstellungen auf automatisch belassen:**
-   
+
    Wir behalten die automatische IP-Konfiguration bei. Das ist so, als würden Sie sich entscheiden, die Automatikfunktion Ihres Autos zu nutzen, während Sie gleichzeitig das Ziel selbst bestimmen:
    ```bash
    nmcli con mod "n2g" ipv4.method auto
    ```
 
 4. **Verbindung neu starten:**
-   
+
    Zum Schluss, ähnlich wie das Neustarten eines Geräts nach einer Softwareaktualisierung, starten wir die Verbindung neu, um die Änderungen wirksam zu machen:
    ```bash
    nmcli con down "n2g" && nmcli con up "n2g"
@@ -467,7 +467,7 @@ conda list python
    ```bash
    wget https://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
    ```
-  
+
 
 3. **Extrahieren des Installations-Skripts:**
    Extrahieren Sie die heruntergeladene Datei.
@@ -523,7 +523,7 @@ pip3 install jinja2
 ### Überprüfung der Installationen
 
 - Um die Version von TeX Live/LaTeX zu überprüfen, verwenden Sie:
-  
+
   ```bash
   latex --version
   pdflatex --version
@@ -905,7 +905,7 @@ Nachdem Sie die Ausführungsrechte gesetzt haben, können Sie die Arduino IDE di
 
 ### Optionale Schritte
 
-- **Erstellen einer Desktop-Verknüpfung:**  `vim ~/.local/share/applications/.desktop` 
+- **Erstellen einer Desktop-Verknüpfung:**  `vim ~/.local/share/applications/.desktop`
 
 ```ini
 [Desktop Entry]

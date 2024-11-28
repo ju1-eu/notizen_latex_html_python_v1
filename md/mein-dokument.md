@@ -2,22 +2,21 @@
 title: "Markdown"
 thema: "Anwendung von Markdown-Techniken für Dokumentationen"
 runningtitle: "Dokumentation mit Markdown"
-keywords: "\\textbf{Keywords:} Markdown, Dokumentation, Pandoc, Konvertierung, Fußnoten, Tabellen, Code, Hyperlinks, Bilder, Literatur"
+keywords: "\\textbf{Keywords:} Markdown, Pandoc, Konvertierung"
 abstract: |
-  \includegraphics[width=0.6\textwidth]{images/Mindmap-Markdown.pdf}
+  \includegraphics[width=0.5\textwidth]{images/Mindmap-Markdown.pdf}
 
   Markdown ist eine leichtgewichtige Auszeichnungssprache, die entwickelt wurde, um das Schreiben von Webinhalten zu vereinfachen. Sie ermöglicht es Autoren, mit einer einfachen Textformatierungssyntax Dokumente zu erstellen, die dann in HTML umgewandelt werden können. Markdown wurde 2004 von John Gruber in Zusammenarbeit mit Aaron Swartz entworfen, mit dem Ziel, Lesbarkeit und Einfachheit in den Vordergrund zu stellen.
 
   Git ist ein weit verbreitetes Versionskontrollsystem, das von Entwicklern verwendet wird, um den Überblick über Änderungen an ihren Codeprojekten zu behalten. Es unterstützt die Zusammenarbeit, indem es mehreren Benutzern ermöglicht, an denselben Projekten zu arbeiten, ohne sich gegenseitig zu behindern.
 
-  Eine Mindmap ist ein visuelles Diagramm, das dazu dient, Informationen hierarchisch und in einem vernetzten Format darzustellen, wobei ein zentrales Konzept oder Thema in der Mitte platziert und verwandte Themen oder Ideen drum herum angeordnet werden.
-
   Python ist eine weit verbreitete, hochgradig vielseitige Programmiersprache, die für ihre Einfachheit und Lesbarkeit bekannt ist. Sie unterstützt verschiedene Programmierparadigmen wie objektorientiert, imperativ und in gewissem Maße auch funktional.
 date: \today
 ---
 <!-------------------------------------------------------------------------------------------------------------
-ju 30-3-24 mein-dokument.md
+ju 26-11-24 mein-dokument.md
 pandoc mein-dokument.md -o mein-dokument.html -c navigation.css --mathjax --citeproc --bibliography=literatur.bib --csl=zitierstil-number.csl
+pandoc mein-dokument.md --to latex --output mein-dokument.tex --template=vorlage-main.tex --lua-filter=combined-filter.lua
 
 Quelle [@spanner:2019:robotik].
 
@@ -26,52 +25,12 @@ Fußnote.[^1]
 
 [Google](https://www.google.com)
 
-![Logo 2](images/Logo/Logo2.pdf)
+![Logo 2](images/Logo/Logo2.pdf){width=60%}
 
 **Tabelle 1:** Beschreibung
 
-pandoc mein-dokument.md --to latex --output mein-dokument.tex --template=vorlage-main.tex --lua-filter=combined-filter.lua
 pdflatex mein-dokument.tex
 biber mein-dokument
-pdflatex mein-dokument.tex
-pdflatex mein-dokument.tex
-
-ChatGPT:
-
-Schreibstil: Expositorisch ohne Form du/sie
-Prüfe Rechtschreibung und Grammatik
-Erstelle eine ansprechende Zusammenfassung zum nachfolgenden Text in Aufzählungsform und gleichzeitig gebe die wichtigsten Informationen genau wieder.
-
-Zusammenfassung in Latex: Schreibstil: Expositorisch ohne Form du/sie
-Erstellen Sie eine kurze (ca. 200 Wörter) und ansprechende Zusammenfassung zum nachfolgenden Text. Die Zusammenfassung sollte für jemanden ohne wissenschaftlichen Hintergrund verständlich sein und gleichzeitig die wichtigsten Fakten genau wiedergeben. Beachte den Zusammenhang. Textinhalt: " "
-
-Keywords: Erstelle mir eine kommagetrennte Liste der wichtigsten Keywords zum Textinhalt.
-
-Erklärung in Latex: Erkläre die Schlüsselwörter. Bereite die Antwort gehirngerecht auf mit Didaktische Reduktion.
-
-Basierend auf den Schlüsselwörtern und deren Zusammenhang
-erstelle eine detaillierte Struktur für eine Mindmap
-erstelle eine Mindmap in LaTeX, benutze das Paket tikz
-
-neue Infos: Erklären Sie einem Gymnasiasten, der sich mit Programmierung beschäftigt, das Konzept von Git.
-
-Gedankenkette: Könnten Sie kurz das Konzept von Git erläutern? Wie beeinflusst Git die Programmiersprache und in welchen Zusammenhang steht es?
-
-Kognitives Prüfmuster: Wenn ich eine Frage zu Git stelle, teilen Sie sie in drei kleinere Fragen auf, die Ihnen helfen, eine genauere Antwort zu geben. Kombinieren Sie die Antworten auf diese Unterfragen, um die endgültige Antwort zu erhalten.
-
-Rolle - Programmierexperten: Nehmen Sie die Rolle eines erfahrenen Programmierexperten an. Führen Sie anhand dieser Person ein Codeüberprüfung durch.
-
-Rolle - Cybersicherheitsexperten: Nehmen Sie die Rolle eines erfahrenen Cybersicherheitsexperten an. Führen Sie anhand dieser Person ein Überprüfung durch.
-
-Zusammenfassung: Thema: C - Programmierung
-Schreibstil: Expositorisch ohne Form du/sie, verwende Markdown
-Erstelle eine ansprechende Zusammenfassung zum nachfolgenden Text in Aufzählungsform und gleichzeitig gebe die wichtigsten Informationen genau wieder. Bereite die Antwort gehirngerecht auf mit Didaktische Reduktion.
-Textinhalt: " "
-
-Fragen: Erstelle 5x Fragen zum Lerninhalt (beachte den Focus: tieferes Verständnis und kritisches Denken zu fördern) mit Lösung. Lerninhalt: " "
-
-Projekt: Erstelle ein Projekt zum Anwenden des gelernten mit Lösung.
-------------------------
 ---------------------------------------------------------------------------------------------------------------->
 # Dokumente in Markdown erstellen
 
@@ -91,7 +50,7 @@ dokumentation.py
 
 Git
 
-![Was ist Git?](images/Mindmap-Git.pdf)
+![Was ist Git?](images/Mindmap-Git.pdf){width=60%}
 
 ```bash
 # Git Versionierung
@@ -185,13 +144,13 @@ int main() {
 // Markdown
 [Google](https://www.google.com)
 
-![Logo 2](images/Logo/Logo2.pdf)
+![Logo 2](images/Logo/Logo2.pdf){width=50%}
 ```
 
 Website [Google](https://www.google.com) und GitHub <https://github.com/ju1-eu> und meine Website <https://bw-ju.de/>
 
-![Logo 2](images/Logo/Logo2.pdf)
+![Logo 2](images/Logo/Logo2.pdf){width=40%}
 
-![Was ist eine Mindmap?](images/Mindmap.pdf)
+![Was ist eine Mindmap?](images/Mindmap.pdf){width=60%}
 
-![Was ist Python?](images/Mindmap-Python.pdf)
+![Was ist Python?](images/Mindmap-Python.pdf){width=60%}

@@ -653,4 +653,3 @@ Kannst du das Anschreiben noch ein bisschen ändern?
 Kannst du mir den Code für einen Button schreiben, der beim anklicken immer die Farbe zwischen rot und blau ändert? Ich möchte den Button auf eine Webseite verwenden.
 Sieht gut aus! Aber ich finde die Farben etwas zu grell. Kannst du außerdem den Rand des Buttons entfernen und die Ecken leicht abrunden?
 ```
-

@@ -14,7 +14,7 @@ abstract: |
 	Meilensteine sind besonders wertvoll für die Planung und Durchführung von Projektphasen. Sie unterstützen die Organisation von Issues in größere Arbeitspakete oder Releases. Durch die Möglichkeit, Meilensteine zu erstellen, zu aktualisieren und zu löschen, bleibt das Projektmanagement flexibel und übersichtlich.
 
 	\section*{Schlüsselwörter}
-	
+
 	\begin{enumerate}
 		\item \textbf{GitHub}: Eine Plattform für Softwareentwicklung, die Werkzeuge für Versionskontrolle und Kollaboration bietet.
 		\item \textbf{Issues}: Aufgaben, Vorschläge, Bugs oder andere Anliegen, die innerhalb eines Projekts verfolgt und verwaltet werden.
@@ -72,9 +72,9 @@ Rolle - Programmierexperten: Nehmen Sie die Rolle eines erfahrenen Programmierex
 
 Rolle - Cybersicherheitsexperten: Nehmen Sie die Rolle eines erfahrenen Cybersicherheitsexperten an. Führen Sie anhand dieser Person ein Überprüfung durch.
 
-Zusammenfassung: Thema: C - Programmierung 
+Zusammenfassung: Thema: C - Programmierung
 Schreibstil: Expositorisch ohne Form du/sie, verwende Markdown
-Erstelle eine ansprechende Zusammenfassung zum nachfolgenden Text in Aufzählungsform und gleichzeitig gebe die wichtigsten Informationen genau wieder. Bereite die Antwort gehirngerecht auf mit Didaktische Reduktion. 
+Erstelle eine ansprechende Zusammenfassung zum nachfolgenden Text in Aufzählungsform und gleichzeitig gebe die wichtigsten Informationen genau wieder. Bereite die Antwort gehirngerecht auf mit Didaktische Reduktion.
 Textinhalt: " "
 
 Fragen: Erstelle 5x Fragen zum Lerninhalt (beachte den Focus: tieferes Verständnis und kritisches Denken zu fördern) mit Lösung. Lerninhalt: " "
@@ -139,7 +139,7 @@ Projekt: Erstelle ein Projekt zum Anwenden des gelernten mit Lösung.
 
 4. **Meilensteine setzen**:
     - Ordne Issues Meilensteinen zu, um sie in größere Arbeitspakete oder Releases zu gruppieren.
-  
+
     ```bash
     # Meilenstein erstellen
     gh api \
@@ -162,7 +162,7 @@ Projekt: Erstelle ein Projekt zum Anwenden des gelernten mit Lösung.
 
 1. **Branch erstellen**:
     - Für jedes Issue, das du bearbeiten möchtest, erstelle einen neuen Branch basierend auf dem Issue-Titel oder der -Nummer.
-  
+
     ```bash
     # Issue-Nummer
     gh issue list
@@ -173,7 +173,7 @@ Projekt: Erstelle ein Projekt zum Anwenden des gelernten mit Lösung.
 
 2. **Problem lösen**:
     - Arbeite im erstellten Branch an der Lösung des Issues. Führe regelmäßig Commits durch, um deine Fortschritte zu speichern.
-  
+
     ```bash
     vim code.c
     git commit -a

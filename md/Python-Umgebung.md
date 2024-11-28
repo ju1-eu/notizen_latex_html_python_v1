@@ -171,7 +171,7 @@ Algorithmen sind die Rezepte des maschinellen Lernens, Schritt-für-Schritt-Anwe
 
 ## Mindmap: Python, Anaconda und Jupyter Notebooks in der Datenwissenschaft
 
-![PDF: Mindmap - Python](images/Mindmap-Python.pdf "Abb.: Python")
+![PDF: Mindmap - Python](images/Mindmap-Python.pdf "Abb.: Python"){width=60%}
 
 **Zentrales Thema: Python, Anaconda und Jupyter Notebooks in der Datenwissenschaft.**
 

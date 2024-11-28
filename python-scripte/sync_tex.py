@@ -28,7 +28,7 @@ Datum: 26.11.2024
 import subprocess
 
 
-def sicherer_aufruf(befehl):
+def sicherer_aufruf(befehl: list[str]) -> None:
     """Führt einen Befehl sicher aus."""
     try:
         subprocess.run(befehl, check=True)
@@ -38,20 +38,19 @@ def sicherer_aufruf(befehl):
         print(f"Ein unerwarteter Fehler ist aufgetreten: {e}")
 
 
-def synchronisiere_tex_dateien(spezifische_datei=None):
+def synchronisiere_tex_dateien(spezifische_datei: str | None = None) -> None:
     """Synchronisiert .tex-Dateien basierend auf der Benutzerauswahl."""
     befehl = ["rsync", "-avh", "--progress"]
     if spezifische_datei:
-        # Korrigiere hier den Pfad zur spezifischen Datei
         vollstaendiger_pfad = "tex/" + spezifische_datei
         befehl.append(vollstaendiger_pfad)
     else:
         befehl.append("tex/")
-    befehl.append(".")  # Zielverzeichnis
+    befehl.append(".")
     sicherer_aufruf(befehl)
 
 
-def auswahl_und_synchronisierung():
+def auswahl_und_synchronisierung() -> None:
     """Ermöglicht die Benutzerauswahl und führt die Synchronisation durch."""
     auswahl = (
         input("Möchten Sie alle Dateien kopieren (A) oder nur eine bestimmte (B)? [A/B]: ")
@@ -59,16 +58,15 @@ def auswahl_und_synchronisierung():
         .upper()
     )
     if auswahl == "A":
-        synchronisiere_tex_dateien()  # Alle Dateien synchronisieren
+        synchronisiere_tex_dateien()
     elif auswahl == "B":
         dateiname = input("Geben Sie den Namen der Datei ein (z.B. beispiel.tex): ")
-        # Spezifische Datei synchronisieren
         synchronisiere_tex_dateien(dateiname)
     else:
         print("Ungültige Auswahl.")
 
 
-def main():
+def main() -> None:
     auswahl_und_synchronisierung()
 
 

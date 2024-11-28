@@ -68,9 +68,9 @@ Rolle - Programmierexperten: Nehmen Sie die Rolle eines erfahrenen Programmierex
 
 Rolle - Cybersicherheitsexperten: Nehmen Sie die Rolle eines erfahrenen Cybersicherheitsexperten an. Führen Sie anhand dieser Person ein Überprüfung durch.
 
-Zusammenfassung: Thema: C - Programmierung 
+Zusammenfassung: Thema: C - Programmierung
 Schreibstil: Expositorisch ohne Form du/sie, verwende Markdown
-Erstelle eine ansprechende Zusammenfassung zum nachfolgenden Text in Aufzählungsform und gleichzeitig gebe die wichtigsten Informationen genau wieder. Bereite die Antwort gehirngerecht auf mit Didaktische Reduktion. 
+Erstelle eine ansprechende Zusammenfassung zum nachfolgenden Text in Aufzählungsform und gleichzeitig gebe die wichtigsten Informationen genau wieder. Bereite die Antwort gehirngerecht auf mit Didaktische Reduktion.
 Textinhalt: " "
 
 Fragen: Erstelle 5x Fragen zum Lerninhalt (beachte den Focus: tieferes Verständnis und kritisches Denken zu fördern) mit Lösung. Lerninhalt: " "
@@ -103,7 +103,7 @@ Erstelle je nach Schreibstil eine ansprechende Zusammenfassung des folgenden Art
 ```
 
 ```bash
-# Terminal: 
+# Terminal:
 # Dokumentation aktualisieren
 # Dokumentation/html/index.html
 # Dokumentation/latex/refman.pdf

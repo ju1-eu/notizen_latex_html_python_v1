@@ -97,4 +97,3 @@ export PATH="/Users/jan/.pyenv/versions/3.12.1/bin:$PATH"
 
 export PATH="/usr/local/bin:$PATH"
 export PATH="$PATH:/Users/jan/.local/bin"
-

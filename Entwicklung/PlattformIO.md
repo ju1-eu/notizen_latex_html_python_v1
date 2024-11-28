@@ -25,8 +25,8 @@ Erstelle je nach Schreibstil eine ansprechende Zusammenfassung des folgenden Art
 
 # ESP32 für PlattformIO programmieren
 # Konventionen von PlatformIO für C++-Projekte
-Erstelle ein "Hallo Welt"-C++Programm für einen ESP32 Mikrocontroller 
-Erstelle ein "Hallo Welt"-Programm in MicroPython für einen ESP32 Mikrocontroller 
+Erstelle ein "Hallo Welt"-C++Programm für einen ESP32 Mikrocontroller
+Erstelle ein "Hallo Welt"-Programm in MicroPython für einen ESP32 Mikrocontroller
 ```
 
 
@@ -110,7 +110,7 @@ Firmware-Auswahl <https://micropython.org/download/esp32/>
    esptool.py --chip esp32 --port /dev/cu.usbserial-1460 erase_flash
    ```
 
-2. **Flashen der MicroPython-Firmware**: 
+2. **Flashen der MicroPython-Firmware**:
    - **Für WROOM, PICO Module**:
      ```sh
      # Chip is ESP32-D0WD-V3 (revision v3.0)
@@ -146,9 +146,9 @@ Python-Skripte direkt auf dem Gerät ausführen.
 
   # Terminalprogramm: (seriellen Port)
   # Beenden: Ctrl-A + k
-  # 
+  #
   screen /dev/cu.usbserial-0001 115200
-  # 
+  #
   screen /dev/cu.usbserial-1460 115200
   ```
 
@@ -164,7 +164,7 @@ Python-Skripte direkt auf dem Gerät ausführen.
    esptool.py --chip esp32 --port /dev/cu.usbserial-1460 erase_flash
    ```
 
-3. **Vorbereiten der C++-Umgebung**: 
+3. **Vorbereiten der C++-Umgebung**:
    - ESP-IDF (Espressif IoT Development Framework)
    - PlatformIO
    - Arduino-IDE.
@@ -404,4 +404,3 @@ mv *.zip /Users/jan/daten/start/IOT/Projekte-ESP32/Firmware-WROOM/c++
 2. **Speichern auf einem externen Laufwerk oder in der Cloud**
 
 3. **Versionierung**: Git, um Änderungen an Ihrem Projekt zu verfolgen und Backups einfacher zu verwalten.
-

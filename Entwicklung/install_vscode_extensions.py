@@ -9,9 +9,9 @@ Voraussetzungen:
 - `clang-format` muss installiert sein für die Erstellung der .clang-format-Datei.
 """
 
-import subprocess
 import json
 import os
+import subprocess
 import sys
 
 # Liste der Erweiterungs-IDs mit Beschreibungen

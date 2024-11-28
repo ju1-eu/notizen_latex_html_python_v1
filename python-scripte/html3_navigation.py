@@ -48,7 +48,7 @@ from jinja2 import exceptions as jinja2_exceptions
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
 
-def load_config(config_path: str) -> dict:
+def load_config(config_path: str) -> dict[str, str]:
     """
     Lädt die Konfiguration aus einer YAML-Datei.
 
@@ -56,7 +56,7 @@ def load_config(config_path: str) -> dict:
         config_path: Pfad zur Konfigurationsdatei
 
     Returns:
-        dict: Die geladene Konfiguration
+        dict[str, str]: Die geladene Konfiguration mit String-Werten
 
     Raises:
         FileNotFoundError: Wenn die Konfigurationsdatei nicht gefunden wird
@@ -64,7 +64,13 @@ def load_config(config_path: str) -> dict:
     """
     try:
         with open(config_path, "r", encoding="utf-8") as config_file:
-            return yaml.safe_load(config_file)
+            config = yaml.safe_load(config_file)
+            # Typisiertes Dictionary erstellen
+            result: dict[str, str] = {}
+            for key, value in config.items():
+                if isinstance(value, str):
+                    result[key] = value
+            return result
     except FileNotFoundError:
         logging.error("Konfigurationsdatei nicht gefunden: %s", config_path)
         raise
@@ -133,14 +139,13 @@ def erstelle_navigationsseite(
 
 
 def main() -> None:
-    """
-    Hauptfunktion zum Erstellen der Navigationsseite.
+    """Hauptfunktion zum Erstellen der Navigationsseite.
+
     Definiert die Pfade und Namen für Ordner, Vorlage und Ausgabedatei.
     """
     parser = argparse.ArgumentParser(description="Erstellt eine Navigationsseite für HTML-Dateien.")
     parser.add_argument("--config", default="config3.yaml", help="Pfad zur Konfigurationsdatei")
     args = parser.parse_args()
-
     script_dir = os.path.dirname(os.path.abspath(__file__))
     config_path = os.path.join(script_dir, args.config)
 

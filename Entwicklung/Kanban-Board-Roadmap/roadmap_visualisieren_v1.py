@@ -1,7 +1,8 @@
-import pandas as pd
-import matplotlib.pyplot as plt
-import matplotlib.dates as mdates
 from datetime import datetime
+
+import matplotlib.dates as mdates
+import matplotlib.pyplot as plt
+import pandas as pd
 from matplotlib.backends.backend_pdf import PdfPages
 
 

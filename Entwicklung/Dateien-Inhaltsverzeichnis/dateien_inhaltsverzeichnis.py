@@ -34,8 +34,8 @@ Verwendung:
 """
 
 import os
-import subprocess
 import shutil
+import subprocess
 
 # Globale Variablen
 VERZEICHNIS = "./Testordner"  # anpassen

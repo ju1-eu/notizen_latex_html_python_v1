@@ -1,19 +1,15 @@
-% ju 26-Nov-24 Python-Umgebung.tex
+% ju 28-Nov-24 Python-Umgebung.tex
 \documentclass{vorlage-design-main}
-
-% Checkbox Definition
-\newcommand{\checkbox}{\square}
-
+% Verwenden von fontspec und unicode-math für XeLaTeX oder LuaLaTeX
 
 %% Ganze Überschrift
 \title{}
-%% Kürzerer Titel zur Verwendung im Seitenkopf
+%% Kürzerer Titel
 \runningtitle{}
 \author{Jan Unger}
 \date{\today}
 
-%% Die .bib-Datei mit vollständigen Referenzen zur Verwendung mit biblatex. 
-%% articleclass lädt das Paket biblatex-chicago mit Anpassungen
+%% Referenzen
 \addbibresource{literatur.bib}
 
 \begin{document}
@@ -223,12 +219,12 @@ Python.}
   Grundlegende Bibliotheken
 
   \begin{itemize}
-  
+
   \item
     \textbf{Pandas}
 
     \begin{itemize}
-    
+
     \item
       Datenmanipulation
     \item
@@ -240,7 +236,7 @@ Python.}
     \textbf{NumPy}
 
     \begin{itemize}
-    
+
     \item
       Mehrdimensionale Arrays
     \item
@@ -250,7 +246,7 @@ Python.}
     \textbf{SciPy}
 
     \begin{itemize}
-    
+
     \item
       Wissenschaftliches Rechnen
     \item
@@ -263,12 +259,12 @@ Python.}
   Datenvisualisierung
 
   \begin{itemize}
-  
+
   \item
     \textbf{Matplotlib}
 
     \begin{itemize}
-    
+
     \item
       Basisdiagramme und -grafiken
     \item
@@ -278,7 +274,7 @@ Python.}
     \textbf{Seaborn}
 
     \begin{itemize}
-    
+
     \item
       Statistische Grafiken
     \item
@@ -288,7 +284,7 @@ Python.}
     \textbf{Plotly}
 
     \begin{itemize}
-    
+
     \item
       Interaktive, webbasierte Grafiken
     \item
@@ -299,17 +295,17 @@ Python.}
   Maschinelles Lernen
 
   \begin{itemize}
-  
+
   \item
     \textbf{Traditionelles Maschinelles Lernen}
 
     \begin{itemize}
-    
+
     \item
       \textbf{Scikit-learn}
 
       \begin{itemize}
-      
+
       \item
         Algorithmen für Supervised Learning (z.B. Regression,
         Klassifikation)
@@ -321,12 +317,12 @@ Python.}
     \textbf{Tiefes Lernen}
 
     \begin{itemize}
-    
+
     \item
       \textbf{TensorFlow}
 
       \begin{itemize}
-      
+
       \item
         Aufbau und Training tiefer neuronaler Netzwerke
       \item
@@ -336,7 +332,7 @@ Python.}
       \textbf{PyTorch}
 
       \begin{itemize}
-      
+
       \item
         Dynamische Berechnungsgraphen
       \item
@@ -348,12 +344,12 @@ Python.}
   Entwicklungsumgebung
 
   \begin{itemize}
-  
+
   \item
     \textbf{Jupyter Notebooks}
 
     \begin{itemize}
-    
+
     \item
       Interaktive Code-Ausführung
     \item
@@ -364,12 +360,12 @@ Python.}
   Schlüsselkonzepte
 
   \begin{itemize}
-  
+
   \item
     \textbf{Datenanalyse}
 
     \begin{itemize}
-    
+
     \item
       Explorative Datenanalyse
     \item
@@ -379,7 +375,7 @@ Python.}
     \textbf{Statistische Grafiken}
 
     \begin{itemize}
-    
+
     \item
       Verständnis von Datenmustern
     \end{itemize}
@@ -387,7 +383,7 @@ Python.}
     \textbf{Explorative Datenanalyse}
 
     \begin{itemize}
-    
+
     \item
       Erste Schritte der Datenuntersuchung
     \end{itemize}
@@ -395,7 +391,7 @@ Python.}
     \textbf{Algorithmen}
 
     \begin{itemize}
-    
+
     \item
       Verstehen, wie maschinelles Lernen funktioniert
     \end{itemize}
@@ -403,7 +399,7 @@ Python.}
     \textbf{Regression und Klassifikation}
 
     \begin{itemize}
-    
+
     \item
       Zwei Haupttypen des überwachten Lernens
     \end{itemize}
@@ -415,7 +411,9 @@ Datenwissenschaft}\label{mindmap-python-anaconda-und-jupyter-notebooks-in-der-da
 
 \begin{figure}
 \centering
-\includegraphics[keepaspectratio]{images/Mindmap-Python.pdf}
+\includegraphics[width=0.6\linewidth,keepaspectratio]{images/Mindmap-Python.pdf}
+%\floatnotes{}
+%\label{fig:}
 \caption{PDF: Mindmap - Python}
 \end{figure}
 
@@ -429,14 +427,14 @@ Datenwissenschaft.}
   \textbf{Python}
 
   \begin{itemize}
-  
+
   \item
     Definition: Hochrangige Programmiersprache
   \item
     Eigenschaften
 
     \begin{itemize}
-    
+
     \item
       Klarheit
     \item
@@ -446,7 +444,7 @@ Datenwissenschaft.}
     Anwendungsbereiche
 
     \begin{itemize}
-    
+
     \item
       Programmierung
     \item
@@ -459,7 +457,7 @@ Datenwissenschaft.}
   \textbf{Anaconda}
 
   \begin{itemize}
-  
+
   \item
     Definition: Open-Source-Distribution für Python und R
   \item
@@ -468,7 +466,7 @@ Datenwissenschaft.}
     Hauptmerkmale
 
     \begin{itemize}
-    
+
     \item
       Vereinfachung von Installation und Verwaltung
     \item
@@ -480,14 +478,14 @@ Datenwissenschaft.}
   \textbf{Jupyter Notebooks}
 
   \begin{itemize}
-  
+
   \item
     Definition: Open-Source-Webanwendung
   \item
     Funktionen
 
     \begin{itemize}
-    
+
     \item
       Erstellung lebendiger Dokumente
     \item
@@ -497,7 +495,7 @@ Datenwissenschaft.}
     Nutzungskontext
 
     \begin{itemize}
-    
+
     \item
       Explorative Datenanalyse
     \item
@@ -510,12 +508,12 @@ Datenwissenschaft.}
   \textbf{Synergie und Integration}
 
   \begin{itemize}
-  
+
   \item
     Verbindung der Komponenten
 
     \begin{itemize}
-    
+
     \item
       Python als Basis
     \item
@@ -527,7 +525,7 @@ Datenwissenschaft.}
     Anwendungsszenarien
 
     \begin{itemize}
-    
+
     \item
       Datenaufbereitung
     \item
@@ -542,12 +540,12 @@ Datenwissenschaft.}
   \textbf{Praktische Anwendung}
 
   \begin{itemize}
-  
+
   \item
     Effizienz in der Datenwissenschaft
 
     \begin{itemize}
-    
+
     \item
       Schneller Einstieg durch Anaconda
     \item
@@ -559,7 +557,7 @@ Datenwissenschaft.}
     Kooperation und Kommunikation
 
     \begin{itemize}
-    
+
     \item
       Gemeinsame Nutzung von Notebooks
     \item
@@ -1217,7 +1215,7 @@ Notebook}\label{grundlegende-bedienung---jupyter-notebook}
   \textbf{Ausführung von Zellen}:
 
   \begin{itemize}
-  
+
   \item
     \verb|Shift + Enter|
   \end{itemize}
@@ -1225,7 +1223,7 @@ Notebook}\label{grundlegende-bedienung---jupyter-notebook}
   \textbf{Hinzufügen neuer Zellen}:
 
   \begin{itemize}
-  
+
   \item
     \verb|Insert| \textgreater{}
     \verb|Insert Cell Above| oder
@@ -1349,14 +1347,14 @@ python3 gui_script.py
   \textbf{Importe}:
 
   \begin{itemize}
-  
+
   \item
     Importe sollten immer am Anfang einer Datei stehen.
   \item
     Reihenfolge:
 
     \begin{itemize}
-    
+
     \item
       Standardbibliothek-Importe,
     \item
@@ -1368,7 +1366,7 @@ python3 gui_script.py
     Vermeiden Sie Wildcard-Importe
 
     \begin{itemize}
-    
+
     \item
       \verb|from module import *|
     \end{itemize}
@@ -1377,7 +1375,7 @@ python3 gui_script.py
   \textbf{Leerzeichen in Ausdrücken und Anweisungen}:
 
   \begin{itemize}
-  
+
   \item
     Unmittelbar vor einem Komma, Semikolon oder Doppelpunkt.
   \item
@@ -1396,7 +1394,7 @@ python3 gui_script.py
   \textbf{Benennungskonventionen}:
 
   \begin{itemize}
-  
+
   \item
     Klassenname: \verb|CamelCase|
   \item
@@ -1408,7 +1406,7 @@ python3 gui_script.py
   \textbf{Leerzeilen}:
 
   \begin{itemize}
-  
+
   \item
     Verwenden Sie zwei Leerzeilen zwischen Funktionen und
     Klassendefinitionen.
@@ -1429,7 +1427,7 @@ list[index]
   \textbf{Dokumentationsstrings (Docstrings)}:
 
   \begin{itemize}
-  
+
   \item
     Verwenden Sie dreifache doppelte Anführungszeichen für Docstrings.
   \item
@@ -1440,7 +1438,7 @@ list[index]
   \textbf{Dateistruktur und Organisation}:
 
   \begin{itemize}
-  
+
   \item
     Definieren Sie alle Imports am Anfang des Skripts.
   \item
@@ -1451,7 +1449,7 @@ list[index]
     Der ausführbare Teil des Skripts sollte ganz am Ende stehen
 
     \begin{itemize}
-    
+
     \item
       \verb|if \_\_name\_\_ == "\_\_main\_\_":|
     \end{itemize}

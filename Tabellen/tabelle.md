@@ -1,4 +1,4 @@
-Latex Tabellengenerator [^1]        
+Latex Tabellengenerator [^1]
 
 [^1]: <https://www.tablesgenerator.com>
 

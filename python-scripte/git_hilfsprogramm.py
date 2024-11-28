@@ -267,7 +267,12 @@ class GitHelper:
                 timeout=10,
             )
             response.raise_for_status()
-            return response.json()
+            # Explizite Typ-Konvertierung
+            result: List[Dict[str, Any]] = []
+            for repo in response.json():
+                if isinstance(repo, dict):
+                    result.append(repo)
+            return result
         except requests.RequestException as e:
             logging.error("Fehler beim Abrufen der Repositories: %s", e)
             return []

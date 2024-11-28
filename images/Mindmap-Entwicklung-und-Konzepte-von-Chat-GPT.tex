@@ -1,0 +1,84 @@
+\documentclass[tikz, border=10pt]{standalone}
+\usepackage[T1]{fontenc}
+\usepackage[ngerman]{babel}
+\usepackage{tikz}
+\usetikzlibrary{mindmap, shapes.geometric}
+
+\definecolor{MindMapBlue}{RGB}{0, 105, 180}
+\definecolor{MindMapGreen}{RGB}{76, 153, 0}
+\definecolor{MindMapRed}{RGB}{237, 28, 36}
+\definecolor{MindMapYellow}{RGB}{255, 242, 0}
+\definecolor{MindMapOrange}{RGB}{255, 127, 39}
+\definecolor{MindMapPurple}{RGB}{150, 111, 214}
+\definecolor{MindMapGray}{RGB}{195, 195, 195}
+\definecolor{MindMapWhite}{RGB}{255, 255, 255}
+\definecolor{MindMapBlack}{RGB}{0, 0, 0}
+
+\begin{document}
+\begin{tikzpicture}[mindmap, grow cyclic,
+                    every node/.style={concept, fill=none, text width=2.5cm, font=\small, align=center, concept color=MindMapBlue, line width=0.5pt},
+                    level 1/.append style={sibling angle=360/6},
+                    level 2/.append style={sibling angle=45, level distance=4cm},
+                    level 3/.style={sibling angle=45, level distance=4cm},
+                    edge from parent/.style={concept color=MindMapBlack, line width=0.5pt}]
+
+% Hauptknoten
+\node[text width=3cm, font=\large\bfseries]{Entwicklung und Konzepte von Chat-GPT}
+    child [concept color=MindMapGreen] { node {Technologische Grundlagen}
+        child { node {Künstliche Intelligenz}
+            child { node [text only] {Simulation menschlicher Intelligenz}}
+            child { node [text only] {Spracherkennung, Entscheidungsfindung}}
+        }
+        child { node {Maschinelles Lernen}
+            child { node [text only] {Lernen aus Daten}}
+            child { node [text only] {Verfahren: Supervised, Unsupervised}}
+        }
+        child { node {Tiefes Lernen}
+            child { node [text only] {neuronaler Netzwerke}}
+            child { node [text only] {Mustererkennung}}
+        }
+    }
+    child [concept color=MindMapRed] { node {Architektur und Modelle}
+        child { node {Transformer-Architektur}
+            child { node [text only] {Verständnis von Kontext}}
+            child { node [text only] {Selbst-Attention, Kreuz-Attention}}
+        }
+        child { node {Neuronale Netzwerke}
+            child { node [text only] {Schichten von Neuronen}}
+            child { node [text only] {Nachbildung menschlicher Informationsverarbeitung}}
+        }
+    }
+    child [concept color=MindMapYellow] { node {Kernprozesse}
+        child { node {Textgenerierung}
+            child { node [text only] {Ziel: Menschliche Texte erzeugen}}
+        }
+        child { node {Verstehen von Text}
+            child { node [text only] {Herausforderung: Interpretation}}
+        }
+    }
+    child [concept color=MindMapPurple] { node {Schlüsseltechniken}
+        child { node {Attention-Mechanik}
+            child { node [text only] {Bewertung der Relevanz}}
+        }
+        child { node {Hyperparameter-Optimierung}
+            child { node [text only] {Feinabstimmung der Leistung}}
+        }
+    }
+    child [concept color=MindMapOrange] { node {Anwendungsfelder und Forschung}
+        child { node {Mensch-Maschine-Interaktion}
+            child { node [text only] {Dialogsysteme, Kundenbetreuung}}
+        }
+        child { node {Fortgeschrittene NLP-Anwendungen}
+            child { node [text only] {Sentiment-Analyse, Spracherkennung}}
+        }
+    }
+    child [concept color=MindMapGray] { node {Werkzeuge und Frameworks}
+        child { node {Datenanalyse-Tools}
+            child { node [text only] {Pandas, NumPy}}
+        }
+        child { node {Trainingsmethoden}
+            child { node [text only] {Backpropagation, Gradient Descent}}
+        }
+    };
+\end{tikzpicture}
+\end{document}

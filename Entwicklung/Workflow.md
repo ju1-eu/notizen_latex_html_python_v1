@@ -597,4 +597,3 @@ Projektlink: <https://github.com/ju1-eu/hello-world>
   > [!NOTE]
   > [!WARNING]
   ```
-

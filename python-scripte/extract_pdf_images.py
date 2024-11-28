@@ -71,6 +71,16 @@ class PDFImageExtractor:
         image_format: str = "png",
         config: Optional[ImageConfig] = None,
     ):
+        """Initialisiere den PDF-Bild-Extraktor.
+
+        Args:
+            pdf_path: Pfad zur PDF-Datei
+            output_dir: Ausgabeverzeichnis für extrahierte Bilder
+            image_prefix: Präfix für Bildnamen
+            project_name: Projektname für die Ausgabe
+            image_format: Ausgabeformat der Bilder
+            config: Optionale Konfigurationsoptionen
+        """
         self.pdf_path = Path(pdf_path)
         self.output_dir = Path(output_dir)
         self.image_prefix = image_prefix
@@ -172,7 +182,8 @@ class PDFImageExtractor:
                             self.stats["total_images"] += 1
                         else:
                             raise TypeError(
-                                f"Unerwarteter Typ für 'total_images': {type(self.stats['total_images'])}"
+                                f"Unerwarteter Typ für 'total_images': "
+                                f"{type(self.stats['total_images'])}"
                             )
 
                         try:
@@ -186,7 +197,8 @@ class PDFImageExtractor:
                                     self.stats["skipped"] += 1
                                 else:
                                     raise TypeError(
-                                        f"Unerwarteter Typ für 'skipped': {type(self.stats['skipped'])}"
+                                        f"Unerwarteter Typ für 'skipped': "
+                                        f"{type(self.stats['skipped'])}"
                                     )
                                 logging.warning(
                                     f"Bild übersprungen (Seite {page_num + 1}, "
@@ -219,7 +231,8 @@ class PDFImageExtractor:
                                 )
                             else:
                                 raise TypeError(
-                                    f"Unerwarteter Typ für 'successful': {type(self.stats['successful'])}"
+                                    f"Unerwarteter Typ für 'successful': "
+                                    f"{type(self.stats['successful'])}"
                                 )
 
                         except Exception as e:

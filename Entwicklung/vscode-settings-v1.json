@@ -14,7 +14,7 @@
   },
 
   "[markdown]": {
-  
+
     "editor.quickSuggestions": {
       "other": true, // Schnellvorschläge für Wörter, die nicht in einem Kommentar, einer Zeichenfolge oder einem RegEx sind
       "comments": false, // Schnellvorschläge innerhalb von Kommentaren aktivieren oder deaktivieren

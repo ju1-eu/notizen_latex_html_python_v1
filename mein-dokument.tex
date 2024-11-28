@@ -1,19 +1,15 @@
-% ju 26-Nov-24 mein-dokument.tex
+% ju 28-Nov-24 mein-dokument.tex
 \documentclass{vorlage-design-main}
-
-% Checkbox Definition
-\newcommand{\checkbox}{\square}
-
+% Verwenden von fontspec und unicode-math für XeLaTeX oder LuaLaTeX
 
 %% Ganze Überschrift
 \title{Anwendung von Markdown-Techniken für Dokumentationen}
-%% Kürzerer Titel zur Verwendung im Seitenkopf
+%% Kürzerer Titel
 \runningtitle{Dokumentation mit Markdown}
 \author{Jan Unger}
 \date{\today}
 
-%% Die .bib-Datei mit vollständigen Referenzen zur Verwendung mit biblatex. 
-%% articleclass lädt das Paket biblatex-chicago mit Anpassungen
+%% Referenzen
 \addbibresource{literatur.bib}
 
 \begin{document}
@@ -21,7 +17,7 @@
 \maketitle
 
 \begin{abstract}
-\includegraphics[width=0.6\textwidth]{images/Mindmap-Markdown.pdf}
+\includegraphics[width=0.5\textwidth]{images/Mindmap-Markdown.pdf}
 
 Markdown ist eine leichtgewichtige Auszeichnungssprache, die entwickelt
 wurde, um das Schreiben von Webinhalten zu vereinfachen. Sie ermöglicht
@@ -36,18 +32,12 @@ Codeprojekten zu behalten. Es unterstützt die Zusammenarbeit, indem es
 mehreren Benutzern ermöglicht, an denselben Projekten zu arbeiten, ohne
 sich gegenseitig zu behindern.
 
-Eine Mindmap ist ein visuelles Diagramm, das dazu dient, Informationen
-hierarchisch und in einem vernetzten Format darzustellen, wobei ein
-zentrales Konzept oder Thema in der Mitte platziert und verwandte Themen
-oder Ideen drum herum angeordnet werden.
-
 Python ist eine weit verbreitete, hochgradig vielseitige
 Programmiersprache, die für ihre Einfachheit und Lesbarkeit bekannt ist.
 Sie unterstützt verschiedene Programmierparadigmen wie objektorientiert,
 imperativ und in gewissem Maße auch funktional.
 
-\textbf{Keywords:} Markdown, Dokumentation, Pandoc, Konvertierung,
-Fußnoten, Tabellen, Code, Hyperlinks, Bilder, Literatur
+\textbf{Keywords:} Markdown, Pandoc, Konvertierung
 \end{abstract}
 
 \section{Dokumente in Markdown
@@ -70,7 +60,9 @@ Git
 
 \begin{figure}
 \centering
-\includegraphics[keepaspectratio]{images/Mindmap-Git.pdf}
+\includegraphics[width=0.6\linewidth,keepaspectratio]{images/Mindmap-Git.pdf}
+%\floatnotes{}
+%\label{fig:}
 \caption{Was ist Git?}
 \end{figure}
 
@@ -164,9 +156,9 @@ der Ausführung.
   \begin{tabular}{@{}lll@{}}
 \toprule
 Skriptname
- & 
+ &
 Beschreibung
- & 
+ &
 Ergebnis
  \\
 \midrule[\heavyrulewidth]
@@ -198,7 +190,7 @@ int main() {
 // Markdown
 [Google](https://www.google.com)
 
-![Logo 2](images/Logo/Logo2.pdf)
+![Logo 2](images/Logo/Logo2.pdf){width=50%}
 \end{lstlisting}
 
 Website \href{https://www.google.com}{Google} und GitHub
@@ -207,19 +199,25 @@ Website \href{https://www.google.com}{Google} und GitHub
 
 \begin{figure}
 \centering
-\includegraphics[keepaspectratio]{images/Logo/Logo2.pdf}
+\includegraphics[width=0.4\linewidth,keepaspectratio]{images/Logo/Logo2.pdf}
+%\floatnotes{}
+%\label{fig:}
 \caption{Logo 2}
 \end{figure}
 
 \begin{figure}
 \centering
-\includegraphics[keepaspectratio]{images/Mindmap.pdf}
+\includegraphics[width=0.6\linewidth,keepaspectratio]{images/Mindmap.pdf}
+%\floatnotes{}
+%\label{fig:}
 \caption{Was ist eine Mindmap?}
 \end{figure}
 
 \begin{figure}
 \centering
-\includegraphics[keepaspectratio]{images/Mindmap-Python.pdf}
+\includegraphics[width=0.6\linewidth,keepaspectratio]{images/Mindmap-Python.pdf}
+%\floatnotes{}
+%\label{fig:}
 \caption{Was ist Python?}
 \end{figure}
 

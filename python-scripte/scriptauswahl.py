@@ -50,9 +50,15 @@ BefehlsEintrag = Dict[str, Union[str, CommandType]]
 
 
 # Lade Konfiguration aus YAML-Datei
-def load_config(config_path: str) -> Dict[str, List[str]]:
+def load_config(config_path: str) -> dict[str, list[str]]:
     with open(config_path, "r") as config_file:
-        return yaml.safe_load(config_file)
+        config = yaml.safe_load(config_file)
+        # Typisiertes Dictionary erstellen
+        result: dict[str, list[str]] = {}
+        for key, value in config.items():
+            if isinstance(value, list) and all(isinstance(x, str) for x in value):
+                result[key] = value
+        return result
 
 
 CONFIG = load_config("config.yaml")

@@ -47,10 +47,16 @@ from tqdm import tqdm
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
 
-def load_config(config_path):
+def load_config(config_path: str) -> dict[str, str]:
     try:
         with open(config_path, "r", encoding="utf-8") as config_file:
-            return yaml.safe_load(config_file)
+            config = yaml.safe_load(config_file)
+            # Typisiertes Dictionary erstellen
+            result: dict[str, str] = {}
+            for key, value in config.items():
+                if isinstance(value, str):
+                    result[key] = value
+            return result
     except FileNotFoundError:
         logging.error(f"Konfigurationsdatei nicht gefunden: {config_path}")
         raise
@@ -126,10 +132,8 @@ def bearbeite_dateien(spezifische_datei: Optional[str] = None) -> List[str]:
     return erfolgreich_bearbeitet
 
 
-def main():
-    """
-    Hauptfunktion, die andere Funktionen in der richtigen Reihenfolge aufruft.
-    """
+def main() -> None:
+    """Hauptfunktion, die andere Funktionen in der richtigen Reihenfolge aufruft."""
     parser = argparse.ArgumentParser(description="Bearbeitet HTML-Dateien.")
     parser.add_argument(
         "--datei",
@@ -137,7 +141,6 @@ def main():
     )
     args = parser.parse_args()
 
-    # Sicherheitsüberprüfung
     if args.datei and (not args.datei.isalnum() or ".." in args.datei or "/" in args.datei):
         logging.error(
             "Ungültiger Dateiname. Bitte geben Sie einen sicheren Dateinamen ohne Pfadangaben an."

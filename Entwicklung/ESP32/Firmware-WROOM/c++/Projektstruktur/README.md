@@ -104,4 +104,3 @@ mv *.zip /Users/jan/daten/start/IOT/Projekte-ESP32/Firmware-WROOM/c++
 2. **Speichern auf einem externen Laufwerk oder in der Cloud**
 
 3. **Versionierung**: Git, um Änderungen an Ihrem Projekt zu verfolgen und Backups einfacher zu verwalten.
-

@@ -1,0 +1,92 @@
+\documentclass[tikz, border=10pt]{standalone}
+\usepackage[T1]{fontenc} % Verwendung von Vektorschriften
+\usepackage[ngerman]{babel} % Deutsche Rechtschreibung und Silbentrennung
+\usepackage{tikz}
+\usetikzlibrary{mindmap, shapes.geometric} % Import der shapes.geometric Bibliothek
+
+% Farbdefinitionen
+\definecolor{MindMapBlue}{RGB}{0, 105, 180}
+\definecolor{MindMapGreen}{RGB}{76, 153, 0}
+\definecolor{MindMapRed}{RGB}{237, 28, 36}
+\definecolor{MindMapYellow}{RGB}{255, 242, 0}
+\definecolor{MindMapOrange}{RGB}{255, 127, 39}
+\definecolor{MindMapPurple}{RGB}{150, 111, 214}
+\definecolor{MindMapGray}{RGB}{195, 195, 195}
+\definecolor{MindMapWhite}{RGB}{255, 255, 255}
+\definecolor{MindMapBlack}{RGB}{0, 0, 0}
+
+\begin{document}
+\begin{tikzpicture}[mindmap, grow cyclic,
+                    every node/.style={concept, fill=none, text width=2.5cm, font=\small, align=center, line width=0.5pt},
+                    level 1/.append style={sibling angle=360/5},
+                    level 2/.append style={level distance=4cm, sibling angle=45},
+                    level 3/.style={sibling angle=45}, % Unterunterknoten
+                    level 4/.style={sibling angle=45},
+                    edge from parent/.style={concept color=MindMapBlack, line width=0.5pt},
+                    text only/.style={draw=none, rectangle, text=MindMapBlack}]
+
+% Hauptknoten
+\node[text width=4cm, font=\large\bfseries]{Datenwissenschaft und Maschinelles Lernen mit Python}
+    child [concept color=MindMapBlue] { node {Grundlegende Bibliotheken}
+        child { node {Pandas}
+            child { node [text only] {Datenmanipulation}}
+            child { node [text only] {Datenreinigung}}
+            child { node [text only] {Zeitreihenanalyse}}
+        }
+        child { node {NumPy}
+            child { node [text only] {Mehrdimensionale Arrays}}
+            child { node [text only] {Mathematische Operationen}}
+        }
+        child { node {SciPy}
+            child { node [text only] {Wissenschaftliches Rechnen}}
+            child { node [text only] {Statistik}}
+            child { node [text only] {Optimierungs-aufgaben}}
+        }
+    }
+    child [concept color=MindMapGreen] { node {Daten-visualisierung}
+        child { node {Matplotlib}
+            child { node [text only] {Basisdiagramme und -grafiken}}
+            child { node [text only] {Anpassung von Plots}}
+        }
+        child { node {Seaborn}
+            child { node [text only] {Statistische Grafiken}}
+            child { node [text only] {Attraktive Standarddesigns}}
+        }
+        child { node {Plotly}
+            child { node [text only] {Interaktive, webbasierte Grafiken}}
+            child { node [text only] {Komplexere Visualisierungen}}
+        }
+    }
+    child [concept color=MindMapRed] { node {Maschinelles Lernen}
+        child { node {Traditionelles Maschinelles Lernen}
+            child { node {Scikit-learn}
+                child { node [text only] {Supervised Learning}}
+                child { node [text only] {Unsupervised Learning}}
+            }
+        }
+        child { node {Tiefes Lernen}
+            child { node {TensorFlow}
+                child { node [text only] {Aufbau tiefer neuronaler Netzwerke}}
+                child { node [text only] {Anwendungs-bereiche}}
+            }
+            child { node {PyTorch}
+                child { node [text only] {Dynamische Berechnungsgraphen}}
+                child { node [text only] {Forschungsfreundlich}}
+            }
+        }
+    }
+    child [concept color=MindMapOrange] { node {Entwicklungs-umgebung}
+        child { node {Jupyter Notebooks}
+            child { node [text only] {Interaktive Code-Ausführung}}
+            child { node [text only] {Integration von Text, Code und Visualisierungen}}
+        }
+    }
+    child [concept color=MindMapPurple] { node {Schlüsselkonzepte}
+        child { node [text only] {Datenanalyse}}
+        child { node [text only] {Statistische Grafiken}}
+        child { node [text only] {Explorative Datenanalyse}}
+        child { node [text only] {Algorithmen}}
+        child { node [text only] {Regression und Klassifikation}}
+    };
+\end{tikzpicture}
+\end{document}

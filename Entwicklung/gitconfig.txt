@@ -25,7 +25,7 @@
     untracked = cyan
 
 [alias]
-    st = status 
+    st = status
     cl = clone
     c = commit -m
     cam = commit -am
